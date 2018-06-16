@@ -1,4 +1,5 @@
 book_filename: "CellTrails-handbook"
+output_dir: "docs"
 delete_merged_file: yes
 new_session: no
 rmd_files: ["index.Rmd", 
