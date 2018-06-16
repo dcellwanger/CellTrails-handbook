@@ -229,7 +229,7 @@ If your expression data is not stored in an object of class
 \emph{\href{http://bioconductor.org/packages/SingleCellExperiment}{SingleCellExperiment}},
 we suggest to initiate an object from a numerical matrix composed of the
 log-normalized expression values; features should be listed in rows, and
-samples in columns (see \emph{Example Datasets}).
+samples in columns.
 
 \subsection{Spike-in Controls}\label{spike-in-controls}
 
@@ -237,9 +237,9 @@ There is no need to remove spike-in controls from your
 \emph{\href{http://bioconductor.org/packages/SingleCellExperiment}{SingleCellExperiment}}
 object. \emph{CellTrails} automatically ignores spike-in controls for
 its analysis, if they were properly annotated in the object using the
-function \texttt{isSpike} (see \#exdat).
+function \texttt{isSpike}.
 
-\section{Example Datasets}\label{exdat}
+\section{Example Datasets}\label{S-exdat}
 
 \textbf{exSim}
 
@@ -524,7 +524,7 @@ features is shown.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-6-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-6-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -586,7 +586,7 @@ and the fraction of removed features is shown.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-7-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-7-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -641,7 +641,7 @@ feature; filtered features are highlighted.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-8-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-8-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -681,9 +681,9 @@ The functions \texttt{filterTrajFeaturesByCOV} and
 account for systematic bias in the expression data (e.g., batch, gender
 or cell cycle). It should list the nuisance factors that should be
 blocked and their values per sample. It is suggested to construct the
-design matrix with the \texttt{model.matrix} function. Please see
-\emph{Manifold Learning/Blocking Uniformative Substructures} of this
-vignette for an example on how to create a proper design matrix.
+design matrix with the \texttt{model.matrix} function. An example
+illustrating how to create a proper design matrix is given
+\protect\hyperlink{S-blockSubstructures}{here}.
 
 \section{Using Alternative Methods}\label{using-alternative-methods}
 
@@ -876,7 +876,7 @@ eigenvalues.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-12-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-12-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -915,8 +915,8 @@ object:
 ## Used tSNE perplexity: 30
 \end{verbatim}
 
-\section{Blocking Uninformative
-Substructures}\label{blocking-uninformative-substructures}
+\hypertarget{S-blockSubstructures}{\section{Blocking Uninformative
+Substructures}\label{S-blockSubstructures}}
 
 Single-cell measurements are susceptible to the influence of
 confounders, such as batch, gender or cell cycle effects. Blocking these
@@ -1144,7 +1144,7 @@ lower-dimensional space.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-18-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-18-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1274,7 +1274,7 @@ method, such as PCA (e.g., available in \emph{CellTrails} via function
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-20-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-20-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1303,7 +1303,7 @@ method, such as PCA (e.g., available in \emph{CellTrails} via function
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-20-2.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-20-2}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1353,7 +1353,7 @@ with \texttt{featureNames}, respectively.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-21-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-21-1}
 
 The function \texttt{plotManifold} returns a \texttt{ggplot} object
 \citep{ggplot2} from the
@@ -1361,7 +1361,7 @@ The function \texttt{plotManifold} returns a \texttt{ggplot} object
 package, which can be adapted by the user's needs and preferences (for
 details, please refer to the
 \emph{\href{https://CRAN.R-project.org/package=ggplot2}{ggplot2}}
-manual; to save the plot see function \texttt{ggsave}). The 2D
+manual; a plot can be exported via \texttt{ggsave}). The 2D
 representation of the latent manifold is by default already stored the
 the
 \emph{\href{http://bioconductor.org/packages/SingleCellExperiment}{SingleCellExperiment}}
@@ -1390,7 +1390,7 @@ object using the \texttt{manifold2D} function, respectively.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-22-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-22-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1402,7 +1402,7 @@ object using the \texttt{manifold2D} function, respectively.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-22-2.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-22-2}
 
 \chapter{Clustering}\label{clustering}
 
@@ -1493,7 +1493,7 @@ visualizing a principal component analysis with
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-25-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-25-1}
 
 Please note that the (Bioconductor) package
 \emph{\href{http://bioconductor.org/packages/scater}{scater}} is not
@@ -1530,7 +1530,7 @@ and colorize each sample by its assigned state.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-26-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-26-1}
 
 The function \texttt{plotStateSize} generates a barplot showing the
 absolute sizes of each state.
@@ -1541,7 +1541,7 @@ absolute sizes of each state.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-27-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-27-1}
 
 Further, violin plots can be produced showing the expression
 distribution of a feature per state. Each point displays the feature's
@@ -1554,7 +1554,7 @@ mirrored density plot on each side.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-28-1}
 
 \chapter{Sample Ordering}\label{sample-ordering}
 
@@ -1687,7 +1687,7 @@ at the FM1-43 uptake and the \emph{CALB2} expression in component 1:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-32-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-32-1}
 
 The \texttt{plotStateTrajectory} function uses the Fruchterman-Reingold
 graph layout algorithm \citep{fr} for visualization. If the user needs
@@ -1715,7 +1715,7 @@ object.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-33-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1728,7 +1728,7 @@ object.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-33-2.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-33-2}
 
 \section{Aligning Samples Onto the
 Trajectory}\label{aligning-samples-onto-the-trajectory}
@@ -1763,7 +1763,7 @@ object can be subset.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-35-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-35-1}
 
 As expected, the isolated state S3 (trajectory graph component 2) is not
 contained in this subset.
@@ -1840,7 +1840,7 @@ fitting deviations of each sample indicated by the perpendicular jitter.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-37-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-37-1}
 
 \chapter{CellTrails Maps}\label{celltrails-maps}
 
@@ -1876,7 +1876,7 @@ Linux).
 
 Let's open the exported graphml file in \emph{yEd}:
 
-\includegraphics[width=35.56in]{img/yEd_1}
+\includegraphics[width=0.7\linewidth]{img/yEd_1}
 
 If a layout has already been defined for a
 \emph{\href{http://bioconductor.org/packages/SingleCellExperiment}{SingleCellExperiment}}
@@ -1905,11 +1905,11 @@ our case. The layouter can be selected via \emph{Layout} \(\rightarrow\)
 \emph{Tree} \(\rightarrow\) \emph{Balloon}. The following parameter
 setting was used in the original \emph{CellTrails} publication:
 
-\includegraphics[width=35.56in]{img/yEd_2-3}
+\includegraphics[width=0.7\linewidth]{img/yEd_2-3}
 
 Let's run the algorithm to compute the layout:
 
-\includegraphics[width=35.56in]{img/yEd_4}
+\includegraphics[width=0.7\linewidth]{img/yEd_4}
 
 \emph{Please note} that edge crossings (i.e., two or more edges overlap)
 are not useful and if they occur we suggest to re-run the layouter with
@@ -1921,7 +1921,7 @@ phenotype label), we need to transform the graph. This can be done via
 \emph{Tools} \(\rightarrow\) \emph{Geometric transformations}. Here, we
 select \emph{Mirror on Y axis} and \emph{Mirror on X axis}.
 
-\includegraphics[width=35.56in]{img/yEd_5-6}
+\includegraphics[width=0.7\linewidth]{img/yEd_5-6}
 
 Finally, the file can be saved via \emph{File} \(\rightarrow\)
 \emph{Save} and reimported to R.
@@ -1946,7 +1946,7 @@ example dataset is available within this package.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-45-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-45-1}
 
 Finally, we set the trajectory layout to the
 \emph{\href{http://bioconductor.org/packages/SingleCellExperiment}{SingleCellExperiment}}
@@ -1992,7 +1992,7 @@ they correspond to the inferred pseudotime.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-46-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-46-1}
 
 \textbf{Sidenote}. It is not a requirement to use yEd. The trajectory
 layout can also be defined by the user otherwise. The minimum
@@ -2023,7 +2023,7 @@ trajectory:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-47-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-47-1}
 
 In the topographical plot, a smooth surface is fitted and values are
 predicted for a regular grid resulting in the shown map topography; the
@@ -2037,7 +2037,7 @@ during sensory hair cell development:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-48-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-48-1}
 
 Let's have a look into the standard error of the predicted expression
 surface by setting the parameter \texttt{type}.
@@ -2048,7 +2048,7 @@ surface by setting the parameter \texttt{type}.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-49-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-49-1}
 
 Alternatively, \emph{CellTrails} enables to show the samples only,
 instead of the whole fitted expression surface. Here, we have two
@@ -2061,7 +2061,7 @@ options: either the raw expression or the smoothed values.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-50-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-50-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2071,7 +2071,7 @@ options: either the raw expression or the smoothed values.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-50-2.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-50-2}
 
 \chapter{Expression Dynamics}\label{expression-dynamics}
 
@@ -2094,7 +2094,7 @@ available landmark points on the trajectory map.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-51-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-51-1}
 
 Based on the experimental metainformation and the expression pattern of
 marker features, we identified in the original \emph{CellTrails}
@@ -2145,7 +2145,7 @@ its corresponding pseudotime.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-53-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-53-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2153,7 +2153,7 @@ its corresponding pseudotime.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-53-2.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-53-2}
 
 The function \texttt{addTrail} automatically extracts the samples and
 their pseudotime along the trail by computing the shortest path between
@@ -2199,7 +2199,7 @@ lower-dimensional manifold.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-55-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-55-1}
 
 Also, the data is accessible via \texttt{colData} of the
 \emph{\href{http://bioconductor.org/packages/SingleCellExperiment}{SingleCellExperiment}}
@@ -2219,7 +2219,7 @@ package \citep{scater}.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-56-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-56-1}
 
 \emph{Please note} that trails can be renamed with
 \texttt{trailNames\textless{}-} and removed with \texttt{removeTrail},
@@ -2253,8 +2253,8 @@ pseudotime near the terminal end of trail TrES, which might indicate
 that the terminal state can be split, and two trails are actually
 overlapping. This gap becomes already quite obvious visually when we
 utilize \emph{yEd} to have a closer look into the trajectory graph.
-First, we export the graph. By default, nodes are colorized by state
-(see \emph{CellTrails Maps / Graph Layout}).
+First, we export the graph. By default, nodes are colorized by
+\emph{state}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2265,7 +2265,7 @@ First, we export the graph. By default, nodes are colorized by state
 Then we open the graphml file in \emph{yEd}. The gap in the purple
 colored population is obvious:
 
-\includegraphics[width=23.17in]{img/yEd_7}
+\includegraphics[width=0.7\linewidth]{img/yEd_7}
 
 To indicate this sample as landmark, we simply change the shape of this
 node. This can be any shape, but not \emph{ellipse}, which is used as
@@ -2273,7 +2273,7 @@ default for other nodes. The shape can be changed using the
 \emph{Properties View} panel on the right border of the \emph{yEd}
 application.
 
-\includegraphics[width=23.17in]{img/yEd_8}
+\includegraphics[width=0.7\linewidth]{img/yEd_8}
 
 After saving the layout, it can be reimported to \emph{CellTrails} and
 the landmark can be used to define the subtrail:
@@ -2285,7 +2285,7 @@ the landmark can be used to define the subtrail:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-61-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-61-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2294,7 +2294,7 @@ the landmark can be used to define the subtrail:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-61-2.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-61-2}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2337,7 +2337,7 @@ landmarks need to be changed.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=23.17in]{img/yEd_9}
+\includegraphics[width=0.7\linewidth]{img/yEd_9}
 
 Here, blue nodes denote user-defined landmarks, green nodes are
 branching points and red nodes are leafs. Landmark IDs, as listed by
@@ -2376,7 +2376,7 @@ each trail, respectively.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-66-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-66-1}
 
 The boxplot statistics indicate that there is a strong outlier in state
 S9 (which is termed state \emph{i} in the original \emph{CellTrails}
@@ -2405,7 +2405,7 @@ The function \texttt{userLandmarks\textless{}-} enables us to
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-68-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-68-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2414,7 +2414,7 @@ The function \texttt{userLandmarks\textless{}-} enables us to
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-68-2.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-68-2}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2471,7 +2471,7 @@ as follows:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-69-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-69-1}
 
 \emph{Please note} that the fitting function automatically scales
 pseudotime between 0 and 100\% for each trail.
@@ -2541,7 +2541,7 @@ displayed in a single plot as follows:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CellTrails-handbook_files/figure-latex/unnamed-chunk-71-1.pdf}
+\includegraphics[width=0.7\linewidth]{CellTrails-handbook_files/figure-latex/unnamed-chunk-71-1}
 
 By using the fitting function \texttt{fitDynamic}, the
 similarity/correspondence between curves can be quantified. This allows
@@ -2861,10 +2861,10 @@ and tdTomato fluorescence indicating major cell types). The processed
 data (\texttt{mmu\_p1\_utricle.rda}) can be downloaded as
 \emph{\href{http://bioconductor.org/packages/SingleCellExperiment}{SingleCellExperiment}}
 object from
-\href{https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.rds}{here}.
+\href{https://github.com/dcellwanger/CellTrails-handbook/raw/master/exdata/mmu_p1_utricle.rds}{here}.
 The trajectory layout (\texttt{mmu\_p1\_utricle.graphml}) can be
 downloaded from
-\href{https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.graphml}{here}.
+\href{https://github.com/dcellwanger/CellTrails-handbook/raw/master/exdata/mmu_p1_utricle.graphml}{here}.
 
 If you use this dataset for your research, please cite the original work
 by \citet{burns2015}.
@@ -3012,8 +3012,8 @@ then the total runtime is up to 10 minutes.
 
 \section{Session Info}\label{session-info}
 
-We used \emph{yEd} version 3.14.4.\\
-The \emph{R} session and the system used to compile this document is
+This manual was created with \emph{yEd} version 3.14.4.\\
+The \emph{R} session and the system used to compile this document are
 listed below.
 
 \begin{Shaded}
@@ -3098,27 +3098,27 @@ listed below.
 ##  [97] mime_0.5                scran_1.6.6            
 ##  [99] biomaRt_2.34.0          pbkrtest_0.4-7         
 ## [101] compiler_3.4.3          rstudioapi_0.7         
-## [103] png_0.1-7               curl_3.1               
-## [105] beeswarm_0.2.3          e1071_1.6-8            
-## [107] smoother_1.1            tibble_1.3.4           
-## [109] statmod_1.4.30          stringi_1.1.6          
-## [111] lattice_0.20-35         trimcluster_0.1-2      
-## [113] Matrix_1.2-12           nloptr_1.0.4           
-## [115] lmtest_0.9-35           data.table_1.10.4-3    
-## [117] bitops_1.0-6            httpuv_1.3.5           
-## [119] R6_2.2.2                latticeExtra_0.6-28    
-## [121] bookdown_0.7            gridExtra_2.3          
-## [123] vipor_0.4.5             boot_1.3-20            
-## [125] MASS_7.3-47             assertthat_0.2.0       
-## [127] destiny_2.6.1           rhdf5_2.22.0           
-## [129] rprojroot_1.2           rjson_0.2.15           
-## [131] GenomeInfoDbData_0.99.1 diptest_0.75-7         
-## [133] mgcv_1.8-22             grid_3.4.3             
-## [135] rpart_4.1-11            minqa_1.2.4            
-## [137] tidyr_0.7.2             class_7.3-14           
-## [139] rmarkdown_1.8           Rtsne_0.13             
-## [141] TTR_0.23-2              shiny_1.0.5            
-## [143] base64enc_0.1-3         ggbeeswarm_0.6.0
+## [103] curl_3.1                beeswarm_0.2.3         
+## [105] e1071_1.6-8             smoother_1.1           
+## [107] tibble_1.3.4            statmod_1.4.30         
+## [109] stringi_1.1.6           lattice_0.20-35        
+## [111] trimcluster_0.1-2       Matrix_1.2-12          
+## [113] nloptr_1.0.4            lmtest_0.9-35          
+## [115] data.table_1.10.4-3     bitops_1.0-6           
+## [117] httpuv_1.3.5            R6_2.2.2               
+## [119] latticeExtra_0.6-28     bookdown_0.7           
+## [121] gridExtra_2.3           vipor_0.4.5            
+## [123] boot_1.3-20             MASS_7.3-47            
+## [125] assertthat_0.2.0        destiny_2.6.1          
+## [127] rhdf5_2.22.0            rprojroot_1.2          
+## [129] rjson_0.2.15            GenomeInfoDbData_0.99.1
+## [131] diptest_0.75-7          mgcv_1.8-22            
+## [133] grid_3.4.3              rpart_4.1-11           
+## [135] minqa_1.2.4             tidyr_0.7.2            
+## [137] class_7.3-14            rmarkdown_1.8          
+## [139] Rtsne_0.13              TTR_0.23-2             
+## [141] shiny_1.0.5             base64enc_0.1-3        
+## [143] ggbeeswarm_0.6.0
 \end{verbatim}
 
 \bibliography{book.bib,articles.bib}

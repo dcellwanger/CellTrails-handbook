@@ -47,7 +47,7 @@ showTrajInfo(exSim)
 ```
 
 ## Blocking Uniformative Substructures
-The functions `filterTrajFeaturesByCOV` and `filterTrajFeaturesByFF` allow to define a design matrix to account for systematic bias in the expression data (e.g., batch, gender or cell cycle). It should list the nuisance factors that should be blocked and their values per sample. It is suggested to construct the design matrix with the `model.matrix` function. Please see _Manifold Learning/Blocking Uniformative Substructures_ of this vignette for an example on how to create a proper design matrix.
+The functions `filterTrajFeaturesByCOV` and `filterTrajFeaturesByFF` allow to define a design matrix to account for systematic bias in the expression data (e.g., batch, gender or cell cycle). It should list the nuisance factors that should be blocked and their values per sample. It is suggested to construct the design matrix with the `model.matrix` function. An example illustrating how to create a proper design matrix is given   [here](#S-blockSubstructures).
 
 ## Using Alternative Methods
 The function `trajFeatureNames` allows to designate any set of features as trajectory features. The only requirement is that the names in the set match the stored feature names in the `r Biocpkg("SingleCellExperiment")` object (check with function `featureNames`). For example, one could also use an abundance-dependent variance trend fit, as implemented in the `r Biocpkg("scran")` package [@scran], to indicate trajectory features, as shown below. *Please note* that the (Bioconductor) package `r Biocpkg("scran")` is not part of *CellTrails* and may be needed to be installed first.

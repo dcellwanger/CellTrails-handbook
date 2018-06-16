@@ -15,7 +15,7 @@ write.ygraphml(exBundle, file="yourFileName.graphml")
 Let's open the exported graphml file in _yEd_:
 
 ```{r, eval=TRUE, echo=FALSE}
-pth <- "img/yEd_1.png" #system.file("img", "yEd_1.png", package="CellTrails")
+pth <- "img/yEd_1.gif" #system.file("img", "yEd_1.gif", package="CellTrails")
 knitr::include_graphics(path=pth)
 ```
 
@@ -26,21 +26,21 @@ If a layout has already been defined for a `r Biocpkg("SingleCellExperiment")` o
 Next, we layout the graph. Since the trajectory resembles a tree structre, we use a tree algorithm. We found that routing the trajectory graph in a quasi-radial style, called balloon style, works very well for our case. The layouter can be selected via  _Layout_ $\rightarrow$ _Tree_ $\rightarrow$ _Balloon_. The following parameter setting was used in the original _CellTrails_ publication:
 
 ```{r, eval=TRUE, echo=FALSE}
-pth <- "img/yEd_2-3.png" #system.file("img", "yEd_2-3.png", package="CellTrails")
+pth <- "img/yEd_2-3.gif" #system.file("img", "yEd_2-3.gif", package="CellTrails")
 knitr::include_graphics(path=pth)
 ```
 
 Let's run the algorithm to compute the layout:
 
 ```{r, eval=TRUE, echo=FALSE}
-pth <- "img/yEd_4.png" #system.file("img", "yEd_4.png", package="CellTrails")
+pth <- "img/yEd_4.gif" #system.file("img", "yEd_4.gif", package="CellTrails")
 knitr::include_graphics(path=pth)
 ```
 
 *Please note* that edge crossings (i.e., two or more edges overlap) are not useful and if they occur we suggest to re-run the layouter with different parameters before saving the layout. Using either your mouse or the _View_ $\rightarrow$ _Zoom In_ option allows to have a closer look. If we want to have the trajectory progressing from bottom left to bottom right (based on a specific feature expression or phenotype label), we need to transform the graph. This can be done via _Tools_ $\rightarrow$ _Geometric transformations_. Here, we select _Mirror on Y axis_ and _Mirror on X axis_.
 
 ```{r, eval=TRUE, echo=FALSE}
-pth <- "img/yEd_5-6.png" #system.file("img", "yEd_5-6.png", package="CellTrails")
+pth <- "img/yEd_5-6.gif" #system.file("img", "yEd_5-6.gif", package="CellTrails")
 knitr::include_graphics(path=pth)
 ```
 

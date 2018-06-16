@@ -111,7 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
 <li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#S-exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
 <li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
 <li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
 <li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
-<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#S-blockSubstructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
 <li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
 <li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
 </ul></li>
@@ -203,7 +203,7 @@ se &lt;-<span class="st"> </span><span class="kw">embedSamples</span>(exBundle)<
 <p>The function <code>findSpectrum</code> helps to identify the intrisic dimensionality of the data. It determines the most informative dimensions based on the eigenvalues (spectrum) of the eigenspace. Components of the latent space are ranked by their information content. In the following example, <em>CellTrails</em> identifies relevant components by using a linear fit on the eigengaps of the first 100 eigenvalues.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Identify relevant components</span>
 d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(se<span class="op">$</span>eigenvalues, <span class="dt">frac=</span><span class="dv">100</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-12-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d</code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
 <p>We suggest to assess the resulting Scree plot (eigengaps versus spectrum size) for whether the estimation of the unknown intrinsic dimensionality was reasonable. Otherwise, we recommend to adjust the parameter <code>frac</code> accordingly.</p>
@@ -213,7 +213,7 @@ d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(se<span cla
 <pre><code>## Calculating approximation of CellTrails manifold for 2D visualization...</code></pre>
 <pre><code>## Used tSNE perplexity: 30</code></pre>
 </div>
-<div id="blocking-uninformative-substructures" class="section level2">
+<div id="S-blockSubstructures" class="section level2">
 <h2><span class="header-section-number">4.3</span> Blocking Uninformative Substructures</h2>
 <p>Single-cell measurements are susceptible to the influence of confounders, such as batch, gender or cell cycle effects. Blocking these nuisance factors during manifold learning may be necessary to significantly improve the result of downstream data analyses, such as reconstruction of the temporal trajectory. Therefore, the function <code>embedSamples</code> can account for confounding effects via the parameter <code>design</code>, as will be demonstrated on the example of single-cell RNA-Seq data of murine T helper 2 cell (T<sub>h</sub>2) differentiation <span class="citation">(Mahata et al. <a href="#ref-mahata2014">2014</a>)</span>. In a nutshell, Buettner <em>et al.</em> <span class="citation">(F. Buettner et al. <a href="#ref-buettner2015">2015</a>)</span> identified cell cycle effects as major confounder in this dataset and applied a single-cell latent variable model (scLVM) approach to account for this factor. They unbiasedly identified then two cell populations, namely a group of partially and a group of fully differentiated cells. The normalized, log transformed and filtered scRNA-Seq data can be obtained from the supplementary materials of their article (Table S5 and S7); further, a curated list of T<sub>h</sub>2 marker genes, the scLVM-corrected expression matrix, and a binary cluster assignment for each cell can be downloaded.</p>
 <p>For your convenience, the numeric expression matrix (here called <code>th2</code>) and the list of marker genes were already organized in a <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> container. Here, the expression matrix consists of 7,063 selected genes (116 of which are marker genes) which have been detected in more than 3 of all 81 cells.</p>
@@ -318,7 +318,7 @@ se &lt;-<span class="st"> </span><span class="kw">embedSamples</span>(th2, <span
 <pre><code>## Computing adjacency matrix ...</code></pre>
 <pre><code>## Computing spectral embedding ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(se<span class="op">$</span>eigenvalues, <span class="dt">frac=</span><span class="dv">60</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-18-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">latentSpace</span>(th2) &lt;-<span class="st"> </span>se<span class="op">$</span>components[, d]</code></pre></div>
 <pre><code>## Calculating approximation of CellTrails manifold for 2D visualization...</code></pre>
 <pre><code>## Used tSNE perplexity: 16</code></pre>
@@ -372,7 +372,7 @@ pca_result &lt;-<span class="st"> </span><span class="kw">pca</span>(exAlt)</cod
 ## expression over all samples) and was/were therefore neglected.</code></pre>
 <pre><code>## Performing PCA ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(pca_result<span class="op">$</span>eigenvalues, <span class="dt">frac=</span><span class="dv">100</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-20-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">latentSpace</span>(exAlt) &lt;-<span class="st"> </span>pca_result<span class="op">$</span>components[, d]</code></pre></div>
 <pre><code>## Calculating approximation of CellTrails manifold for 2D visualization...</code></pre>
 <pre><code>## Used tSNE perplexity: 30</code></pre>
@@ -384,7 +384,7 @@ pca_result &lt;-<span class="st"> </span><span class="kw">pca</span>(exAlt)</cod
 lcounts &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(exAlt))
 dmaps_result &lt;-<span class="st"> </span>destiny<span class="op">::</span><span class="kw">DiffusionMap</span>(lcounts, <span class="dt">n_eigs =</span> <span class="dv">101</span>)
 d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(destiny<span class="op">:::</span><span class="kw">eigenvalues</span>(dmaps_result), <span class="dt">frac=</span><span class="dv">100</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-20-2.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">latentSpace</span>(exAlt) &lt;-<span class="st"> </span>destiny<span class="op">:::</span><span class="kw">eigenvectors</span>(dmaps_result)[, d]</code></pre></div>
 <pre><code>## Calculating approximation of CellTrails manifold for 2D visualization...
 ## Used tSNE perplexity: 30</code></pre>
@@ -398,19 +398,19 @@ d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(destiny<spa
 <pre><code>## [1] &quot;fm143&quot;  &quot;origin&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Show sample metainformation &#39;fm143 dye uptake&#39;</span>
 <span class="kw">plotManifold</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;fm143&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<p>The function <code>plotManifold</code> returns a <code>ggplot</code> object <span class="citation">(Wickham <a href="#ref-ggplot2">2009</a>)</span> from the <em><a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a></em> package, which can be adapted by the user’s needs and preferences (for details, please refer to the <em><a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a></em> manual; to save the plot see function <code>ggsave</code>). The 2D representation of the latent manifold is by default already stored the the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object (also accessible via <code>reducedDims</code>). However, the <code>plotManifold</code> function provides the parameter <code>recalculate</code>. For example, if we want to change the <code>perplexity</code> parameter of the tSNE calculation, then we set <code>recalculate=TRUE</code>. The new tSNE result needs to be set to the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object using the <code>manifold2D</code> function, respectively.</p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-21-1.png" width="70%" /></p>
+<p>The function <code>plotManifold</code> returns a <code>ggplot</code> object <span class="citation">(Wickham <a href="#ref-ggplot2">2009</a>)</span> from the <em><a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a></em> package, which can be adapted by the user’s needs and preferences (for details, please refer to the <em><a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a></em> manual; a plot can be exported via <code>ggsave</code>). The 2D representation of the latent manifold is by default already stored the the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object (also accessible via <code>reducedDims</code>). However, the <code>plotManifold</code> function provides the parameter <code>recalculate</code>. For example, if we want to change the <code>perplexity</code> parameter of the tSNE calculation, then we set <code>recalculate=TRUE</code>. The new tSNE result needs to be set to the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object using the <code>manifold2D</code> function, respectively.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Show feature expression (e.g., gene TECTA)</span>
 gp &lt;-<span class="st"> </span><span class="kw">plotManifold</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TECTA&quot;</span>, <span class="dt">recalculate=</span><span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## Calculating 2D approximation of CellTrails manifold...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gp</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-22-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Store tSNE result</span>
 <span class="kw">manifold2D</span>(exBundle) &lt;-<span class="st"> </span>gp
 
 <span class="co"># Show feature expression (e.g., genes MYO7A)</span>
 <span class="kw">plotManifold</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;MYO7A&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-22-2.png" width="70%" /></p>
 
 <!-- ---------------------------------- -->
 </div>

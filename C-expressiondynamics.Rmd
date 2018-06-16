@@ -61,7 +61,7 @@ It might be needed to define subtrails if trails overlap. This is neccessary if 
 ### Using yEd
 _U_ landmarks that are needed to define a subtrail can be determined by the user, as demonstrated in the following.
 
-First, we want to give a rational for selecting a specific node. As described in the original _CellTrails_ article, we found a gap in pseudotime near the terminal end of trail TrES, which might indicate that the terminal state can be split, and two trails are actually overlapping. This gap becomes already quite obvious visually when we utilize _yEd_ to have a closer look into the trajectory graph. First, we export the graph. By default, nodes are colorized by state (see _CellTrails Maps / Graph Layout_).
+First, we want to give a rational for selecting a specific node. As described in the original _CellTrails_ article, we found a gap in pseudotime near the terminal end of trail TrES, which might indicate that the terminal state can be split, and two trails are actually overlapping. This gap becomes already quite obvious visually when we utilize _yEd_ to have a closer look into the trajectory graph. First, we export the graph. By default, nodes are colorized by *state*.
 
 ```{r, eval=FALSE}
 write.ygraphml(exBundle, file='yourFileName.graphml')
@@ -70,14 +70,14 @@ write.ygraphml(exBundle, file='yourFileName.graphml')
 Then we open the graphml file in _yEd_. The gap in the purple colored population is obvious:
 
 ```{r, eval=TRUE, echo=FALSE}
-pth <- "img/yEd_7.png" #system.file("img", "yEd_7.png", package="CellTrails")
+pth <- "img/yEd_7.gif" #system.file("img", "yEd_7.gif", package="CellTrails")
 knitr::include_graphics(path=pth)
 ```
 
 To indicate this sample as landmark, we simply change the shape of this node. This can be any shape, but not _ellipse_, which is used as default for other nodes. The shape can be changed using the _Properties View_ panel on the right border of the _yEd_ application. 
 
 ```{r, eval=TRUE, echo=FALSE}
-pth <- "img/yEd_8.png" #system.file("img", "yEd_8.png", package="CellTrails")
+pth <- "img/yEd_8.gif" #system.file("img", "yEd_8.gif", package="CellTrails")
 knitr::include_graphics(path=pth)
 ```
 
@@ -108,7 +108,7 @@ write.ygraphml(exBundle, file='yourFileName.graphml',
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
-pth <- "img/yEd_9.png" #system.file("img", "yEd_9.png", package="CellTrails")
+pth <- "img/yEd_9.gif" #system.file("img", "yEd_9.gif", package="CellTrails")
 knitr::include_graphics(path=pth)
 ```
 

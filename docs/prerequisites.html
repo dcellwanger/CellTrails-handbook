@@ -111,7 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
 <li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#S-exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
 <li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
 <li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
 <li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
-<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#S-blockSubstructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
 <li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
 <li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
 </ul></li>
@@ -203,14 +203,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="shape-of-expression-data" class="section level3">
 <h3><span class="header-section-number">1.4.1</span> Shape of Expression Data</h3>
 <p><em>CellTrails</em> expects the expression data to be normalized and log-transformed; it is not required that features were filtered at this point. The expression data is expected to be available from the <code>logcounts</code> assay entry. If this entry is empty (check for its existence with function <code>assays</code>), the function <code>logcounts&lt;-</code> can be used to store the log-normalized data in a <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object.</p>
-<p>If your expression data is not stored in an object of class <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em>, we suggest to initiate an object from a numerical matrix composed of the log-normalized expression values; features should be listed in rows, and samples in columns (see <em>Example Datasets</em>).</p>
+<p>If your expression data is not stored in an object of class <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em>, we suggest to initiate an object from a numerical matrix composed of the log-normalized expression values; features should be listed in rows, and samples in columns.</p>
 </div>
 <div id="spike-in-controls" class="section level3">
 <h3><span class="header-section-number">1.4.2</span> Spike-in Controls</h3>
-<p>There is no need to remove spike-in controls from your <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object. <em>CellTrails</em> automatically ignores spike-in controls for its analysis, if they were properly annotated in the object using the function <code>isSpike</code> (see #exdat).</p>
+<p>There is no need to remove spike-in controls from your <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object. <em>CellTrails</em> automatically ignores spike-in controls for its analysis, if they were properly annotated in the object using the function <code>isSpike</code>.</p>
 </div>
 </div>
-<div id="exdat" class="section level2">
+<div id="S-exdat" class="section level2">
 <h2><span class="header-section-number">1.5</span> Example Datasets</h2>
 <p><strong>exSim</strong></p>
 <p>In this vignette, simulated data (with log-transformed Negative Binomial distributed expression counts) and real expression data are used to illustrate the functionality of the <em>CellTrails</em> package.</p>

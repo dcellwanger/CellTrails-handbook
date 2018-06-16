@@ -111,7 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
 <li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#S-exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
 <li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
 <li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
 <li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
-<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#S-blockSubstructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
 <li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
 <li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
 </ul></li>
@@ -229,7 +229,7 @@ exBundle &lt;-<span class="st"> </span><span class="kw">connectStates</span>(exB
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># FM1-43 uptake</span>
 <span class="kw">plotStateTrajectory</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;fm143&quot;</span>, 
                     <span class="dt">component=</span><span class="dv">1</span>, <span class="dt">point_size=</span><span class="fl">1.5</span>, <span class="dt">label_offset=</span><span class="dv">4</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-32-1.png" width="70%" /></p>
 <p>The <code>plotStateTrajectory</code> function uses the Fruchterman-Reingold graph layout algorithm <span class="citation">(Fruchterman and Reingold <a href="#ref-fr">1991</a>)</span> for visualization. If the user needs to re-compute the layout, it can be achieved by setting the parameter <code>recalculate=TRUE</code>. The new layout should then be stored to the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># FM1-43 uptake</span>
 gp &lt;-<span class="st"> </span><span class="kw">plotStateTrajectory</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;fm143&quot;</span>, 
@@ -237,14 +237,14 @@ gp &lt;-<span class="st"> </span><span class="kw">plotStateTrajectory</span>(exB
                           <span class="dt">recalculate=</span><span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## Calculating layout of state trajectory graph ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gp</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-33-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Store layout</span>
 <span class="kw">stateTrajLayout</span>(exBundle) &lt;-<span class="st"> </span>gp
 
 <span class="co"># CALB2 exoression</span>
 <span class="kw">plotStateTrajectory</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;CALB2&quot;</span>, 
                     <span class="dt">component=</span><span class="dv">1</span>, <span class="dt">point_size=</span><span class="dv">5</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-33-2.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-33-2.png" width="70%" /></p>
 </div>
 <div id="aligning-samples-onto-the-trajectory" class="section level2">
 <h2><span class="header-section-number">6.2</span> Aligning Samples Onto the Trajectory</h2>
@@ -258,7 +258,7 @@ exBundle_subset &lt;-<span class="st"> </span>exBundle[, <span class="kw">trajSa
 
 <span class="co"># Plot state sizes</span>
 <span class="kw">plotStateSize</span>(exBundle_subset)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-35-1.png" width="70%" /></p>
 <p>As expected, the isolated state S3 (trajectory graph component 2) is not contained in this subset.</p>
 <p>The selected graph component defines the trajectory backbone. The function <code>fitTrajectory</code> embeds the trajectory structure in the latent space by computing straight lines passing through the mediancentres <span class="citation">(Bedall and Zimmermann <a href="#ref-bedall1979">1979</a>)</span> of adjacent states. Then, a fitting function is learned. Each sample is projected to its most proximal straight line passing through the mediancentre of its assigned state. Here, whenever possible, orthogonal projections onto line segments between two mediancentres are preferred to line segments which are only incident to a single median centre. Fitting deviations are given by the Euclidean distance between the sample’s location and the straight line, and are indicated by an aggregated statistic (Mean Squared Error, MSE) shown by <code>showTrajInfo</code> and can be directly accessed via <code>trajResiduals</code>. Finally, a weighted acyclic trajectory graph can be constructed based on each sample’s position along its straight line. Nodes in this graph are samples; edges are constructed between neighboring samples. Each edge is weighted by the distance between its nodes along the straight line.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Align samples onto trajectory</span>
@@ -287,7 +287,7 @@ exBundle &lt;-<span class="st"> </span><span class="kw">fitTrajectory</span>(exB
 <pre><code>## [1] 0.008616594 0.008064917 0.004659595 0.039835749 0.017354939</code></pre>
 <p>Of note, the fitting function implies potential side branches in the trajectory graph; those could be caused due to technical variance or encompass samples that were statistically indistinguishable from the main trajectory given the selected features used for trajectory reconstruction. The <code>plotTrajectoryFit</code> function shows the trajectory backbone (longest shortest path between two samples) and the fitting deviations of each sample indicated by the perpendicular jitter.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotTrajectoryFit</span>(exBundle)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-37-1.png" width="70%" /></p>
 
 <!-- ---------------------------------- -->
 </div>

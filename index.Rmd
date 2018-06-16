@@ -19,7 +19,8 @@ description: "CellTrails Handbook"
 #knitr::write_bib(c(
 #  .packages()#, 'bookdown', 'knitr', 'rmarkdown'
 #), 'packages.bib')
-
+options(knitr.graphics.auto_pdf=TRUE)
+knitr::opts_chunk$set(fig.width=6, fig.asp=.7, out.width='70%') 
 library(BiocStyle)
 ```
 

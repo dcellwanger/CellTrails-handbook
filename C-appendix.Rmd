@@ -126,7 +126,7 @@ plotDynamic(bundle,
 
 ### Mouse P1 Utricle Data
 
-In the following, we provide a protocol to analyze the publicly-available dataset containing single-cell RNASeq measurements of 14,313 genes in 120 cells from P1 mouse utricles ([*GEO*](https://www.ncbi.nlm.nih.gov/geo/) accession code: GSE71982). Experimental metadata was generated during cell sorting (GFP and tdTomato fluorescence indicating major cell types). The processed data (`mmu_p1_utricle.rda`) can be downloaded as `r Biocpkg("SingleCellExperiment")` object from [here](https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.rds). The trajectory layout (`mmu_p1_utricle.graphml`) can be downloaded from [here](https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.graphml).
+In the following, we provide a protocol to analyze the publicly-available dataset containing single-cell RNASeq measurements of 14,313 genes in 120 cells from P1 mouse utricles ([*GEO*](https://www.ncbi.nlm.nih.gov/geo/) accession code: GSE71982). Experimental metadata was generated during cell sorting (GFP and tdTomato fluorescence indicating major cell types). The processed data (`mmu_p1_utricle.rda`) can be downloaded as `r Biocpkg("SingleCellExperiment")` object from [here](https://github.com/dcellwanger/CellTrails-handbook/raw/master/exdata/mmu_p1_utricle.rds). The trajectory layout (`mmu_p1_utricle.graphml`) can be downloaded from [here](https://github.com/dcellwanger/CellTrails-handbook/raw/master/exdata/mmu_p1_utricle.graphml).
 
 If you use this dataset for your research, please cite the original work by @burns2015.
 
@@ -256,8 +256,8 @@ This dataset consists of 183 features and 1,008 samples. The computation time of
 This dataset consists of 14,313 features and 120 samples. The computation time of the whole protocol as listed above (with parallelization of the inter-trail dynamics comparison) took less then seven minutes. Let's assume that computing the layout takes about two minutes (starting *yEd*, running the layouter, saving the file), then the total runtime is up to 10 minutes.
 
 ## Session Info
-We used _yEd_ version 3.14.4.  
-The _R_ session and the system used to compile this document is listed below.
+This manual was created with _yEd_ version 3.14.4.  
+The _R_ session and the system used to compile this document are listed below.
 
 ```{r}
 sessionInfo()

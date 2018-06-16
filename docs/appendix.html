@@ -111,7 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
 <li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#S-exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
 <li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
 <li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
 <li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
-<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#S-blockSubstructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
 <li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
 <li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
 </ul></li>
@@ -307,7 +307,7 @@ gp &lt;-<span class="st"> </span><span class="kw">plotManifold</span>(bundle, <s
 </div>
 <div id="mouse-p1-utricle-data" class="section level3">
 <h3><span class="header-section-number">9.1.2</span> Mouse P1 Utricle Data</h3>
-<p>In the following, we provide a protocol to analyze the publicly-available dataset containing single-cell RNASeq measurements of 14,313 genes in 120 cells from P1 mouse utricles (<a href="https://www.ncbi.nlm.nih.gov/geo/"><em>GEO</em></a> accession code: GSE71982). Experimental metadata was generated during cell sorting (GFP and tdTomato fluorescence indicating major cell types). The processed data (<code>mmu_p1_utricle.rda</code>) can be downloaded as <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object from <a href="https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.rds">here</a>. The trajectory layout (<code>mmu_p1_utricle.graphml</code>) can be downloaded from <a href="https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.graphml">here</a>.</p>
+<p>In the following, we provide a protocol to analyze the publicly-available dataset containing single-cell RNASeq measurements of 14,313 genes in 120 cells from P1 mouse utricles (<a href="https://www.ncbi.nlm.nih.gov/geo/"><em>GEO</em></a> accession code: GSE71982). Experimental metadata was generated during cell sorting (GFP and tdTomato fluorescence indicating major cell types). The processed data (<code>mmu_p1_utricle.rda</code>) can be downloaded as <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object from <a href="https://github.com/dcellwanger/CellTrails-handbook/raw/master/exdata/mmu_p1_utricle.rds">here</a>. The trajectory layout (<code>mmu_p1_utricle.graphml</code>) can be downloaded from <a href="https://github.com/dcellwanger/CellTrails-handbook/raw/master/exdata/mmu_p1_utricle.graphml">here</a>.</p>
 <p>If you use this dataset for your research, please cite the original work by <span class="citation">Burns et al. (<a href="#ref-burns2015">2015</a>)</span>.</p>
 <!-- Burns JC, Kelly MC, Hoa M, Morell RJ, Kelley MW. "Single-cell RNA-Seq resolves cellular complexity in sensory organs from the neonatal inner ear". *Nat Commun.* 2015 Oct 15;6:8557. doi: 10.1038/ncomms9557. -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load expression data</span>
@@ -436,8 +436,8 @@ gp &lt;-<span class="st"> </span><span class="kw">plotManifold</span>(p1utricle,
 </div>
 <div id="session-info" class="section level2">
 <h2><span class="header-section-number">9.3</span> Session Info</h2>
-<p>We used <em>yEd</em> version 3.14.4.<br />
-The <em>R</em> session and the system used to compile this document is listed below.</p>
+<p>This manual was created with <em>yEd</em> version 3.14.4.<br />
+The <em>R</em> session and the system used to compile this document are listed below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
 <pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
@@ -514,27 +514,27 @@ The <em>R</em> session and the system used to compile this document is listed be
 ##  [97] mime_0.5                scran_1.6.6            
 ##  [99] biomaRt_2.34.0          pbkrtest_0.4-7         
 ## [101] compiler_3.4.3          rstudioapi_0.7         
-## [103] png_0.1-7               curl_3.1               
-## [105] beeswarm_0.2.3          e1071_1.6-8            
-## [107] smoother_1.1            tibble_1.3.4           
-## [109] statmod_1.4.30          stringi_1.1.6          
-## [111] lattice_0.20-35         trimcluster_0.1-2      
-## [113] Matrix_1.2-12           nloptr_1.0.4           
-## [115] lmtest_0.9-35           data.table_1.10.4-3    
-## [117] bitops_1.0-6            httpuv_1.3.5           
-## [119] R6_2.2.2                latticeExtra_0.6-28    
-## [121] bookdown_0.7            gridExtra_2.3          
-## [123] vipor_0.4.5             boot_1.3-20            
-## [125] MASS_7.3-47             assertthat_0.2.0       
-## [127] destiny_2.6.1           rhdf5_2.22.0           
-## [129] rprojroot_1.2           rjson_0.2.15           
-## [131] GenomeInfoDbData_0.99.1 diptest_0.75-7         
-## [133] mgcv_1.8-22             grid_3.4.3             
-## [135] rpart_4.1-11            minqa_1.2.4            
-## [137] tidyr_0.7.2             class_7.3-14           
-## [139] rmarkdown_1.8           Rtsne_0.13             
-## [141] TTR_0.23-2              shiny_1.0.5            
-## [143] base64enc_0.1-3         ggbeeswarm_0.6.0</code></pre>
+## [103] curl_3.1                beeswarm_0.2.3         
+## [105] e1071_1.6-8             smoother_1.1           
+## [107] tibble_1.3.4            statmod_1.4.30         
+## [109] stringi_1.1.6           lattice_0.20-35        
+## [111] trimcluster_0.1-2       Matrix_1.2-12          
+## [113] nloptr_1.0.4            lmtest_0.9-35          
+## [115] data.table_1.10.4-3     bitops_1.0-6           
+## [117] httpuv_1.3.5            R6_2.2.2               
+## [119] latticeExtra_0.6-28     bookdown_0.7           
+## [121] gridExtra_2.3           vipor_0.4.5            
+## [123] boot_1.3-20             MASS_7.3-47            
+## [125] assertthat_0.2.0        destiny_2.6.1          
+## [127] rhdf5_2.22.0            rprojroot_1.2          
+## [129] rjson_0.2.15            GenomeInfoDbData_0.99.1
+## [131] diptest_0.75-7          mgcv_1.8-22            
+## [133] grid_3.4.3              rpart_4.1-11           
+## [135] minqa_1.2.4             tidyr_0.7.2            
+## [137] class_7.3-14            rmarkdown_1.8          
+## [139] Rtsne_0.13              TTR_0.23-2             
+## [141] shiny_1.0.5             base64enc_0.1-3        
+## [143] ggbeeswarm_0.6.0</code></pre>
 
 <!-- ---------------------------------- -->
 </div>

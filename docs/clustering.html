@@ -111,7 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
 <li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#S-exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
 <li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
 <li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
 <li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
-<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#S-blockSubstructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
 <li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
 <li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
 </ul></li>
@@ -204,7 +204,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="co"># Plot scater PCA with CellTrails cluster information</span>
 scater<span class="op">::</span><span class="kw">plotPCA</span>(exBundle, <span class="dt">colour_by=</span><span class="st">&quot;CellTrails.state&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-25-1.png" width="70%" /></p>
 <p>Please note that the (Bioconductor) package <em><a href="http://bioconductor.org/packages/scater">scater</a></em> is not part of <em>CellTrails</em> and may be needed to be installed first.</p>
 </div>
 <div id="using-alternative-methods-2" class="section level2">
@@ -219,13 +219,13 @@ scater<span class="op">::</span><span class="kw">plotPCA</span>(exBundle, <span 
 <pre><code>## [1] &quot;fm143&quot;  &quot;origin&quot; &quot;state&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Show manifold</span>
 <span class="kw">plotManifold</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;state&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-26-1.png" width="70%" /></p>
 <p>The function <code>plotStateSize</code> generates a barplot showing the absolute sizes of each state.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotStateSize</span>(exBundle)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-27-1.png" width="70%" /></p>
 <p>Further, violin plots can be produced showing the expression distribution of a feature per state. Each point displays the feature’s expression value in a single sample. A violine represents a vertically mirrored density plot on each side.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotStateExpression</span>(exBundle, <span class="dt">feature_name=</span><span class="st">&quot;CALB2&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-28-1.png" width="70%" /></p>
 
 <!-- ---------------------------------- -->
 </div>

@@ -111,7 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
 <li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#S-exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
 <li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
 <li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
 <li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
-<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#S-blockSubstructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
 <li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
 <li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
 </ul></li>
@@ -193,7 +193,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This filter determines trajectory features that are present in a disproportionate small number of samples. It removes features that are not expressed or that do not sufficiently reach the technological limit of detection. The detection level is defined as the fraction of samples in which a feature is detected, i.e., the relative number of samples having a feature’s expression value greater than 0. If a threshold &gt;= 1 is selected, its value is automatically converted to a relative fraction of the total sample count. The empirical cumulative distribution function of all samples and the fraction of removed features is shown.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter features expressed in at least 3 samples</span>
 tfeat &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByDL</span>(exSim, <span class="dt">threshold=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-6-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tfeat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
 <pre><code>## [1] &quot;feature_84&quot; &quot;feature_88&quot; &quot;feature_92&quot; &quot;feature_94&quot; &quot;feature_96&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Setting trajectory features to the object</span>
@@ -224,7 +224,7 @@ tfeat &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByDL</spa
 <p>This filter determines trajectory features with a narrow standard deviation (sd) with respect to its average expression (mean). This filter removes features with high expression and low variance, such as housekeeping genes. The coefficient of variation is computed by CoV(x) = sd(x)/mean(x). Features with a CoV(x) greater than a given threshold remain labeled as trajectory feature in the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object. The empirical cumulative distribution function of all samples and the fraction of removed features is shown.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter features with COV &gt; 0.5</span>
 tfeat &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByCOV</span>(exSim, <span class="dt">threshold=</span><span class="fl">0.5</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-7-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Setting trajectory features to the object</span>
 <span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span>tfeat
 <span class="kw">showTrajInfo</span>(exSim)</code></pre></div>
@@ -253,7 +253,7 @@ tfeat &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByCOV</sp
 <p>This filter identifies the most variable features while considering their average expression level. Features are placed into 20 bins based on their mean expression. For each bin, the distribution of Fano factors, which is a windowed version of the index of dispersion (IOD = variance / mean), is computed and standardized (<em>Z</em>-score(x) = x/sd(x) - mean(x)/sd(x)). Highly variable features with a <em>Z</em>-score greater than a given threshold remain labeled as trajectory feature in the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object. The parameter <code>min_expr</code> defines the minimum average expression level of a feature to be considered for this filter (default: 0). The Fano factor and the average expression is shown for each feature; filtered features are highlighted.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter features with Z &gt; 1.7</span>
 tfeat &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByFF</span>(exSim, <span class="dt">threshold=</span><span class="fl">1.7</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-8-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Setting trajectory features to the object</span>
 <span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span>tfeat
 <span class="kw">showTrajInfo</span>(exSim)</code></pre></div>
@@ -279,7 +279,7 @@ tfeat &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByFF</spa
 </div>
 <div id="blocking-uniformative-substructures" class="section level2">
 <h2><span class="header-section-number">3.4</span> Blocking Uniformative Substructures</h2>
-<p>The functions <code>filterTrajFeaturesByCOV</code> and <code>filterTrajFeaturesByFF</code> allow to define a design matrix to account for systematic bias in the expression data (e.g., batch, gender or cell cycle). It should list the nuisance factors that should be blocked and their values per sample. It is suggested to construct the design matrix with the <code>model.matrix</code> function. Please see <em>Manifold Learning/Blocking Uniformative Substructures</em> of this vignette for an example on how to create a proper design matrix.</p>
+<p>The functions <code>filterTrajFeaturesByCOV</code> and <code>filterTrajFeaturesByFF</code> allow to define a design matrix to account for systematic bias in the expression data (e.g., batch, gender or cell cycle). It should list the nuisance factors that should be blocked and their values per sample. It is suggested to construct the design matrix with the <code>model.matrix</code> function. An example illustrating how to create a proper design matrix is given <a href="manifold-learning.html#S-blockSubstructures">here</a>.</p>
 </div>
 <div id="using-alternative-methods" class="section level2">
 <h2><span class="header-section-number">3.5</span> Using Alternative Methods</h2>

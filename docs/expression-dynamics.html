@@ -111,7 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
 <li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#S-exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
 <li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
 <li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
 <li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
-<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#S-blockSubstructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
 <li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
 <li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
 </ul></li>
@@ -189,7 +189,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">8.1</span> Trail Definition</h2>
 <p>Trails are usful to infer expression dynamics of features along subsections of the trajectory. A trail denotes a path between two landmarks. To be able to properly define a trail, we display the available landmark points on the trajectory map.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotMap</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-51-1.png" width="70%" /></p>
 <p>Based on the experimental metainformation and the expression pattern of marker features, we identified in the original <em>CellTrails</em> publication path <em>B3</em> to <em>H9</em> as developmental trail toward a striolar sensory hair bundle morphology, and <em>B3</em> to <em>H1</em> as developmental trail toward an extrastriolar bundle morphology. Let’s mark those trails on the map using the function <code>addTrail</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define trails</span>
 exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;H9&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrS&quot;</span>)
@@ -217,9 +217,9 @@ exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle
 ##   trailNames: &quot;TrS&quot; &quot;TrES&quot; (2)</code></pre>
 <p>Next, we want to make sure that the intended trails were extracted by showing the trajectory map and highlight the defined trails along with its corresponding pseudotime.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotTrail</span>(exBundle, <span class="dt">name=</span><span class="st">&quot;TrS&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-53-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotTrail</span>(exBundle, <span class="dt">name=</span><span class="st">&quot;TrES&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-53-2.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-53-2.png" width="70%" /></p>
 <p>The function <code>addTrail</code> automatically extracts the samples and their pseudotime along the trail by computing the shortest path between the trail start and end.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get trail names</span>
 <span class="kw">trailNames</span>(exBundle)</code></pre></div>
@@ -237,7 +237,7 @@ exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle
 <p>The pseudotime information is automatically stored as sample metadata (see <code>phenoNames</code>). For example, we could plot it on the lower-dimensional manifold.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get trail names</span>
 <span class="kw">plotManifold</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrS&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-55-1.png" width="70%" /></p>
 <p>Also, the data is accessible via <code>colData</code> of the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object and can therefore be analyzed using alternative packages. For example, colorizing the trail TrS in a principal component analysis using the <em><a href="http://bioconductor.org/packages/scater">scater</a></em> package <span class="citation">(McCarthy et al. <a href="#ref-scater">2017</a>)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Not run: 
 ##library(scater)
@@ -245,7 +245,7 @@ exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle
 
 <span class="co"># Plot scater PCA with CellTrails pseudotime information</span>
 scater<span class="op">::</span><span class="kw">plotPCA</span>(exBundle, <span class="dt">colour_by=</span><span class="st">&quot;CellTrails.TrS&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-56-1.png" width="70%" /></p>
 <p><em>Please note</em> that trails can be renamed with <code>trailNames&lt;-</code> and removed with <code>removeTrail</code>, respectively. Adding another trail with the same name, will show a warning message and override the existing definition.</p>
 </div>
 <div id="defining-subtrails" class="section level2">
@@ -254,19 +254,19 @@ scater<span class="op">::</span><span class="kw">plotPCA</span>(exBundle, <span 
 <div id="using-yed" class="section level3">
 <h3><span class="header-section-number">8.2.1</span> Using yEd</h3>
 <p><em>U</em> landmarks that are needed to define a subtrail can be determined by the user, as demonstrated in the following.</p>
-<p>First, we want to give a rational for selecting a specific node. As described in the original <em>CellTrails</em> article, we found a gap in pseudotime near the terminal end of trail TrES, which might indicate that the terminal state can be split, and two trails are actually overlapping. This gap becomes already quite obvious visually when we utilize <em>yEd</em> to have a closer look into the trajectory graph. First, we export the graph. By default, nodes are colorized by state (see <em>CellTrails Maps / Graph Layout</em>).</p>
+<p>First, we want to give a rational for selecting a specific node. As described in the original <em>CellTrails</em> article, we found a gap in pseudotime near the terminal end of trail TrES, which might indicate that the terminal state can be split, and two trails are actually overlapping. This gap becomes already quite obvious visually when we utilize <em>yEd</em> to have a closer look into the trajectory graph. First, we export the graph. By default, nodes are colorized by <em>state</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write.ygraphml</span>(exBundle, <span class="dt">file=</span><span class="st">&#39;yourFileName.graphml&#39;</span>)</code></pre></div>
 <p>Then we open the graphml file in <em>yEd</em>. The gap in the purple colored population is obvious:</p>
-<p><img src="img/yEd_7.png" width="834" /></p>
+<p><img src="img/yEd_7.gif" width="70%" /></p>
 <p>To indicate this sample as landmark, we simply change the shape of this node. This can be any shape, but not <em>ellipse</em>, which is used as default for other nodes. The shape can be changed using the <em>Properties View</em> panel on the right border of the <em>yEd</em> application.</p>
-<p><img src="img/yed_8.png" width="834" /></p>
+<p><img src="img/yed_8.gif" width="70%" /></p>
 <p>After saving the layout, it can be reimported to <em>CellTrails</em> and the landmark can be used to define the subtrail:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Trail Identification</span>
 <span class="kw">plotMap</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-61-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;U1&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)
 <span class="kw">plotTrail</span>(exBundle, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-61-2.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-61-2.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">showTrajInfo</span>(exBundle)</code></pre></div>
 <pre><code>## [[ CellTrails ]] 
 ## logcounts: 183 features, 1008 samples
@@ -292,7 +292,7 @@ scater<span class="op">::</span><span class="kw">plotPCA</span>(exBundle, <span 
 <span class="kw">write.ygraphml</span>(exBundle, <span class="dt">file=</span><span class="st">&#39;yourFileName.graphml&#39;</span>, 
                <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>, 
                <span class="dt">node_label=</span><span class="st">&quot;landmark&quot;</span>)</code></pre></div>
-<p><img src="img/yEd_9.png" width="834" /></p>
+<p><img src="img/yEd_9.gif" width="70%" /></p>
 <p>Here, blue nodes denote user-defined landmarks, green nodes are branching points and red nodes are leafs. Landmark IDs, as listed by <code>landmarks</code>, are indicated as node names, respectively.</p>
 </div>
 <div id="using-r" class="section level3">
@@ -318,7 +318,7 @@ lptime &lt;-<span class="st"> </span><span class="kw">lapply</span>(ptime_states
 
 bp &lt;-<span class="st"> </span><span class="kw">boxplot</span>(lptime, <span class="dt">horizontal=</span><span class="ot">TRUE</span>, 
               <span class="dt">ylab=</span><span class="st">&quot;State&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Pseudotime delta&quot;</span>, <span class="dt">las=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-66-1.png" width="70%" /></p>
 <p>The boxplot statistics indicate that there is a strong outlier in state S9 (which is termed state <em>i</em> in the original <em>CellTrails</em> article). Let’s extract the sample right before the leap.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">leap &lt;-<span class="st"> </span>lptime<span class="op">$</span>S9[<span class="kw">which.max</span>(lptime<span class="op">$</span>S9) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]
 <span class="kw">names</span>(leap)</code></pre></div>
@@ -328,10 +328,10 @@ bp &lt;-<span class="st"> </span><span class="kw">boxplot</span>(lptime, <span c
 
 <span class="co"># Trail Identification</span>
 <span class="kw">plotMap</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-68-1.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;U1&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)
 <span class="kw">plotTrail</span>(exBundle, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-68-2.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-68-2.png" width="70%" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">showTrajInfo</span>(exBundle)</code></pre></div>
 <pre><code>## [[ CellTrails ]] 
 ## logcounts: 183 features, 1008 samples
@@ -360,7 +360,7 @@ bp &lt;-<span class="st"> </span><span class="kw">boxplot</span>(lptime, <span c
 <p><em>CellTrails</em> defines pseudotime as the geodesic distance of each node of the trail from the start node. To learn the expression level of a feature as a function of pseudotime, <em>CellTrails</em> used generalized additive models (GAM) with a single smoothing term with five basis dimensions. Here, for each feature, <em>CellTrails</em> introduces prior weights for each observation to lower the confounding effect of missing data to the maximum-likelihood-based fitting process.</p>
 <p>Feature expression as a function of pseudotime along an individual trail can be plotted with the <code>plotDynamic</code> function. This results in the fitted dynamic function (= black line) and the individual expression per sample (= points represent samples colored by their state membership). For example, the expression of the calcium buffer <em>CALB2</em> during extrastriolar hair cell development can be displayed as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDynamic</span>(exBundle, <span class="dt">feature_name=</span><span class="st">&quot;CALB2&quot;</span>, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-69-1.png" width="70%" /></p>
 <p><em>Please note</em> that the fitting function automatically scales pseudotime between 0 and 100% for each trail.</p>
 <p>The fit information can be extracted via function <code>fitDynamic</code> and used for further downstream analyses:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">fitDynamic</span>(exBundle, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>, <span class="dt">feature_name=</span><span class="st">&quot;CALB2&quot;</span>)
@@ -384,7 +384,7 @@ timepoints &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<spa
 <h2><span class="header-section-number">8.4</span> Dynamic Comparison: Within Trails</h2>
 <p><em>CellTrails</em> allows the analysis and comparison of the expression of multiple features along a single trail. For example, the expression dynamics of the acting crosslinkers <em>FSCN1</em> and <em>FSCN2</em> can be displayed in a single plot as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDynamic</span>(exBundle, <span class="dt">feature_name=</span><span class="kw">c</span>(<span class="st">&quot;FSCN1&quot;</span>, <span class="st">&quot;FSCN2&quot;</span>), <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>)</code></pre></div>
-<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-71-1.png" width="70%" /></p>
 <p>By using the fitting function <code>fitDynamic</code>, the similarity/correspondence between curves can be quantified. This allows a quantitative assessment of the observed anticorrelation seen in the plot above between <em>FSCN1</em> and <em>FSCN2</em>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fscn1_fit &lt;-<span class="st"> </span><span class="kw">fitDynamic</span>(exBundle, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>, <span class="dt">feature_name=</span><span class="st">&quot;FSCN1&quot;</span>)
 fscn2_fit &lt;-<span class="st"> </span><span class="kw">fitDynamic</span>(exBundle, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>, <span class="dt">feature_name=</span><span class="st">&quot;FSCN2&quot;</span>)
