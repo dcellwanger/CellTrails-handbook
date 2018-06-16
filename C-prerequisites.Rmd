@@ -1,0 +1,55 @@
+<!-- ---------------------------------- -->
+# Prerequisites
+<!-- ---------------------------------- -->
+## Terminology
+In the following, we use a general termonology to describe the biological data of interest. We analyze quantitative _expression values_ (e.g., RT-qPCR Log2Ex, RNA-Seq log2 counts, usf.) of _features_ (e.g., genes, transcripts, spike-in controls, usf.), which were obtained from individual _samples_ (e.g., single cells).
+
+## Load Library
+Before ready to use, the *CellTrails* libraries must be loaded into the *R* environment:
+
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
+library(CellTrails)
+```
+
+## Third-party Software: yEd
+We strongly recommend to download and install the graph visualization software *yEd*  (<http://www.yworks.com/products/yed>). It provides great capabilities to perform planar embedding, visualization, and analysis of a trajectory graph produced by _CellTrails_.
+
+## Input: SingleCellExperiment
+*CellTrails* organizes its data in an object of Bioconductor's `r Biocpkg("SingleCellExperiment")` [@R-SingleCellExperiment] class. It provides all attributes required for smooth and user-friendly data processing and analysis of single cell data and enables interoperability between packages. Please, refer to the `r Biocpkg("SingleCellExperiment")` vignette for details. 
+
+### Shape of Expression Data
+*CellTrails* expects the expression data to be normalized and log-transformed; it is not required that features were filtered at this point. The expression data is expected to be available from the `logcounts` assay entry. If this entry is empty (check for its existence with function `assays`), the function `logcounts<-` can be used to store the log-normalized data in a `r Biocpkg("SingleCellExperiment")` object.
+
+If your expression data is not stored in an object of class `r Biocpkg("SingleCellExperiment")`, we suggest to initiate an object from a numerical matrix composed of the log-normalized expression values; features should be listed in rows, and samples in columns (see _Example Datasets_). 
+
+### Spike-in Controls
+There is no need to remove spike-in controls from your `r Biocpkg("SingleCellExperiment")` object. *CellTrails* automatically ignores spike-in controls for its analysis, if they were properly annotated in the object using the function `isSpike` (see #exdat).
+
+## Example Datasets {#exdat}
+**exSim**
+
+In this vignette, simulated data (with log-transformed Negative Binomial distributed expression counts) and real expression data are used to illustrate the functionality of the *CellTrails* package. 
+
+The first dataset, `exSim`, is composed of expression values of 15,000 features measured in 100 samples; 80 spike-in transcripts were added.
+```{r, eval=TRUE}
+# Create example expression data
+# with 15,000 features and 100 samples
+set.seed(1101)
+emat <- simulate_exprs(n_features=15000, n_samples=100)
+
+# Create SingleCellExperiment object
+exSim <- SingleCellExperiment(assays=list(logcounts=emat))
+
+# Annotate ERCC spike-ins 
+isSpike(exSim, "ERCC") <- 1:80
+show(exSim)
+```
+
+**exBundle**
+
+The second dataset, `exBundle`, contains transcript expression profiles of 183 genes expressed during sensory hair cell bundle maturation and function, which were quantified in the chicken utricle sensory epithelium at embryonic day 15 using multiplex RT-qPCR. Experimental metadata was generated during tissue preparation (cell origin) and cell sorting (uptake of FM1-43 dye indicating cell maturity). This data set is the foundation used for the development of *CellTrails*. If you use this dataset for your research, please cite @ellwanger2018.
+
+```{r, eval=TRUE}
+# Load bundle data
+exBundle <- readRDS(system.file("exdata", "bundle.rds", package="CellTrails"))
+```

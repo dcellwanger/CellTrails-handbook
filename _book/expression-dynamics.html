@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</title>
+  <meta name="description" content="CellTrails Handbook">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="CellTrails Handbook" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  
+  <meta name="twitter:description" content="CellTrails Handbook" />
+  
+
+<meta name="author" content="Daniel C. Ellwanger // dcellwanger.dev[at]gmail.com">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="celltrails-maps.html">
+<link rel="next" href="appendix.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CellTrails Handbook</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="prerequisites.html"><a href="prerequisites.html#terminology"><i class="fa fa-check"></i><b>1.1</b> Terminology</a></li>
+<li class="chapter" data-level="1.2" data-path="prerequisites.html"><a href="prerequisites.html#load-library"><i class="fa fa-check"></i><b>1.2</b> Load Library</a></li>
+<li class="chapter" data-level="1.3" data-path="prerequisites.html"><a href="prerequisites.html#third-party-software-yed"><i class="fa fa-check"></i><b>1.3</b> Third-party Software: yEd</a></li>
+<li class="chapter" data-level="1.4" data-path="prerequisites.html"><a href="prerequisites.html#input-singlecellexperiment"><i class="fa fa-check"></i><b>1.4</b> Input: SingleCellExperiment</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
+<li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
+<li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
+<li class="chapter" data-level="3.1" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-detection-level"><i class="fa fa-check"></i><b>3.1</b> Filter by Detection Level</a></li>
+<li class="chapter" data-level="3.2" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-coefficient-of-variation"><i class="fa fa-check"></i><b>3.2</b> Filter by Coefficient of Variation</a></li>
+<li class="chapter" data-level="3.3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-fano-factor"><i class="fa fa-check"></i><b>3.3</b> Filter by Fano Factor</a></li>
+<li class="chapter" data-level="3.4" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#blocking-uniformative-substructures"><i class="fa fa-check"></i><b>3.4</b> Blocking Uniformative Substructures</a></li>
+<li class="chapter" data-level="3.5" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#using-alternative-methods"><i class="fa fa-check"></i><b>3.5</b> Using Alternative Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
+<li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>5</b> Clustering</a><ul>
+<li class="chapter" data-level="5.1" data-path="clustering.html"><a href="clustering.html#hierarchical-spectral-clustering"><i class="fa fa-check"></i><b>5.1</b> Hierarchical Spectral Clustering</a></li>
+<li class="chapter" data-level="5.2" data-path="clustering.html"><a href="clustering.html#using-alternative-methods-2"><i class="fa fa-check"></i><b>5.2</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="5.3" data-path="clustering.html"><a href="clustering.html#visualization-1"><i class="fa fa-check"></i><b>5.3</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sample-ordering.html"><a href="sample-ordering.html"><i class="fa fa-check"></i><b>6</b> Sample Ordering</a><ul>
+<li class="chapter" data-level="6.1" data-path="sample-ordering.html"><a href="sample-ordering.html#state-trajectory-graph"><i class="fa fa-check"></i><b>6.1</b> State Trajectory Graph</a></li>
+<li class="chapter" data-level="6.2" data-path="sample-ordering.html"><a href="sample-ordering.html#aligning-samples-onto-the-trajectory"><i class="fa fa-check"></i><b>6.2</b> Aligning Samples Onto the Trajectory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="celltrails-maps.html"><a href="celltrails-maps.html"><i class="fa fa-check"></i><b>7</b> CellTrails Maps</a><ul>
+<li class="chapter" data-level="7.1" data-path="celltrails-maps.html"><a href="celltrails-maps.html#graph-layout"><i class="fa fa-check"></i><b>7.1</b> Graph Layout</a></li>
+<li class="chapter" data-level="7.2" data-path="celltrails-maps.html"><a href="celltrails-maps.html#plot-maps"><i class="fa fa-check"></i><b>7.2</b> Plot Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="expression-dynamics.html"><a href="expression-dynamics.html"><i class="fa fa-check"></i><b>8</b> Expression Dynamics</a><ul>
+<li class="chapter" data-level="8.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#trail-definition"><i class="fa fa-check"></i><b>8.1</b> Trail Definition</a></li>
+<li class="chapter" data-level="8.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#defining-subtrails"><i class="fa fa-check"></i><b>8.2</b> Defining Subtrails</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-yed"><i class="fa fa-check"></i><b>8.2.1</b> Using yEd</a></li>
+<li class="chapter" data-level="8.2.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-r"><i class="fa fa-check"></i><b>8.2.2</b> Using R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="expression-dynamics.html"><a href="expression-dynamics.html#inference-of-dynamics"><i class="fa fa-check"></i><b>8.3</b> Inference of Dynamics</a></li>
+<li class="chapter" data-level="8.4" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-within-trails"><i class="fa fa-check"></i><b>8.4</b> Dynamic Comparison: Within Trails</a></li>
+<li class="chapter" data-level="8.5" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-between-trails"><i class="fa fa-check"></i><b>8.5</b> Dynamic Comparison: Between Trails</a></li>
+<li class="chapter" data-level="8.6" data-path="expression-dynamics.html"><a href="expression-dynamics.html#parallelization"><i class="fa fa-check"></i><b>8.6</b> Parallelization</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>9</b> Appendix</a><ul>
+<li class="chapter" data-level="9.1" data-path="appendix.html"><a href="appendix.html#protocols"><i class="fa fa-check"></i><b>9.1</b> Protocols</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="appendix.html"><a href="appendix.html#chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.1.1</b> Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.1.2" data-path="appendix.html"><a href="appendix.html#mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.1.2</b> Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix.html"><a href="appendix.html#runtime"><i class="fa fa-check"></i><b>9.2</b> Runtime</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="appendix.html"><a href="appendix.html#protocol-chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.2.1</b> Protocol: Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.2.2" data-path="appendix.html"><a href="appendix.html#protocol-mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.2.2</b> Protocol: Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix.html"><a href="appendix.html#session-info"><i class="fa fa-check"></i><b>9.3</b> Session Info</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="expression-dynamics" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Expression Dynamics</h1>
+<!-- ---------------------------------- -->
+<p>During the trajectory fitting process, landmarks are automatically identified on the trajectory: trail heads (leafs), <em>H</em>, and branching points, <em>B</em>. The assigned landmark IDs can be obtained via <code>landmarks</code>. We use this information to define individual trails along the trajectory.</p>
+<div id="trail-definition" class="section level2">
+<h2><span class="header-section-number">8.1</span> Trail Definition</h2>
+<p>Trails are usful to infer expression dynamics of features along subsections of the trajectory. A trail denotes a path between two landmarks. To be able to properly define a trail, we display the available landmark points on the trajectory map.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotMap</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>Based on the experimental metainformation and the expression pattern of marker features, we identified in the original <em>CellTrails</em> publication path <em>B3</em> to <em>H9</em> as developmental trail toward a striolar sensory hair bundle morphology, and <em>B3</em> to <em>H1</em> as developmental trail toward an extrastriolar bundle morphology. Let’s mark those trails on the map using the function <code>addTrail</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define trails</span>
+exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;H9&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrS&quot;</span>)
+exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;H1&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrES&quot;</span>)
+
+<span class="kw">showTrajInfo</span>(exBundle)</code></pre></div>
+<pre><code>## [[ CellTrails ]] 
+## logcounts: 183 features, 1008 samples
+## Pheno data: 
+##   sampleNames: &quot;Cell-1-1&quot; &quot;Cell-1-2&quot; ... &quot;Cell-11-82&quot; (1008)
+##   phenoNames: &quot;fm143&quot; &quot;origin&quot; ... &quot;landmark&quot; (6)
+## Feature data: 
+##   featureNames: &quot;ABCA5&quot; &quot;ARF1&quot; ... &quot;USH2A&quot; (183)
+##   rowData: none
+## Trajectory data: 
+##   trajFeatureNames: &quot;ABCA5&quot; &quot;ARF1&quot; ... &quot;USH2A&quot; (183)
+##   latentSpace: 1008 samples, 9 dimensions
+##   states: &quot;S1&quot; &quot;S2&quot; ... &quot;S11&quot; (11)
+## Trajectories: [Component(#Vertices,Edges)]: 1(10,9)
+##   trajSampleNames: &quot;Cell-1-1&quot; &quot;Cell-1-2&quot; ... &quot;Cell-11-82&quot; (896)
+##   trajResiduals: MSE=9.9e-03
+##   landmarks:  #Branches=7 #Terminals=9 #User=0
+##   trajLayout: available
+## Trail data: 
+##   trailNames: &quot;TrS&quot; &quot;TrES&quot; (2)</code></pre>
+<p>Next, we want to make sure that the intended trails were extracted by showing the trajectory map and highlight the defined trails along with its corresponding pseudotime.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotTrail</span>(exBundle, <span class="dt">name=</span><span class="st">&quot;TrS&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotTrail</span>(exBundle, <span class="dt">name=</span><span class="st">&quot;TrES&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-53-2.png" width="672" /></p>
+<p>The function <code>addTrail</code> automatically extracts the samples and their pseudotime along the trail by computing the shortest path between the trail start and end.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get trail names</span>
+<span class="kw">trailNames</span>(exBundle)</code></pre></div>
+<pre><code>## [1] &quot;TrS&quot;  &quot;TrES&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get trail pseudotime</span>
+<span class="kw">trails</span>(exBundle)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</code></pre></div>
+<pre><code>## DataFrame with 5 rows and 2 columns
+##                TrS      TrES
+##          &lt;numeric&gt; &lt;numeric&gt;
+## Cell-1-1 0.5776028        NA
+## Cell-1-2        NA        NA
+## Cell-1-3        NA        NA
+## Cell-1-4        NA        NA
+## Cell-1-5        NA 0.8723274</code></pre>
+<p>The pseudotime information is automatically stored as sample metadata (see <code>phenoNames</code>). For example, we could plot it on the lower-dimensional manifold.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get trail names</span>
+<span class="kw">plotManifold</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrS&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p>Also, the data is accessible via <code>colData</code> of the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object and can therefore be analyzed using alternative packages. For example, colorizing the trail TrS in a principal component analysis using the <em><a href="http://bioconductor.org/packages/scater">scater</a></em> package <span class="citation">(McCarthy et al. <a href="#ref-scater">2017</a>)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Not run: 
+##library(scater)
+## End(Not run)
+
+<span class="co"># Plot scater PCA with CellTrails pseudotime information</span>
+scater<span class="op">::</span><span class="kw">plotPCA</span>(exBundle, <span class="dt">colour_by=</span><span class="st">&quot;CellTrails.TrS&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><em>Please note</em> that trails can be renamed with <code>trailNames&lt;-</code> and removed with <code>removeTrail</code>, respectively. Adding another trail with the same name, will show a warning message and override the existing definition.</p>
+</div>
+<div id="defining-subtrails" class="section level2">
+<h2><span class="header-section-number">8.2</span> Defining Subtrails</h2>
+<p>It might be needed to define subtrails if trails overlap. This is neccessary if the dynamics of one trail are subdynamics of another trail. Because pseudotime mirrors the location of each datapoint in the latent space, a significant gap in pseudotime could indicate separate sample populations. However, these populations have only subtle feature expression profile differences and were linearly aligned in the latent space. Since pseudotime can also be interpreted as a function of transcriptional change, one can argue that these populations undergo the same expression program (for the selected features), with the small but distinct difference that samples ordered at the terminal end of the longer trail up- or down-regulate additional features late during their maturation. Thus, trails can overlap, while one trail is a subtrail of the longer trail.</p>
+<div id="using-yed" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> Using yEd</h3>
+<p><em>U</em> landmarks that are needed to define a subtrail can be determined by the user, as demonstrated in the following.</p>
+<p>First, we want to give a rational for selecting a specific node. As described in the original <em>CellTrails</em> article, we found a gap in pseudotime near the terminal end of trail TrES, which might indicate that the terminal state can be split, and two trails are actually overlapping. This gap becomes already quite obvious visually when we utilize <em>yEd</em> to have a closer look into the trajectory graph. First, we export the graph. By default, nodes are colorized by state (see <em>CellTrails Maps / Graph Layout</em>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write.ygraphml</span>(exBundle, <span class="dt">file=</span><span class="st">&#39;yourFileName.graphml&#39;</span>)</code></pre></div>
+<p>Then we open the graphml file in <em>yEd</em>. The gap in the purple colored population is obvious:</p>
+<p><img src="img/yEd_7.png" width="834" /></p>
+<p>To indicate this sample as landmark, we simply change the shape of this node. This can be any shape, but not <em>ellipse</em>, which is used as default for other nodes. The shape can be changed using the <em>Properties View</em> panel on the right border of the <em>yEd</em> application.</p>
+<p><img src="img/yed_8.png" width="834" /></p>
+<p>After saving the layout, it can be reimported to <em>CellTrails</em> and the landmark can be used to define the subtrail:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Trail Identification</span>
+<span class="kw">plotMap</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;U1&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)
+<span class="kw">plotTrail</span>(exBundle, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-61-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">showTrajInfo</span>(exBundle)</code></pre></div>
+<pre><code>## [[ CellTrails ]] 
+## logcounts: 183 features, 1008 samples
+## Pheno data: 
+##   sampleNames: &quot;Cell-1-1&quot; &quot;Cell-1-2&quot; ... &quot;Cell-11-82&quot; (1008)
+##   phenoNames: &quot;fm143&quot; &quot;origin&quot; ... &quot;landmark&quot; (7)
+## Feature data: 
+##   featureNames: &quot;ABCA5&quot; &quot;ARF1&quot; ... &quot;USH2A&quot; (183)
+##   rowData: none
+## Trajectory data: 
+##   trajFeatureNames: &quot;ABCA5&quot; &quot;ARF1&quot; ... &quot;USH2A&quot; (183)
+##   latentSpace: 1008 samples, 9 dimensions
+##   states: &quot;S1&quot; &quot;S2&quot; ... &quot;S11&quot; (11)
+## Trajectories: [Component(#Vertices,Edges)]: 1(10,9)
+##   trajSampleNames: &quot;Cell-1-1&quot; &quot;Cell-1-2&quot; ... &quot;Cell-11-82&quot; (896)
+##   trajResiduals: MSE=9.9e-03
+##   landmarks:  #Branches=7 #Terminals=9 #User=1
+##   trajLayout: available
+## Trail data: 
+##   trailNames: &quot;TrS&quot; &quot;TrES&quot; &quot;TrES*&quot; (3)</code></pre>
+<p><em>Please note</em> that the trajectory graph can also be exported having all landmarks highlighted. This is particulary helpful if user-defined landmarks need to be changed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Export Trajectory Graph Layout with sample names</span>
+<span class="kw">write.ygraphml</span>(exBundle, <span class="dt">file=</span><span class="st">&#39;yourFileName.graphml&#39;</span>, 
+               <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>, 
+               <span class="dt">node_label=</span><span class="st">&quot;landmark&quot;</span>)</code></pre></div>
+<p><img src="img/yEd_9.png" width="834" /></p>
+<p>Here, blue nodes denote user-defined landmarks, green nodes are branching points and red nodes are leafs. Landmark IDs, as listed by <code>landmarks</code>, are indicated as node names, respectively.</p>
+</div>
+<div id="using-r" class="section level3">
+<h3><span class="header-section-number">8.2.2</span> Using R</h3>
+<p>A visual and empiric identification of user-defined landmarks can be helpful, but scientifically more appropriate is a statistical approach. For this purpose we analyze the distribution of all lagged differences along trail TrES. Here, we make use of the pseudotime information of each trail, respectively.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Extract pseudotime of TrES</span>
+ptime &lt;-<span class="st"> </span><span class="kw">trails</span>(exBundle)[, <span class="st">&quot;TrES&quot;</span>]
+
+<span class="co"># Subset SingleCellExperiment set</span>
+<span class="co"># to samples which are part of trail TrES</span>
+trES &lt;-<span class="st"> </span>exBundle[, <span class="op">!</span><span class="kw">is.na</span>(ptime)]
+
+<span class="co"># Order samples by pseudotime</span>
+o &lt;-<span class="st"> </span><span class="kw">order</span>(<span class="kw">trails</span>(trES)[, <span class="st">&quot;TrES&quot;</span>])
+trES &lt;-<span class="st"> </span>trES[, o]
+ptime &lt;-<span class="st"> </span><span class="kw">trails</span>(trES)[, <span class="st">&quot;TrES&quot;</span>]
+<span class="kw">names</span>(ptime) &lt;-<span class="st"> </span><span class="kw">colnames</span>(trES)
+
+<span class="co"># Lagged pseudotime values per state</span>
+ptime_states &lt;-<span class="st"> </span><span class="kw">split</span>(ptime, <span class="kw">states</span>(trES))
+lptime &lt;-<span class="st"> </span><span class="kw">lapply</span>(ptime_states, 
+                 <span class="cf">function</span>(x){y &lt;-<span class="st"> </span><span class="kw">diff</span>(<span class="kw">sort</span>(x)); y[<span class="op">-</span><span class="kw">length</span>(y)]})
+
+bp &lt;-<span class="st"> </span><span class="kw">boxplot</span>(lptime, <span class="dt">horizontal=</span><span class="ot">TRUE</span>, 
+              <span class="dt">ylab=</span><span class="st">&quot;State&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Pseudotime delta&quot;</span>, <span class="dt">las=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p>The boxplot statistics indicate that there is a strong outlier in state S9 (which is termed state <em>i</em> in the original <em>CellTrails</em> article). Let’s extract the sample right before the leap.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">leap &lt;-<span class="st"> </span>lptime<span class="op">$</span>S9[<span class="kw">which.max</span>(lptime<span class="op">$</span>S9) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]
+<span class="kw">names</span>(leap)</code></pre></div>
+<pre><code>## [1] &quot;Cell-8-57&quot;</code></pre>
+<p>The function <code>userLandmarks&lt;-</code> enables us to (re-)define the set of user landmarks.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">userLandmarks</span>(exBundle) &lt;-<span class="st"> </span><span class="kw">names</span>(leap)
+
+<span class="co"># Trail Identification</span>
+<span class="kw">plotMap</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exBundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(exBundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;U1&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)
+<span class="kw">plotTrail</span>(exBundle, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-68-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">showTrajInfo</span>(exBundle)</code></pre></div>
+<pre><code>## [[ CellTrails ]] 
+## logcounts: 183 features, 1008 samples
+## Pheno data: 
+##   sampleNames: &quot;Cell-1-1&quot; &quot;Cell-1-2&quot; ... &quot;Cell-11-82&quot; (1008)
+##   phenoNames: &quot;fm143&quot; &quot;origin&quot; ... &quot;landmark&quot; (7)
+## Feature data: 
+##   featureNames: &quot;ABCA5&quot; &quot;ARF1&quot; ... &quot;USH2A&quot; (183)
+##   rowData: none
+## Trajectory data: 
+##   trajFeatureNames: &quot;ABCA5&quot; &quot;ARF1&quot; ... &quot;USH2A&quot; (183)
+##   latentSpace: 1008 samples, 9 dimensions
+##   states: &quot;S1&quot; &quot;S2&quot; ... &quot;S11&quot; (11)
+## Trajectories: [Component(#Vertices,Edges)]: 1(10,9)
+##   trajSampleNames: &quot;Cell-1-1&quot; &quot;Cell-1-2&quot; ... &quot;Cell-11-82&quot; (896)
+##   trajResiduals: MSE=9.9e-03
+##   landmarks:  #Branches=7 #Terminals=9 #User=1
+##   trajLayout: available
+## Trail data: 
+##   trailNames: &quot;TrS&quot; &quot;TrES&quot; &quot;TrES*&quot; (3)</code></pre>
+<p><em>Please note</em> that all user-defined landmarks can be removed using <code>userLandmarks(exBundle) &lt;- NULL</code>.</p>
+</div>
+</div>
+<div id="inference-of-dynamics" class="section level2">
+<h2><span class="header-section-number">8.3</span> Inference of Dynamics</h2>
+<p><em>CellTrails</em> defines pseudotime as the geodesic distance of each node of the trail from the start node. To learn the expression level of a feature as a function of pseudotime, <em>CellTrails</em> used generalized additive models (GAM) with a single smoothing term with five basis dimensions. Here, for each feature, <em>CellTrails</em> introduces prior weights for each observation to lower the confounding effect of missing data to the maximum-likelihood-based fitting process.</p>
+<p>Feature expression as a function of pseudotime along an individual trail can be plotted with the <code>plotDynamic</code> function. This results in the fitted dynamic function (= black line) and the individual expression per sample (= points represent samples colored by their state membership). For example, the expression of the calcium buffer <em>CALB2</em> during extrastriolar hair cell development can be displayed as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDynamic</span>(exBundle, <span class="dt">feature_name=</span><span class="st">&quot;CALB2&quot;</span>, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><em>Please note</em> that the fitting function automatically scales pseudotime between 0 and 100% for each trail.</p>
+<p>The fit information can be extracted via function <code>fitDynamic</code> and used for further downstream analyses:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">fitDynamic</span>(exBundle, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>, <span class="dt">feature_name=</span><span class="st">&quot;CALB2&quot;</span>)
+
+<span class="kw">summary</span>(fit)</code></pre></div>
+<pre><code>##            Length Class  Mode   
+## pseudotime 470    -none- numeric
+## expression 470    -none- numeric
+## gam         52    gam    list</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(fit<span class="op">$</span>pseudotime)</code></pre></div>
+<pre><code>## [1] 0 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(fit<span class="op">$</span>expression)</code></pre></div>
+<pre><code>## [1]  7.131096 15.419633</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Predict expression at 0%, 25%, 50%, 75% and 100% of pseudotime</span>
+timepoints &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="st">&quot;0%&quot;</span>=<span class="dv">0</span>, <span class="st">&quot;25%&quot;</span>=.<span class="dv">25</span>, <span class="st">&quot;50%&quot;</span>=.<span class="dv">5</span>, <span class="st">&quot;75%&quot;</span>=.<span class="dv">75</span>, <span class="st">&quot;100%&quot;</span>=<span class="dv">1</span>))
+<span class="kw">predict</span>(fit<span class="op">$</span>gam, <span class="dt">newdata=</span>timepoints)</code></pre></div>
+<pre><code>##        0%       25%       50%       75%      100% 
+##  7.131096 11.917652 14.649184 15.117750 10.831007</code></pre>
+</div>
+<div id="dynamic-comparison-within-trails" class="section level2">
+<h2><span class="header-section-number">8.4</span> Dynamic Comparison: Within Trails</h2>
+<p><em>CellTrails</em> allows the analysis and comparison of the expression of multiple features along a single trail. For example, the expression dynamics of the acting crosslinkers <em>FSCN1</em> and <em>FSCN2</em> can be displayed in a single plot as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDynamic</span>(exBundle, <span class="dt">feature_name=</span><span class="kw">c</span>(<span class="st">&quot;FSCN1&quot;</span>, <span class="st">&quot;FSCN2&quot;</span>), <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
+<p>By using the fitting function <code>fitDynamic</code>, the similarity/correspondence between curves can be quantified. This allows a quantitative assessment of the observed anticorrelation seen in the plot above between <em>FSCN1</em> and <em>FSCN2</em>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fscn1_fit &lt;-<span class="st"> </span><span class="kw">fitDynamic</span>(exBundle, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>, <span class="dt">feature_name=</span><span class="st">&quot;FSCN1&quot;</span>)
+fscn2_fit &lt;-<span class="st"> </span><span class="kw">fitDynamic</span>(exBundle, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>, <span class="dt">feature_name=</span><span class="st">&quot;FSCN2&quot;</span>)
+
+<span class="co"># Correlation</span>
+<span class="kw">cor</span>(fscn1_fit<span class="op">$</span>expression, fscn2_fit<span class="op">$</span>expression)</code></pre></div>
+<pre><code>## [1] -0.6432156</code></pre>
+</div>
+<div id="dynamic-comparison-between-trails" class="section level2">
+<h2><span class="header-section-number">8.5</span> Dynamic Comparison: Between Trails</h2>
+<p>Genes have non-uniform expression rates and each trail has a distinct set of upregulated features, but also contains unequal numbers of samples. Since pseudotime is computed based on expression differences between individual samples, the pseudotime axis may be distorted, leading to stretched or compressed sections of longitudinal expression data that make comparisons of such trails challenging. To align different trails, despite these differences, <em>CellTrails</em> employs a strategy that has long been known in speech recognition, called dynamic time warping <span class="citation">(Sakoe and Chiba <a href="#ref-sakoe1978">1978</a>)</span>. Feature expression dynamics are modeled analogous to how dynamic time warping is used to align phonetic dynamics present in speech. Innate non-linear variation in the length of individual phonemes (i.e., states) is appropriately modeled, which results in stretching and shrinking of word (i.e., trail) segments. This allows the computation of inter-trail alignment warps of individual expression time series that are similar but locally out of phase. The overall dissimilarity between two expression time series can be estimated by the root-mean-square deviation (<em>RMSD</em>), the total deviation (<em>TD</em>), the area between curves (<em>ABC</em>), or Pearson’s correlation coefficient (<em>COR</em>) over all aligned elements. The warp and the corresponding quantitative score can be computed using the function <code>contrastTrailExpr</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compare ATOH1 dynamic</span>
+<span class="co"># Root-mean-square deviation</span>
+<span class="kw">contrastTrailExpr</span>(exBundle, <span class="dt">feature_names=</span><span class="kw">c</span>(<span class="st">&quot;ATOH1&quot;</span>), 
+                  <span class="dt">trail_names=</span><span class="kw">c</span>(<span class="st">&quot;TrS&quot;</span>, <span class="st">&quot;TrES&quot;</span>), <span class="dt">score=</span><span class="st">&quot;RMSD&quot;</span>)</code></pre></div>
+<pre><code>##     ATOH1 
+## 0.0321192</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Total deviation</span>
+<span class="kw">contrastTrailExpr</span>(exBundle, <span class="dt">feature_names=</span><span class="kw">c</span>(<span class="st">&quot;ATOH1&quot;</span>), 
+                  <span class="dt">trail_names=</span><span class="kw">c</span>(<span class="st">&quot;TrS&quot;</span>, <span class="st">&quot;TrES&quot;</span>), <span class="dt">score=</span><span class="st">&quot;TD&quot;</span>)</code></pre></div>
+<pre><code>##    ATOH1 
+## 6.364661</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Area between curves</span>
+<span class="kw">contrastTrailExpr</span>(exBundle, <span class="dt">feature_names=</span><span class="kw">c</span>(<span class="st">&quot;ATOH1&quot;</span>), 
+                  <span class="dt">trail_names=</span><span class="kw">c</span>(<span class="st">&quot;TrS&quot;</span>, <span class="st">&quot;TrES&quot;</span>), <span class="dt">score=</span><span class="st">&quot;ABC&quot;</span>)</code></pre></div>
+<pre><code>##      ATOH1 
+## 0.02300188</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Pearson&#39;s correlation coefficient</span>
+<span class="kw">contrastTrailExpr</span>(exBundle, <span class="dt">feature_names=</span><span class="kw">c</span>(<span class="st">&quot;ATOH1&quot;</span>), 
+                  <span class="dt">trail_names=</span><span class="kw">c</span>(<span class="st">&quot;TrS&quot;</span>, <span class="st">&quot;TrES&quot;</span>), <span class="dt">score=</span><span class="st">&quot;COR&quot;</span>)</code></pre></div>
+<pre><code>##     ATOH1 
+## 0.9999033</code></pre>
+<p>In this example, <em>ATOH1</em> is expected to have a highly similar dynamic between both trails. Therefore, <em>RMSD</em>, <em>TD</em>, <em>ABC</em> values should be low and <em>COR</em> values high relative to other assayed features.</p>
+<p>To identify features that differ between two trails, we can compute the divergence for all features and analyze the <em>Z</em>-score distribution as derived by <code>scale</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compare TrS and TrES dynamics</span>
+<span class="co"># Root-mean-square deviation</span>
+all_rmsd &lt;-<span class="st"> </span><span class="kw">contrastTrailExpr</span>(exBundle, 
+                              <span class="dt">trail_names=</span><span class="kw">c</span>(<span class="st">&quot;TrS&quot;</span>, <span class="st">&quot;TrES&quot;</span>), <span class="dt">score=</span><span class="st">&quot;RMSD&quot;</span>)
+
+<span class="co"># Identify highly differing features</span>
+all_rmsd &lt;-<span class="st"> </span>all_rmsd[all_rmsd <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>]
+zscores &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">log</span>(all_rmsd))
+<span class="kw">sort</span>(all_rmsd[zscores <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.65</span>])</code></pre></div>
+<pre><code>##     SYN3    AKAP5      OCM   SLC8A1   ATP2B2    MYO1H   CAB39L   MCOLN3 
+## 1.494187 1.529849 1.601328 1.903307 1.953127 1.981343 2.304601 2.417525 
+##  CHRNA10    MYO3A     CIB2    TNNC2    SKOR2   LOXHD1     TMC2 
+## 2.637487 2.671320 2.790146 3.051273 3.717097 4.129766 4.799793</code></pre>
+</div>
+<div id="parallelization" class="section level2">
+<h2><span class="header-section-number">8.6</span> Parallelization</h2>
+<p>In the case one wants to compare a large number of features (e.g. from an RNA-Seq experiment), the computation can be significantly sped up by parallel computing. In this example, we use the package <em><a href="https://CRAN.R-project.org/package=doSNOW">doSNOW</a></em>, but any other package may also be used for this purpose.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(doSNOW)
+<span class="co"># Register parallel backend</span>
+cpu.cl &lt;-<span class="st"> </span><span class="kw">makeCluster</span>(parallel<span class="op">::</span><span class="kw">detectCores</span>() <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)
+<span class="kw">registerDoSNOW</span>(cpu.cl)
+
+<span class="co"># Compute warps</span>
+fnames &lt;-<span class="st"> </span><span class="kw">featureNames</span>(exBundle)
+all_rmsd &lt;-<span class="st"> </span><span class="kw">foreach</span>(<span class="dt">i=</span><span class="kw">seq_along</span>(fnames), <span class="dt">.combine=</span>rbind)  <span class="op">%dopar%</span><span class="st">  </span>{
+  g &lt;-<span class="st"> </span>fnames[i]
+  CellTrails<span class="op">::</span><span class="kw">contrastTrailExpr</span>(exBundle, 
+                                <span class="dt">feature_name=</span>g, 
+                                <span class="dt">trail_names=</span><span class="kw">c</span>(<span class="st">&quot;TrES&quot;</span>, <span class="st">&quot;TrS&quot;</span>), 
+                                <span class="dt">score=</span><span class="st">&quot;RMSD&quot;</span>)
+}
+<span class="kw">stopCluster</span>(cpu.cl)
+all_rmsd &lt;-<span class="st"> </span>all_rmsd[, <span class="dv">1</span>]
+<span class="kw">names</span>(all_rmsd) &lt;-<span class="st"> </span>fnames</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Identify highly differing features</span>
+all_rmsd &lt;-<span class="st"> </span>all_rmsd[all_rmsd <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>]
+zscores &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">log</span>(all_rmsd))
+<span class="kw">sort</span>(all_rmsd[zscores <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.65</span>])</code></pre></div>
+<pre><code>##     SYN3    AKAP5      OCM   SLC8A1   ATP2B2    MYO1H   CAB39L   MCOLN3 
+## 1.494187 1.529849 1.601328 1.903307 1.953127 1.981343 2.304601 2.417525 
+##  CHRNA10    MYO3A     CIB2    TNNC2    SKOR2   LOXHD1     TMC2 
+## 2.637487 2.671320 2.790146 3.051273 3.717097 4.129766 4.799793</code></pre>
+<p><em>Please note</em> that the advantage in computation time increases with the number of features; for a small number of features parallel computing may be slower than the sequential approach due to its overhead.</p>
+
+<!-- ---------------------------------- -->
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-scater">
+<p>McCarthy, DJ, KR Campbell, ATL Lun, and QF Wills. 2017. “Scater: Pre-Processing, Quality Control, Normalisation and Visualisation of Single-Cell Rna-Seq Data in R.” <em>Bioinformatics</em> 14: 1179–86.</p>
+</div>
+<div id="ref-sakoe1978">
+<p>Sakoe, H, and S Chiba. 1978. “Dynamic Programming Algorithm Optimization for Spoken Word Recognition.” <em>IEEE Transactions on Acoustics, Speech, and Signaling Processing</em> 26: 43–49.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="celltrails-maps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["CellTrails-handbook.pdf", "CellTrails-handbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

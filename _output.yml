@@ -1,0 +1,23 @@
+bookdown::gitbook:
+  css: css/style.css
+  config:
+    toc:
+      before: |
+        <li><a href="./">CellTrails Handbook</a></li>
+    download: ["pdf", "epub"]
+  sharing:
+    facebook: yes
+    twitter: yes
+    linkedin: yes
+    github: yes
+    google: no
+    all: ['facebook', 'google', 'twitter', 'linkedin', 'github']
+  bookdown::html_chapters:
+    css: [css/style.css, css/toc.css]
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default

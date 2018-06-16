@@ -1,0 +1,264 @@
+<!-- ---------------------------------- -->
+# Appendix
+<!-- ---------------------------------- -->
+## Protocols
+The following protocols describe how this package can be used to perform the data analysis shown in the original *CellTrails* article.
+
+### Chicken E15 Utricle Data
+
+```{r, eval=FALSE}
+# Load expression data
+bundle <- readRDS(system.file("exdata", "bundle.rds", package="CellTrails"))
+
+# Manifold Learning
+se <- embedSamples(bundle)
+d <- findSpectrum(se$eigenvalues, frac=100) #Similar to Figure 1E
+latentSpace(bundle) <- se$components[, d]
+
+# Clustering
+states(bundle) <- findStates(bundle, min_size=0.01, 
+                             min_feat=5, max_pval=1e-04, min_fc=2)
+
+# Sample Ordering
+bundle <- connectStates(bundle, l=10)
+showTrajInfo(bundle)
+
+bundle <- selectTrajectory(bundle, component=1)
+bundle <- fitTrajectory(bundle)
+
+# CellTrails maps
+# Please note: For illustration purposes, the layout was 
+# computed in yEd using functions write.ygraphml and 
+# read.ygraphml, and is part of the CellTrails package
+tl <- read.ygraphml(system.file("exdata", "bundle.graphml", 
+                                package="CellTrails"))
+trajLayout(bundle, adjust=TRUE) <- tl
+
+# Define subtrail by adding a user-defined landmark
+userLandmarks(bundle) <- "Cell-8-57"
+
+# Analysis of Expression Dynamics
+bundle <- addTrail(bundle, from="B3", to="H9", name="TrS")
+bundle <- addTrail(bundle, from="B3", to="H1", name="TrES")
+bundle <- addTrail(bundle, from="B3", to="U1", name="TrES*")
+
+# Inter-trail comparison (similar to Figure 5B)
+rmsd_all <- contrastTrailExpr(bundle, trail_names=c("TrS", "TrES"))
+rmsd_all <- rmsd_all[rmsd_all > 0]
+sort(rmsd_all[scale(log(rmsd_all)) > 1.65])
+
+# -------------------------------
+# Visualizations
+# -------------------------------
+# Plot size of clusters (similar to Figure 2E)
+plotStateSize(bundle)
+
+# Plot expression distribution
+plotStateExpression(bundle, feature_name="OTOA")
+plotStateExpression(bundle, feature_name="ATOH1")
+plotStateExpression(bundle, feature_name="CALB2")
+plotStateExpression(bundle, feature_name="ATP2B2")
+
+# Plot manifold (similar to Figure S4F)
+set.seed(1101)
+gp <- plotManifold(bundle, color_by="phenoName", name="state")
+manifold2D(bundle) <- gp
+plotManifold(bundle, color_by="phenoName", name="fm143")
+plotManifold(bundle, color_by="featureName", name="OTOA")
+plotManifold(bundle, color_by="featureName", name="CALB2")
+
+# Plot state trajectory graph (similar to Figure 1G)
+plotStateTrajectory(bundle, color_by="phenoName", 
+                    name="fm143", point_size=1.5, 
+                    label_offset=4, component=1)
+plotStateTrajectory(bundle, color_by="phenoName", 
+                    name="origin", point_size=1.5, 
+                    label_offset=4, component=1)
+plotStateTrajectory(bundle, color_by="featureName", 
+                    name="OTOA", point_size=5, 
+                    label_offset=4, component=1)
+plotStateTrajectory(bundle, color_by="featureName", 
+                    name="ATOH1", point_size=5, 
+                    label_offset=4, component=1)
+plotStateTrajectory(bundle, color_by="featureName", 
+                    name="CALB2", point_size=5, 
+                    label_offset=4, component=1)
+
+# Plot trajectory fit (similar to Figure 2E)
+plotTrajectoryFit(bundle)
+
+# Plot CellTrails maps (similar to Figure 3 and Table S2)
+plotMap(bundle, color_by="phenoName", name="fm143")
+plotMap(bundle, color_by="featureName", 
+        name="ATOH1", type="raw")
+plotMap(bundle, color_by="featureName", 
+        name="ATOH1", type="surface.fit")
+plotMap(bundle, color_by="featureName", 
+        name="ATOH1", type="surface.se")
+plotMap(bundle, color_by="featureName", 
+        name="ATOH1", type="surface.fit", samples_only=TRUE)
+
+# Plot landmarks
+plotMap(bundle, color_by="phenoName", name="landmark")
+
+# Plot trails (similar to Figure 4K)
+plotTrail(bundle, name="TrS")
+plotTrail(bundle, name="TrES")
+plotTrail(bundle, name="TrES*")
+
+# Plot single dynamics (similar to Figure 4B,G and Table S2)
+plotDynamic(bundle, feature_name="CALB2", trail_name="TrES")
+plotDynamic(bundle, feature_name="ATP2B2", trail_name="TrES")
+
+# Compare dynamics (similar to Figure 6A)
+plotDynamic(bundle, 
+            feature_name=c("TECTA", "OTOA", "ATOH1", "POU4F3", 
+                           "MYO7A", "CALB2", "SYN3", "SKOR2",
+                           "ATP2B2", "LOXHD1", "MYO3A", "TMC2", 
+                           "TNNC2"), trail_name="TrES")
+
+plotDynamic(bundle, 
+            feature_name=c("TECTA", "OTOA", "ATOH1", "POU4F3", 
+                           "MYO7A", "CALB2", "SYN3", "SKOR2",
+                           "ATP2B2", "LOXHD1", "MYO3A", "TMC2", 
+                           "TNNC2"), trail_name="TrS")
+```
+
+### Mouse P1 Utricle Data
+
+In the following, we provide a protocol to analyze the publicly-available dataset containing single-cell RNASeq measurements of 14,313 genes in 120 cells from P1 mouse utricles ([*GEO*](https://www.ncbi.nlm.nih.gov/geo/) accession code: GSE71982). Experimental metadata was generated during cell sorting (GFP and tdTomato fluorescence indicating major cell types). The processed data (`mmu_p1_utricle.rda`) can be downloaded as `r Biocpkg("SingleCellExperiment")` object from [here](https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.rds). The trajectory layout (`mmu_p1_utricle.graphml`) can be downloaded from [here](https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.graphml).
+
+If you use this dataset for your research, please cite the original work by @burns2015.
+
+<!-- Burns JC, Kelly MC, Hoa M, Morell RJ, Kelley MW. "Single-cell RNA-Seq resolves cellular complexity in sensory organs from the neonatal inner ear". *Nat Commun.* 2015 Oct 15;6:8557. doi: 10.1038/ncomms9557. -->
+
+```{r, eval=FALSE}
+# Load expression data
+p1utricle <- readRDS("mmu_p1_utricle.rds")
+
+# Feature Selection
+trajFeatureNames(p1utricle) <- filterTrajFeaturesByDL(p1utricle, threshold=2)
+trajFeatureNames(p1utricle) <- filterTrajFeaturesByCOV(p1utricle, threshold=.5)
+trajFeatureNames(p1utricle) <- filterTrajFeaturesByFF(p1utricle)
+
+showTrajInfo(p1utricle)
+
+# Manifold Learning
+se <- embedSamples(p1utricle)
+d <- findSpectrum(se$eigenvalues)
+latentSpace(p1utricle) <- se$components[, d]
+
+# Clustering (parameters account for low sample size)
+states(p1utricle) <- findStates(p1utricle, max_pval=1e-3, min_feat=2)
+
+# Sample Ordering
+p1utricle <- connectStates(p1utricle)
+p1utricle <- fitTrajectory(p1utricle)
+showTrajInfo(p1utricle)
+
+# CellTrails maps
+tl <- read.ygraphml("mmu_p1_utricle.graphml")
+trajLayout(p1utricle) <- tl
+
+# Analysis of Expression Dynamics
+p1utricle <- addTrail(p1utricle, from="H1", to="H3", name="Tr1")
+p1utricle <- addTrail(p1utricle, from="H1", to="H2", name="Tr2")
+
+# Inter-trail comparison
+rmsd_all <- contrastTrailExpr(p1utricle, trail_names=c("Tr1", "Tr2"))
+rmsd_all <- rmsd_all[rmsd_all > 0]
+sort(rmsd_all[scale(log(rmsd_all)) > 1.65])
+
+# Alternative: using parallel computing using doSNOW
+library(doSNOW)
+cpu.cl <- makeCluster(parallel::detectCores() * 2)
+registerDoSNOW(cpu.cl)
+
+fnames <- featureNames(p1utricle)
+all_rmsd <- foreach(i=seq_along(fnames), .combine=rbind)  %dopar%  {
+  g <- fnames[i]
+  CellTrails::contrastTrailExpr(p1utricle, feature_name=g, 
+                                trail_names=c("Tr1", "Tr2"), score="RMSD")
+}
+stopCluster(cpu.cl)
+all_rmsd <- all_rmsd[, 1]
+names(all_rmsd) <- fnames
+all_rmsd <- all_rmsd[all_rmsd > 0]
+zscores <- scale(log(all_rmsd))
+sort(all_rmsd[zscores > 1.65])
+
+# -------------------------------
+# Visualizations
+# -------------------------------
+# Plot size of clusters (similar to Figure 7A)
+plotStateSize(p1utricle)
+
+# Plot expression distribution
+plotStateExpression(p1utricle, feature_name="Otoa")
+plotStateExpression(p1utricle, feature_name="Atoh1")
+plotStateExpression(p1utricle, feature_name="Sox2")
+
+# Plot manifold
+set.seed(1101)
+gp <- plotManifold(p1utricle, color_by="phenoName", name="state")
+manifold2D(p1utricle) <- gp
+plotManifold(p1utricle, color_by="phenoName", name="gate")
+plotManifold(p1utricle, color_by="featureName", name="Otoa")
+plotManifold(p1utricle, color_by="featureName", name="Fscn2")
+
+# Plot state trajectory graph (similar to Figure 1G)
+plotStateTrajectory(p1utricle, color_by="phenoName", 
+                    name="gate", point_size=1.5, 
+                    label_offset=4, component=1)
+plotStateTrajectory(p1utricle, color_by="featureName", 
+                    name="Otoa", point_size=5, 
+                    label_offset=4, component=1)
+
+# Plot trajectory fit (similar to Figure 7A)
+plotTrajectoryFit(p1utricle)
+
+# Plot CellTrails maps (similar to Figure 7C-E)
+plotMap(p1utricle, color_by="phenoName", name="gate")
+plotMap(p1utricle, color_by="featureName", 
+        name="Atoh1", type="raw")
+plotMap(p1utricle, color_by="featureName", 
+        name="Atoh1", type="surface.fit")
+plotMap(p1utricle, color_by="featureName", 
+        name="Atoh1", type="surface.se")
+plotMap(p1utricle, color_by="featureName", 
+        name="Atoh1", type="surface.fit", 
+        samples_only=TRUE)
+
+# Plot landmarks
+plotMap(p1utricle, color_by="phenoName", name="landmark")
+
+# Plot trails (similar to Figure 7F)
+plotTrail(p1utricle, name="Tr1")
+plotTrail(p1utricle, name="Tr2")
+
+# Plot single dynamics (similar to Figure 7I)
+plotDynamic(p1utricle, feature_name="Fgf21", trail_name="Tr2")
+plotDynamic(p1utricle, feature_name="Fgf21", trail_name="Tr1")
+
+# Compare dynamics
+plotDynamic(p1utricle, feature_name=c("Fscn1", "Fscn2"), trail_name="Tr2")
+```
+
+## Runtime
+In this section, we illustrate that a *CellTrails* analysis can be performed in a reasonable period of time. The elapsed computational runtime of each function was measured on a MacBook Pro (Early 2015) with a 3.1 GHz Intel Core i7 processor, 16 GB 1867 MHz DDR3 RAM, and an Intel Iris Graphics 6100 1536 MB graphics card.
+
+### Protocol: Chicken E15 Utricle Data
+This dataset consists of 183 features and 1,008 samples. The computation time of the whole protocol as listed above took less then two minutes. Let's assume that computing the layout takes about two minutes (starting *yEd*, running the layouter, saving the file), then the total runtime is up to five minutes.
+
+<!-- test with proc.time(); ... ; ptm <- proc.time() -->
+
+### Protocol: Mouse P1 Utricle Data
+This dataset consists of 14,313 features and 120 samples. The computation time of the whole protocol as listed above (with parallelization of the inter-trail dynamics comparison) took less then seven minutes. Let's assume that computing the layout takes about two minutes (starting *yEd*, running the layouter, saving the file), then the total runtime is up to 10 minutes.
+
+## Session Info
+We used _yEd_ version 3.14.4.  
+The _R_ session and the system used to compile this document is listed below.
+
+```{r}
+sessionInfo()
+```

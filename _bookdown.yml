@@ -1,0 +1,17 @@
+book_filename: "CellTrails-handbook"
+delete_merged_file: yes
+new_session: no
+rmd_files: ["index.Rmd", 
+            "C-prerequisites.Rmd", 
+            "C-overview.Rmd", 
+            "C-featureselection.Rmd",
+            "C-manifoldlearning.Rmd",
+            "C-clustering.Rmd",
+            "C-sampleordering.Rmd",
+            "C-celltrailsmaps.Rmd",
+            "C-expressiondynamics.Rmd",
+            "C-appendix.Rmd",
+            "C-references.Rmd"]
+language:
+  ui:
+    chapter_name: "Chapter "

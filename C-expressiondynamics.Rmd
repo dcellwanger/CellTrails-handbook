@@ -1,0 +1,277 @@
+<!-- ---------------------------------- -->
+# Expression Dynamics
+<!-- ---------------------------------- -->
+During the trajectory fitting process, landmarks are automatically identified on the trajectory: trail heads (leafs), _H_, and branching points, _B_. The assigned landmark IDs can be obtained via `landmarks`. We use this information to define individual trails along the trajectory.
+
+## Trail Definition
+Trails are usful to infer expression dynamics of features along subsections of the trajectory. A trail denotes a path between two landmarks. To be able to properly define a trail, we display the available landmark points on the trajectory map.
+
+```{r, eval=TRUE}
+plotMap(exBundle, color_by="phenoName", name="landmark")
+```
+
+Based on the experimental metainformation and the expression pattern of marker features, we identified in the original *CellTrails* publication path _B3_ to _H9_ as developmental trail toward a striolar sensory hair bundle morphology, and _B3_ to _H1_ as developmental trail toward an extrastriolar bundle morphology. Let's mark those trails on the map using the function `addTrail`. 
+
+```{r, eval=TRUE}
+# Define trails
+exBundle <- addTrail(exBundle, from="B3", to="H9", name="TrS")
+exBundle <- addTrail(exBundle, from="B3", to="H1", name="TrES")
+
+showTrajInfo(exBundle)
+```
+
+Next, we want to make sure that the intended trails were extracted by showing the trajectory map and highlight the defined trails along with its corresponding pseudotime.
+
+```{r, eval=TRUE}
+plotTrail(exBundle, name="TrS")
+plotTrail(exBundle, name="TrES")
+```
+
+The function `addTrail` automatically extracts the samples and their pseudotime along the trail by computing the shortest path between the trail start and end. 
+```{r, eval=TRUE}
+# Get trail names
+trailNames(exBundle)
+
+# Get trail pseudotime
+trails(exBundle)[1:5, ]
+```
+
+The pseudotime information is automatically stored as sample metadata (see `phenoNames`). For example, we could plot it on the lower-dimensional manifold.
+```{r, eval=TRUE}
+# Get trail names
+plotManifold(exBundle, color_by="phenoName", name="TrS")
+```
+
+Also, the data is accessible via `colData` of the `r Biocpkg("SingleCellExperiment")` object and can therefore be analyzed using alternative packages. For example, colorizing the trail TrS in a principal component analysis using the `r Biocpkg("scater")` package [@scater].
+
+```{r, eval=TRUE}
+## Not run: 
+##library(scater)
+## End(Not run)
+
+# Plot scater PCA with CellTrails pseudotime information
+scater::plotPCA(exBundle, colour_by="CellTrails.TrS")
+```
+
+*Please note* that trails can be renamed with `trailNames<-` and removed with `removeTrail`, respectively. Adding another trail with the same name, will show a warning message and override the existing definition.
+
+## Defining Subtrails
+It might be needed to define subtrails if trails overlap. This is neccessary if the dynamics of one trail are subdynamics of another trail. Because pseudotime mirrors the location of each datapoint in the latent space, a significant gap in pseudotime could indicate separate sample populations. However, these populations have only subtle feature expression profile differences and were linearly aligned in the latent space. Since pseudotime can also be interpreted as a function of transcriptional change, one can argue that these populations undergo the same expression program (for the selected features), with the small but distinct difference that samples ordered at the terminal end of the longer trail up- or down-regulate additional features late during their maturation. Thus, trails can overlap, while one trail is a subtrail of the longer trail.
+
+### Using yEd
+_U_ landmarks that are needed to define a subtrail can be determined by the user, as demonstrated in the following.
+
+First, we want to give a rational for selecting a specific node. As described in the original _CellTrails_ article, we found a gap in pseudotime near the terminal end of trail TrES, which might indicate that the terminal state can be split, and two trails are actually overlapping. This gap becomes already quite obvious visually when we utilize _yEd_ to have a closer look into the trajectory graph. First, we export the graph. By default, nodes are colorized by state (see _CellTrails Maps / Graph Layout_).
+
+```{r, eval=FALSE}
+write.ygraphml(exBundle, file='yourFileName.graphml')
+```
+
+Then we open the graphml file in _yEd_. The gap in the purple colored population is obvious:
+
+```{r, eval=TRUE, echo=FALSE}
+pth <- "img/yEd_7.png" #system.file("img", "yEd_7.png", package="CellTrails")
+knitr::include_graphics(path=pth)
+```
+
+To indicate this sample as landmark, we simply change the shape of this node. This can be any shape, but not _ellipse_, which is used as default for other nodes. The shape can be changed using the _Properties View_ panel on the right border of the _yEd_ application. 
+
+```{r, eval=TRUE, echo=FALSE}
+pth <- "img/yEd_8.png" #system.file("img", "yEd_8.png", package="CellTrails")
+knitr::include_graphics(path=pth)
+```
+
+After saving the layout, it can be reimported to *CellTrails* and the landmark can be used to define the subtrail:
+
+```{r, eval=TRUE, echo=FALSE}
+userLandmarks(exBundle) <- c("Cell-8-57")
+```
+```{r, eval=TRUE}
+# Trail Identification
+plotMap(exBundle, color_by="phenoName", name="landmark")
+exBundle <- addTrail(exBundle, from="B3", to="U1", name="TrES*")
+plotTrail(exBundle, name="TrES*")
+showTrajInfo(exBundle)
+```
+```{r, eval=TRUE, echo=FALSE}
+userLandmarks(exBundle) <- NULL
+exBundle <- removeTrail(exBundle, "TrES*")
+```
+
+*Please note* that the trajectory graph can also be exported having all landmarks highlighted. This is particulary helpful if user-defined landmarks need to be changed.
+
+```{r, eval=FALSE}
+# Export Trajectory Graph Layout with sample names
+write.ygraphml(exBundle, file='yourFileName.graphml', 
+               color_by="phenoName", name="landmark", 
+               node_label="landmark")
+```
+
+```{r, eval=TRUE, echo=FALSE}
+pth <- "img/yEd_9.png" #system.file("img", "yEd_9.png", package="CellTrails")
+knitr::include_graphics(path=pth)
+```
+
+Here, blue nodes denote user-defined landmarks, green nodes are branching points and red nodes are leafs. Landmark IDs, as listed by `landmarks`, are indicated as node names, respectively.
+
+### Using R
+A visual and empiric identification of user-defined landmarks can be helpful, but scientifically more appropriate is a statistical approach. For this purpose we analyze the distribution of all lagged differences along trail TrES. Here, we make use of the pseudotime information of each trail, respectively. 
+
+```{r, eval=TRUE, include=FALSE}
+dev.off()
+```
+
+```{r, eval=TRUE}
+# Extract pseudotime of TrES
+ptime <- trails(exBundle)[, "TrES"]
+
+# Subset SingleCellExperiment set
+# to samples which are part of trail TrES
+trES <- exBundle[, !is.na(ptime)]
+
+# Order samples by pseudotime
+o <- order(trails(trES)[, "TrES"])
+trES <- trES[, o]
+ptime <- trails(trES)[, "TrES"]
+names(ptime) <- colnames(trES)
+
+# Lagged pseudotime values per state
+ptime_states <- split(ptime, states(trES))
+lptime <- lapply(ptime_states, 
+                 function(x){y <- diff(sort(x)); y[-length(y)]})
+
+bp <- boxplot(lptime, horizontal=TRUE, 
+              ylab="State", xlab="Pseudotime delta", las=2)
+```
+
+The boxplot statistics indicate that there is a strong outlier in state S9 (which is termed state _i_ in the original *CellTrails* article). Let's extract the sample right before the leap.
+
+```{r, eval=TRUE}
+leap <- lptime$S9[which.max(lptime$S9) - 1]
+names(leap)
+```
+
+The function `userLandmarks<-` enables us to (re-)define the set of user landmarks.
+
+```{r, eval=TRUE}
+userLandmarks(exBundle) <- names(leap)
+
+# Trail Identification
+plotMap(exBundle, color_by="phenoName", name="landmark")
+exBundle <- addTrail(exBundle, from="B3", to="U1", name="TrES*")
+plotTrail(exBundle, name="TrES*")
+showTrajInfo(exBundle)
+```
+
+*Please note* that all user-defined landmarks can be removed using `userLandmarks(exBundle) <- NULL`.
+
+## Inference of Dynamics
+*CellTrails* defines pseudotime as the geodesic distance of each node of the trail from the start node. To learn the expression level of a feature as a function of pseudotime, *CellTrails* used generalized additive models (GAM) with a single smoothing term with five basis dimensions. Here, for each feature, *CellTrails* introduces prior weights for each observation to lower the confounding effect of missing data to the maximum-likelihood-based fitting process.
+
+Feature expression as a function of pseudotime along an individual trail can be plotted with the `plotDynamic` function. This results in the fitted dynamic function (= black line) and the individual expression per sample (= points represent samples colored by their state membership). For example, the expression of the calcium buffer _CALB2_ during extrastriolar hair cell development can be displayed as follows: 
+
+```{r, eval=TRUE}
+plotDynamic(exBundle, feature_name="CALB2", trail_name="TrES")
+```
+
+*Please note* that the fitting function automatically scales pseudotime between 0 and 100% for each trail.
+
+The fit information can be extracted via function `fitDynamic` and used for further downstream analyses:
+
+```{r, eval=TRUE}
+fit <- fitDynamic(exBundle, trail_name="TrES", feature_name="CALB2")
+
+summary(fit)
+range(fit$pseudotime)
+range(fit$expression)
+
+# Predict expression at 0%, 25%, 50%, 75% and 100% of pseudotime
+timepoints <- data.frame(x=c("0%"=0, "25%"=.25, "50%"=.5, "75%"=.75, "100%"=1))
+predict(fit$gam, newdata=timepoints)
+```
+
+## Dynamic Comparison: Within Trails
+*CellTrails* allows the analysis and comparison of the expression of multiple features along a single trail. For example, the expression dynamics of the acting crosslinkers *FSCN1* and *FSCN2* can be displayed in a single plot as follows:
+
+```{r, eval=TRUE}
+plotDynamic(exBundle, feature_name=c("FSCN1", "FSCN2"), trail_name="TrES")
+```
+
+By using the fitting function `fitDynamic`, the similarity/correspondence between curves can be quantified. This allows a quantitative assessment of the observed anticorrelation seen in the plot above between _FSCN1_ and _FSCN2_:
+
+```{r, eval=TRUE}
+fscn1_fit <- fitDynamic(exBundle, trail_name="TrES", feature_name="FSCN1")
+fscn2_fit <- fitDynamic(exBundle, trail_name="TrES", feature_name="FSCN2")
+
+# Correlation
+cor(fscn1_fit$expression, fscn2_fit$expression)
+```
+
+## Dynamic Comparison: Between Trails
+Genes have non-uniform expression rates and each trail has a distinct set of upregulated features, but also contains unequal numbers of samples. Since pseudotime is computed based on expression differences between individual samples, the pseudotime axis may be distorted, leading to stretched or compressed sections of longitudinal expression data that make comparisons of such trails challenging. To align different trails, despite these differences, *CellTrails* employs a strategy that has long been known in speech recognition, called dynamic time warping [@sakoe1978]. Feature expression dynamics are modeled analogous to how dynamic time warping is used to align phonetic dynamics present in speech. Innate non-linear variation in the length of individual phonemes (i.e., states) is appropriately modeled, which results in stretching and shrinking of word (i.e., trail) segments. This allows the computation of inter-trail alignment warps of individual expression time series that are similar but locally out of phase. The overall dissimilarity between two expression time series can be estimated by the root-mean-square deviation (_RMSD_), the total deviation (_TD_), the area between curves (_ABC_), or Pearson's correlation coefficient (_COR_) over all aligned elements. The warp and the corresponding quantitative score can be computed using the function `contrastTrailExpr`.
+
+```{r, eval=TRUE}
+# Compare ATOH1 dynamic
+# Root-mean-square deviation
+contrastTrailExpr(exBundle, feature_names=c("ATOH1"), 
+                  trail_names=c("TrS", "TrES"), score="RMSD")
+
+# Total deviation
+contrastTrailExpr(exBundle, feature_names=c("ATOH1"), 
+                  trail_names=c("TrS", "TrES"), score="TD")
+
+# Area between curves
+contrastTrailExpr(exBundle, feature_names=c("ATOH1"), 
+                  trail_names=c("TrS", "TrES"), score="ABC")
+
+# Pearson's correlation coefficient
+contrastTrailExpr(exBundle, feature_names=c("ATOH1"), 
+                  trail_names=c("TrS", "TrES"), score="COR")
+```
+
+In this example, _ATOH1_ is expected to have a highly similar dynamic between both trails. Therefore, _RMSD_, _TD_, _ABC_ values should be low and _COR_ values high relative to other assayed features.
+
+To identify features that differ between two trails, we can compute the divergence for all features and analyze the *Z*-score distribution as derived by `scale`:
+
+```{r, eval=TRUE}
+# Compare TrS and TrES dynamics
+# Root-mean-square deviation
+all_rmsd <- contrastTrailExpr(exBundle, 
+                              trail_names=c("TrS", "TrES"), score="RMSD")
+
+# Identify highly differing features
+all_rmsd <- all_rmsd[all_rmsd > 0]
+zscores <- scale(log(all_rmsd))
+sort(all_rmsd[zscores > 1.65])
+```
+
+## Parallelization
+In the case one wants to compare a large number of features (e.g. from an RNA-Seq experiment), the computation can be significantly sped up by parallel computing. In this example, we use the package `r CRANpkg("doSNOW")`, but any other package may also be used for this purpose.
+
+```{r, eval=FALSE}
+library(doSNOW)
+# Register parallel backend
+cpu.cl <- makeCluster(parallel::detectCores() * 2)
+registerDoSNOW(cpu.cl)
+
+# Compute warps
+fnames <- featureNames(exBundle)
+all_rmsd <- foreach(i=seq_along(fnames), .combine=rbind)  %dopar%  {
+  g <- fnames[i]
+  CellTrails::contrastTrailExpr(exBundle, 
+                                feature_name=g, 
+                                trail_names=c("TrES", "TrS"), 
+                                score="RMSD")
+}
+stopCluster(cpu.cl)
+all_rmsd <- all_rmsd[, 1]
+names(all_rmsd) <- fnames
+```
+```{r, eval=TRUE}
+# Identify highly differing features
+all_rmsd <- all_rmsd[all_rmsd > 0]
+zscores <- scale(log(all_rmsd))
+sort(all_rmsd[zscores > 1.65])
+```
+
+*Please note* that the advantage in computation time increases with the number of features; for a small number of features parallel computing may be slower than the sequential approach due to its overhead.

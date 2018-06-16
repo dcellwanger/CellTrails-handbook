@@ -1,0 +1,32 @@
+--- 
+title: "CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data"
+shorttitle: "CellTrails Handbook"
+author: 
+ - "Daniel C. Ellwanger // dcellwanger.dev[at]gmail.com"
+package: "CellTrails"
+date: "Package: `r packageVersion('CellTrails')` // Manual: `r Sys.Date()`"
+tags: ["Trajectory reconstruction", "Dimensionality reduction", "Clustering", "Single-cell", "Machine learning"]
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, articles.bib]
+biblio-style: apalike
+link-citations: yes
+description: "CellTrails Handbook"
+---
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+#knitr::write_bib(c(
+#  .packages()#, 'bookdown', 'knitr', 'rmarkdown'
+#), 'packages.bib')
+
+library(BiocStyle)
+```
+
+# Preface {-}
+
+This manual describes the practical use of the _CellTrails_ implementation, an unsupervised algorithm for the _de novo_ chronological ordering, visualization and analysis of single-cell expression data. _CellTrails_ makes use of a geometrically motivated concept of lower-dimensional manifold learning, which exhibits a multitude of virtues that counteract intrinsic noise of single cell data caused by drop-outs, technical variance, and redundancy of predictive variables. _CellTrails_ enables the reconstruction of branching trajectories and provides an intuitive graphical representation of expression patterns along all branches simultaneously. It allows the user to define and infer the expression dynamics of individual and multiple pathways towards distinct phenotypes.
+
+We are pleased that you consider using _CellTrails_ in your research. A detailed theoretical description of the algorithm and its application to biological uses has been published in:
+
+Ellwanger, DC, M Scheibinger, RA Dumont, PG Barr-Gillespie, and S Heller. 2018. "Transcriptional Dynamics of Hair-Bundle Morphogenesis Revealed with Celltrails." *Cell Reports* 23 (10): 2901–14.

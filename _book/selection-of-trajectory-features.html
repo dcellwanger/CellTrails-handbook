@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</title>
+  <meta name="description" content="CellTrails Handbook">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="CellTrails Handbook" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  
+  <meta name="twitter:description" content="CellTrails Handbook" />
+  
+
+<meta name="author" content="Daniel C. Ellwanger // dcellwanger.dev[at]gmail.com">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="overview.html">
+<link rel="next" href="manifold-learning.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CellTrails Handbook</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="prerequisites.html"><a href="prerequisites.html#terminology"><i class="fa fa-check"></i><b>1.1</b> Terminology</a></li>
+<li class="chapter" data-level="1.2" data-path="prerequisites.html"><a href="prerequisites.html#load-library"><i class="fa fa-check"></i><b>1.2</b> Load Library</a></li>
+<li class="chapter" data-level="1.3" data-path="prerequisites.html"><a href="prerequisites.html#third-party-software-yed"><i class="fa fa-check"></i><b>1.3</b> Third-party Software: yEd</a></li>
+<li class="chapter" data-level="1.4" data-path="prerequisites.html"><a href="prerequisites.html#input-singlecellexperiment"><i class="fa fa-check"></i><b>1.4</b> Input: SingleCellExperiment</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
+<li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
+<li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
+<li class="chapter" data-level="3.1" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-detection-level"><i class="fa fa-check"></i><b>3.1</b> Filter by Detection Level</a></li>
+<li class="chapter" data-level="3.2" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-coefficient-of-variation"><i class="fa fa-check"></i><b>3.2</b> Filter by Coefficient of Variation</a></li>
+<li class="chapter" data-level="3.3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-fano-factor"><i class="fa fa-check"></i><b>3.3</b> Filter by Fano Factor</a></li>
+<li class="chapter" data-level="3.4" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#blocking-uniformative-substructures"><i class="fa fa-check"></i><b>3.4</b> Blocking Uniformative Substructures</a></li>
+<li class="chapter" data-level="3.5" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#using-alternative-methods"><i class="fa fa-check"></i><b>3.5</b> Using Alternative Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
+<li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>5</b> Clustering</a><ul>
+<li class="chapter" data-level="5.1" data-path="clustering.html"><a href="clustering.html#hierarchical-spectral-clustering"><i class="fa fa-check"></i><b>5.1</b> Hierarchical Spectral Clustering</a></li>
+<li class="chapter" data-level="5.2" data-path="clustering.html"><a href="clustering.html#using-alternative-methods-2"><i class="fa fa-check"></i><b>5.2</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="5.3" data-path="clustering.html"><a href="clustering.html#visualization-1"><i class="fa fa-check"></i><b>5.3</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sample-ordering.html"><a href="sample-ordering.html"><i class="fa fa-check"></i><b>6</b> Sample Ordering</a><ul>
+<li class="chapter" data-level="6.1" data-path="sample-ordering.html"><a href="sample-ordering.html#state-trajectory-graph"><i class="fa fa-check"></i><b>6.1</b> State Trajectory Graph</a></li>
+<li class="chapter" data-level="6.2" data-path="sample-ordering.html"><a href="sample-ordering.html#aligning-samples-onto-the-trajectory"><i class="fa fa-check"></i><b>6.2</b> Aligning Samples Onto the Trajectory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="celltrails-maps.html"><a href="celltrails-maps.html"><i class="fa fa-check"></i><b>7</b> CellTrails Maps</a><ul>
+<li class="chapter" data-level="7.1" data-path="celltrails-maps.html"><a href="celltrails-maps.html#graph-layout"><i class="fa fa-check"></i><b>7.1</b> Graph Layout</a></li>
+<li class="chapter" data-level="7.2" data-path="celltrails-maps.html"><a href="celltrails-maps.html#plot-maps"><i class="fa fa-check"></i><b>7.2</b> Plot Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="expression-dynamics.html"><a href="expression-dynamics.html"><i class="fa fa-check"></i><b>8</b> Expression Dynamics</a><ul>
+<li class="chapter" data-level="8.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#trail-definition"><i class="fa fa-check"></i><b>8.1</b> Trail Definition</a></li>
+<li class="chapter" data-level="8.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#defining-subtrails"><i class="fa fa-check"></i><b>8.2</b> Defining Subtrails</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-yed"><i class="fa fa-check"></i><b>8.2.1</b> Using yEd</a></li>
+<li class="chapter" data-level="8.2.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-r"><i class="fa fa-check"></i><b>8.2.2</b> Using R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="expression-dynamics.html"><a href="expression-dynamics.html#inference-of-dynamics"><i class="fa fa-check"></i><b>8.3</b> Inference of Dynamics</a></li>
+<li class="chapter" data-level="8.4" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-within-trails"><i class="fa fa-check"></i><b>8.4</b> Dynamic Comparison: Within Trails</a></li>
+<li class="chapter" data-level="8.5" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-between-trails"><i class="fa fa-check"></i><b>8.5</b> Dynamic Comparison: Between Trails</a></li>
+<li class="chapter" data-level="8.6" data-path="expression-dynamics.html"><a href="expression-dynamics.html#parallelization"><i class="fa fa-check"></i><b>8.6</b> Parallelization</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>9</b> Appendix</a><ul>
+<li class="chapter" data-level="9.1" data-path="appendix.html"><a href="appendix.html#protocols"><i class="fa fa-check"></i><b>9.1</b> Protocols</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="appendix.html"><a href="appendix.html#chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.1.1</b> Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.1.2" data-path="appendix.html"><a href="appendix.html#mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.1.2</b> Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix.html"><a href="appendix.html#runtime"><i class="fa fa-check"></i><b>9.2</b> Runtime</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="appendix.html"><a href="appendix.html#protocol-chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.2.1</b> Protocol: Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.2.2" data-path="appendix.html"><a href="appendix.html#protocol-mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.2.2</b> Protocol: Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix.html"><a href="appendix.html#session-info"><i class="fa fa-check"></i><b>9.3</b> Session Info</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="selection-of-trajectory-features" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Selection of Trajectory Features</h1>
+<!-- ---------------------------------- -->
+<p>An expression matrix from an high-throughput experiment contains hundreds of features that bear no or little information about a sample’s progress through the trajectory of interest. These non-relevant features not only increase the computational runtime of the trajectory reconstruction, but they also impair the accuracy of downstream analysis results. <em>CellTrails</em> assumes that key features show high expression variability during a sample’s progression along the biological process under study. Therefore, <em>CellTrails</em> enables to unbiasedly filter the informative features.</p>
+<p><em>Please note</em> that the following functions only indicates features used for dimensionality reduction, state detection and trajectory reconstruction; it does <em>not</em> remove features from the assay stored in the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object. Thus, all features are still available for <em>CellTrails</em> donwstream analyses capabilities, such as cluster analysis and inference of expression dynamics, as well as, for functions available from complementary analysis packages.</p>
+<p>The names of trajectory features can be received from and set to a <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object using the function <code>trajFeatureNames</code>. The <code>showTrajInfo</code> function, as well, provides an overview of the selected trajectory features.</p>
+<p><em>Please note</em> that the following filter functions can be used incrementally, since statistical characteristics are only analyzed for already designated trajectory features. In other words, using the filters multiple times or combining the filters will result in a more stringent selection of trajectory features. Initially, all features in a <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> (excluding spike-in controls), are assumed to be trajectory features.</p>
+<div id="filter-by-detection-level" class="section level2">
+<h2><span class="header-section-number">3.1</span> Filter by Detection Level</h2>
+<p>This filter determines trajectory features that are present in a disproportionate small number of samples. It removes features that are not expressed or that do not sufficiently reach the technological limit of detection. The detection level is defined as the fraction of samples in which a feature is detected, i.e., the relative number of samples having a feature’s expression value greater than 0. If a threshold &gt;= 1 is selected, its value is automatically converted to a relative fraction of the total sample count. The empirical cumulative distribution function of all samples and the fraction of removed features is shown.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter features expressed in at least 3 samples</span>
+tfeat &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByDL</span>(exSim, <span class="dt">threshold=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tfeat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>## [1] &quot;feature_84&quot; &quot;feature_88&quot; &quot;feature_92&quot; &quot;feature_94&quot; &quot;feature_96&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Setting trajectory features to the object</span>
+<span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span>tfeat
+<span class="kw">showTrajInfo</span>(exSim)</code></pre></div>
+<pre><code>## [[ CellTrails ]] 
+## logcounts: 15000 features, 100 samples
+## Pheno data: 
+##   sampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   phenoNames: none
+## Feature data: 
+##   featureNames: &quot;feature_1&quot; &quot;feature_2&quot; ... &quot;feature_15000&quot; (15000)
+##   rowData: none
+## Trajectory data: 
+##   trajFeatureNames: &quot;feature_84&quot; &quot;feature_88&quot; ... &quot;feature_15000&quot; (9839)
+##   latentSpace: none
+##   states: none
+## Trajectories: none
+##   trajSampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   trajResiduals: MSE=NA
+##   landmarks: none
+##   trajLayout: none
+## Trail data: 
+##   trailNames: none</code></pre>
+</div>
+<div id="filter-by-coefficient-of-variation" class="section level2">
+<h2><span class="header-section-number">3.2</span> Filter by Coefficient of Variation</h2>
+<p>This filter determines trajectory features with a narrow standard deviation (sd) with respect to its average expression (mean). This filter removes features with high expression and low variance, such as housekeeping genes. The coefficient of variation is computed by CoV(x) = sd(x)/mean(x). Features with a CoV(x) greater than a given threshold remain labeled as trajectory feature in the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object. The empirical cumulative distribution function of all samples and the fraction of removed features is shown.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter features with COV &gt; 0.5</span>
+tfeat &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByCOV</span>(exSim, <span class="dt">threshold=</span><span class="fl">0.5</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Setting trajectory features to the object</span>
+<span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span>tfeat
+<span class="kw">showTrajInfo</span>(exSim)</code></pre></div>
+<pre><code>## [[ CellTrails ]] 
+## logcounts: 15000 features, 100 samples
+## Pheno data: 
+##   sampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   phenoNames: none
+## Feature data: 
+##   featureNames: &quot;feature_1&quot; &quot;feature_2&quot; ... &quot;feature_15000&quot; (15000)
+##   rowData: none
+## Trajectory data: 
+##   trajFeatureNames: &quot;feature_84&quot; &quot;feature_88&quot; ... &quot;feature_14998&quot; (8386)
+##   latentSpace: none
+##   states: none
+## Trajectories: none
+##   trajSampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   trajResiduals: MSE=NA
+##   landmarks: none
+##   trajLayout: none
+## Trail data: 
+##   trailNames: none</code></pre>
+</div>
+<div id="filter-by-fano-factor" class="section level2">
+<h2><span class="header-section-number">3.3</span> Filter by Fano Factor</h2>
+<p>This filter identifies the most variable features while considering their average expression level. Features are placed into 20 bins based on their mean expression. For each bin, the distribution of Fano factors, which is a windowed version of the index of dispersion (IOD = variance / mean), is computed and standardized (<em>Z</em>-score(x) = x/sd(x) - mean(x)/sd(x)). Highly variable features with a <em>Z</em>-score greater than a given threshold remain labeled as trajectory feature in the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object. The parameter <code>min_expr</code> defines the minimum average expression level of a feature to be considered for this filter (default: 0). The Fano factor and the average expression is shown for each feature; filtered features are highlighted.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter features with Z &gt; 1.7</span>
+tfeat &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByFF</span>(exSim, <span class="dt">threshold=</span><span class="fl">1.7</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Setting trajectory features to the object</span>
+<span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span>tfeat
+<span class="kw">showTrajInfo</span>(exSim)</code></pre></div>
+<pre><code>## [[ CellTrails ]] 
+## logcounts: 15000 features, 100 samples
+## Pheno data: 
+##   sampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   phenoNames: none
+## Feature data: 
+##   featureNames: &quot;feature_1&quot; &quot;feature_2&quot; ... &quot;feature_15000&quot; (15000)
+##   rowData: none
+## Trajectory data: 
+##   trajFeatureNames: &quot;feature_118&quot; &quot;feature_183&quot; ... &quot;feature_14998&quot; (485)
+##   latentSpace: none
+##   states: none
+## Trajectories: none
+##   trajSampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   trajResiduals: MSE=NA
+##   landmarks: none
+##   trajLayout: none
+## Trail data: 
+##   trailNames: none</code></pre>
+</div>
+<div id="blocking-uniformative-substructures" class="section level2">
+<h2><span class="header-section-number">3.4</span> Blocking Uniformative Substructures</h2>
+<p>The functions <code>filterTrajFeaturesByCOV</code> and <code>filterTrajFeaturesByFF</code> allow to define a design matrix to account for systematic bias in the expression data (e.g., batch, gender or cell cycle). It should list the nuisance factors that should be blocked and their values per sample. It is suggested to construct the design matrix with the <code>model.matrix</code> function. Please see <em>Manifold Learning/Blocking Uniformative Substructures</em> of this vignette for an example on how to create a proper design matrix.</p>
+</div>
+<div id="using-alternative-methods" class="section level2">
+<h2><span class="header-section-number">3.5</span> Using Alternative Methods</h2>
+<p>The function <code>trajFeatureNames</code> allows to designate any set of features as trajectory features. The only requirement is that the names in the set match the stored feature names in the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object (check with function <code>featureNames</code>). For example, one could also use an abundance-dependent variance trend fit, as implemented in the <em><a href="http://bioconductor.org/packages/scran">scran</a></em> package <span class="citation">(Lun, McCarthy, and Marioni <a href="#ref-scran">2016</a>)</span>, to indicate trajectory features, as shown below. <em>Please note</em> that the (Bioconductor) package <em><a href="http://bioconductor.org/packages/scran">scran</a></em> is not part of <em>CellTrails</em> and may be needed to be installed first.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Not run: 
+##library(scran)
+## End(Not run)
+
+<span class="co"># Filter using scran</span>
+var_fit &lt;-<span class="st"> </span>scran<span class="op">::</span><span class="kw">trendVar</span>(<span class="dt">x=</span>exSim, <span class="dt">use.spikes=</span><span class="ot">FALSE</span>)
+var_out &lt;-<span class="st"> </span>scran<span class="op">::</span><span class="kw">decomposeVar</span>(<span class="dt">x=</span>exSim, <span class="dt">fit=</span>var_fit)
+tfeat &lt;-<span class="st"> </span><span class="kw">featureNames</span>(exSim)[<span class="kw">which</span>(var_out<span class="op">$</span>FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>)]
+
+<span class="co"># Setting trajectory features to the object</span>
+<span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span>tfeat
+<span class="kw">showTrajInfo</span>(exSim)</code></pre></div>
+<pre><code>## [[ CellTrails ]] 
+## logcounts: 15000 features, 100 samples
+## Pheno data: 
+##   sampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   phenoNames: none
+## Feature data: 
+##   featureNames: &quot;feature_1&quot; &quot;feature_2&quot; ... &quot;feature_15000&quot; (15000)
+##   rowData: none
+## Trajectory data: 
+##   trajFeatureNames: &quot;feature_118&quot; &quot;feature_183&quot; ... &quot;feature_14987&quot; (1058)
+##   latentSpace: none
+##   states: none
+## Trajectories: none
+##   trajSampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   trajResiduals: MSE=NA
+##   landmarks: none
+##   trajLayout: none
+## Trail data: 
+##   trailNames: none</code></pre>
+<p><em>Please note</em> that filters from different packages can also be combined by subsetting the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object with the trajectory features.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Reset: all features are trajectory features</span>
+<span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span><span class="kw">featureNames</span>(exSim)
+
+<span class="co"># Use CellTrails filter</span>
+<span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByDL</span>(exSim, <span class="dt">threshold=</span><span class="dv">2</span>, 
+                                                  <span class="dt">show_plot=</span><span class="ot">FALSE</span>)
+<span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByCOV</span>(exSim, <span class="dt">threshold=</span><span class="fl">0.5</span>, 
+                                                   <span class="dt">show_plot=</span><span class="ot">FALSE</span>)
+
+exSim_sub &lt;-<span class="st"> </span>exSim[<span class="kw">trajFeatureNames</span>(exSim), ]
+
+<span class="co"># Filter using scran</span>
+var_fit &lt;-<span class="st"> </span>scran<span class="op">::</span><span class="kw">trendVar</span>(<span class="dt">x=</span>exSim_sub, <span class="dt">use.spikes=</span><span class="ot">FALSE</span>)
+var_out &lt;-<span class="st"> </span>scran<span class="op">::</span><span class="kw">decomposeVar</span>(<span class="dt">x=</span>exSim_sub, <span class="dt">fit=</span>var_fit)
+tfeat &lt;-<span class="st"> </span><span class="kw">featureNames</span>(exSim_sub)[<span class="kw">which</span>(var_out<span class="op">$</span>FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>)]
+
+<span class="co"># Setting trajectory features to the object</span>
+<span class="kw">trajFeatureNames</span>(exSim) &lt;-<span class="st"> </span>tfeat
+<span class="kw">showTrajInfo</span>(exSim)</code></pre></div>
+<pre><code>## [[ CellTrails ]] 
+## logcounts: 15000 features, 100 samples
+## Pheno data: 
+##   sampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   phenoNames: none
+## Feature data: 
+##   featureNames: &quot;feature_1&quot; &quot;feature_2&quot; ... &quot;feature_15000&quot; (15000)
+##   rowData: none
+## Trajectory data: 
+##   trajFeatureNames: &quot;feature_118&quot; &quot;feature_183&quot; ... &quot;feature_14987&quot; (466)
+##   latentSpace: none
+##   states: none
+## Trajectories: none
+##   trajSampleNames: &quot;sample_1&quot; &quot;sample_2&quot; ... &quot;sample_100&quot; (100)
+##   trajResiduals: MSE=NA
+##   landmarks: none
+##   trajLayout: none
+## Trail data: 
+##   trailNames: none</code></pre>
+
+<!-- ---------------------------------- -->
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-scran">
+<p>Lun, ATL, DJ McCarthy, and JC Marioni. 2016. “A Step-by-Step Workflow for Low-Level Analysis of Single-Cell Rna-Seq Data with Bioconductor.” <em>F1000Res.</em> 5: 2122.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="overview.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="manifold-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["CellTrails-handbook.pdf", "CellTrails-handbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

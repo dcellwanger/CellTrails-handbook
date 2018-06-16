@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</title>
+  <meta name="description" content="CellTrails Handbook">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="CellTrails Handbook" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  
+  <meta name="twitter:description" content="CellTrails Handbook" />
+  
+
+<meta name="author" content="Daniel C. Ellwanger // dcellwanger.dev[at]gmail.com">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="overview.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CellTrails Handbook</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="prerequisites.html"><a href="prerequisites.html#terminology"><i class="fa fa-check"></i><b>1.1</b> Terminology</a></li>
+<li class="chapter" data-level="1.2" data-path="prerequisites.html"><a href="prerequisites.html#load-library"><i class="fa fa-check"></i><b>1.2</b> Load Library</a></li>
+<li class="chapter" data-level="1.3" data-path="prerequisites.html"><a href="prerequisites.html#third-party-software-yed"><i class="fa fa-check"></i><b>1.3</b> Third-party Software: yEd</a></li>
+<li class="chapter" data-level="1.4" data-path="prerequisites.html"><a href="prerequisites.html#input-singlecellexperiment"><i class="fa fa-check"></i><b>1.4</b> Input: SingleCellExperiment</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
+<li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
+<li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
+<li class="chapter" data-level="3.1" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-detection-level"><i class="fa fa-check"></i><b>3.1</b> Filter by Detection Level</a></li>
+<li class="chapter" data-level="3.2" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-coefficient-of-variation"><i class="fa fa-check"></i><b>3.2</b> Filter by Coefficient of Variation</a></li>
+<li class="chapter" data-level="3.3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-fano-factor"><i class="fa fa-check"></i><b>3.3</b> Filter by Fano Factor</a></li>
+<li class="chapter" data-level="3.4" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#blocking-uniformative-substructures"><i class="fa fa-check"></i><b>3.4</b> Blocking Uniformative Substructures</a></li>
+<li class="chapter" data-level="3.5" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#using-alternative-methods"><i class="fa fa-check"></i><b>3.5</b> Using Alternative Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
+<li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>5</b> Clustering</a><ul>
+<li class="chapter" data-level="5.1" data-path="clustering.html"><a href="clustering.html#hierarchical-spectral-clustering"><i class="fa fa-check"></i><b>5.1</b> Hierarchical Spectral Clustering</a></li>
+<li class="chapter" data-level="5.2" data-path="clustering.html"><a href="clustering.html#using-alternative-methods-2"><i class="fa fa-check"></i><b>5.2</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="5.3" data-path="clustering.html"><a href="clustering.html#visualization-1"><i class="fa fa-check"></i><b>5.3</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sample-ordering.html"><a href="sample-ordering.html"><i class="fa fa-check"></i><b>6</b> Sample Ordering</a><ul>
+<li class="chapter" data-level="6.1" data-path="sample-ordering.html"><a href="sample-ordering.html#state-trajectory-graph"><i class="fa fa-check"></i><b>6.1</b> State Trajectory Graph</a></li>
+<li class="chapter" data-level="6.2" data-path="sample-ordering.html"><a href="sample-ordering.html#aligning-samples-onto-the-trajectory"><i class="fa fa-check"></i><b>6.2</b> Aligning Samples Onto the Trajectory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="celltrails-maps.html"><a href="celltrails-maps.html"><i class="fa fa-check"></i><b>7</b> CellTrails Maps</a><ul>
+<li class="chapter" data-level="7.1" data-path="celltrails-maps.html"><a href="celltrails-maps.html#graph-layout"><i class="fa fa-check"></i><b>7.1</b> Graph Layout</a></li>
+<li class="chapter" data-level="7.2" data-path="celltrails-maps.html"><a href="celltrails-maps.html#plot-maps"><i class="fa fa-check"></i><b>7.2</b> Plot Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="expression-dynamics.html"><a href="expression-dynamics.html"><i class="fa fa-check"></i><b>8</b> Expression Dynamics</a><ul>
+<li class="chapter" data-level="8.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#trail-definition"><i class="fa fa-check"></i><b>8.1</b> Trail Definition</a></li>
+<li class="chapter" data-level="8.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#defining-subtrails"><i class="fa fa-check"></i><b>8.2</b> Defining Subtrails</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-yed"><i class="fa fa-check"></i><b>8.2.1</b> Using yEd</a></li>
+<li class="chapter" data-level="8.2.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-r"><i class="fa fa-check"></i><b>8.2.2</b> Using R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="expression-dynamics.html"><a href="expression-dynamics.html#inference-of-dynamics"><i class="fa fa-check"></i><b>8.3</b> Inference of Dynamics</a></li>
+<li class="chapter" data-level="8.4" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-within-trails"><i class="fa fa-check"></i><b>8.4</b> Dynamic Comparison: Within Trails</a></li>
+<li class="chapter" data-level="8.5" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-between-trails"><i class="fa fa-check"></i><b>8.5</b> Dynamic Comparison: Between Trails</a></li>
+<li class="chapter" data-level="8.6" data-path="expression-dynamics.html"><a href="expression-dynamics.html#parallelization"><i class="fa fa-check"></i><b>8.6</b> Parallelization</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>9</b> Appendix</a><ul>
+<li class="chapter" data-level="9.1" data-path="appendix.html"><a href="appendix.html#protocols"><i class="fa fa-check"></i><b>9.1</b> Protocols</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="appendix.html"><a href="appendix.html#chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.1.1</b> Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.1.2" data-path="appendix.html"><a href="appendix.html#mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.1.2</b> Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix.html"><a href="appendix.html#runtime"><i class="fa fa-check"></i><b>9.2</b> Runtime</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="appendix.html"><a href="appendix.html#protocol-chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.2.1</b> Protocol: Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.2.2" data-path="appendix.html"><a href="appendix.html#protocol-mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.2.2</b> Protocol: Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix.html"><a href="appendix.html#session-info"><i class="fa fa-check"></i><b>9.3</b> Session Info</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="prerequisites" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Prerequisites</h1>
+<!-- ---------------------------------- -->
+<div id="terminology" class="section level2">
+<h2><span class="header-section-number">1.1</span> Terminology</h2>
+<p>In the following, we use a general termonology to describe the biological data of interest. We analyze quantitative <em>expression values</em> (e.g., RT-qPCR Log2Ex, RNA-Seq log2 counts, usf.) of <em>features</em> (e.g., genes, transcripts, spike-in controls, usf.), which were obtained from individual <em>samples</em> (e.g., single cells).</p>
+</div>
+<div id="load-library" class="section level2">
+<h2><span class="header-section-number">1.2</span> Load Library</h2>
+<p>Before ready to use, the <em>CellTrails</em> libraries must be loaded into the <em>R</em> environment:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(CellTrails)</code></pre></div>
+</div>
+<div id="third-party-software-yed" class="section level2">
+<h2><span class="header-section-number">1.3</span> Third-party Software: yEd</h2>
+<p>We strongly recommend to download and install the graph visualization software <em>yEd</em> (<a href="http://www.yworks.com/products/yed" class="uri">http://www.yworks.com/products/yed</a>). It provides great capabilities to perform planar embedding, visualization, and analysis of a trajectory graph produced by <em>CellTrails</em>.</p>
+</div>
+<div id="input-singlecellexperiment" class="section level2">
+<h2><span class="header-section-number">1.4</span> Input: SingleCellExperiment</h2>
+<p><em>CellTrails</em> organizes its data in an object of Bioconductor’s <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> <span class="citation">(Lun and Risso <a href="#ref-R-SingleCellExperiment">2017</a>)</span> class. It provides all attributes required for smooth and user-friendly data processing and analysis of single cell data and enables interoperability between packages. Please, refer to the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> vignette for details.</p>
+<div id="shape-of-expression-data" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> Shape of Expression Data</h3>
+<p><em>CellTrails</em> expects the expression data to be normalized and log-transformed; it is not required that features were filtered at this point. The expression data is expected to be available from the <code>logcounts</code> assay entry. If this entry is empty (check for its existence with function <code>assays</code>), the function <code>logcounts&lt;-</code> can be used to store the log-normalized data in a <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object.</p>
+<p>If your expression data is not stored in an object of class <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em>, we suggest to initiate an object from a numerical matrix composed of the log-normalized expression values; features should be listed in rows, and samples in columns (see <em>Example Datasets</em>).</p>
+</div>
+<div id="spike-in-controls" class="section level3">
+<h3><span class="header-section-number">1.4.2</span> Spike-in Controls</h3>
+<p>There is no need to remove spike-in controls from your <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object. <em>CellTrails</em> automatically ignores spike-in controls for its analysis, if they were properly annotated in the object using the function <code>isSpike</code> (see #exdat).</p>
+</div>
+</div>
+<div id="exdat" class="section level2">
+<h2><span class="header-section-number">1.5</span> Example Datasets</h2>
+<p><strong>exSim</strong></p>
+<p>In this vignette, simulated data (with log-transformed Negative Binomial distributed expression counts) and real expression data are used to illustrate the functionality of the <em>CellTrails</em> package.</p>
+<p>The first dataset, <code>exSim</code>, is composed of expression values of 15,000 features measured in 100 samples; 80 spike-in transcripts were added.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create example expression data</span>
+<span class="co"># with 15,000 features and 100 samples</span>
+<span class="kw">set.seed</span>(<span class="dv">1101</span>)
+emat &lt;-<span class="st"> </span><span class="kw">simulate_exprs</span>(<span class="dt">n_features=</span><span class="dv">15000</span>, <span class="dt">n_samples=</span><span class="dv">100</span>)
+
+<span class="co"># Create SingleCellExperiment object</span>
+exSim &lt;-<span class="st"> </span><span class="kw">SingleCellExperiment</span>(<span class="dt">assays=</span><span class="kw">list</span>(<span class="dt">logcounts=</span>emat))
+
+<span class="co"># Annotate ERCC spike-ins </span>
+<span class="kw">isSpike</span>(exSim, <span class="st">&quot;ERCC&quot;</span>) &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">80</span>
+<span class="kw">show</span>(exSim)</code></pre></div>
+<pre><code>## class: SingleCellExperiment 
+## dim: 15000 100 
+## metadata(0):
+## assays(1): logcounts
+## rownames(15000): feature_1 feature_2 ... feature_14999
+##   feature_15000
+## rowData names(0):
+## colnames(100): sample_1 sample_2 ... sample_99 sample_100
+## colData names(0):
+## reducedDimNames(0):
+## spikeNames(1): ERCC</code></pre>
+<p><strong>exBundle</strong></p>
+<p>The second dataset, <code>exBundle</code>, contains transcript expression profiles of 183 genes expressed during sensory hair cell bundle maturation and function, which were quantified in the chicken utricle sensory epithelium at embryonic day 15 using multiplex RT-qPCR. Experimental metadata was generated during tissue preparation (cell origin) and cell sorting (uptake of FM1-43 dye indicating cell maturity). This data set is the foundation used for the development of <em>CellTrails</em>. If you use this dataset for your research, please cite <span class="citation">Ellwanger et al. (<a href="#ref-ellwanger2018">2018</a>)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load bundle data</span>
+exBundle &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">system.file</span>(<span class="st">&quot;exdata&quot;</span>, <span class="st">&quot;bundle.rds&quot;</span>, <span class="dt">package=</span><span class="st">&quot;CellTrails&quot;</span>))</code></pre></div>
+
+<!-- ---------------------------------- -->
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-SingleCellExperiment">
+<p>Lun, ATL, and D Risso. 2017. <em>SingleCellExperiment: S4 Classes for Single Cell Data</em>.</p>
+</div>
+<div id="ref-ellwanger2018">
+<p>Ellwanger, DC, M Scheibinger, RA Dumont, PG Barr-Gillespie, and S Heller. 2018. “Transcriptional Dynamics of Hair-Bundle Morphogenesis Revealed with Celltrails.” <em>Cell Reports</em> 23 (10): 2901–14.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["CellTrails-handbook.pdf", "CellTrails-handbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

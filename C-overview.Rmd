@@ -1,0 +1,54 @@
+<!-- ---------------------------------- -->
+# Overview
+<!-- ---------------------------------- -->
+
+The following illustrates the typical sequence of steps performed during a *CellTrails* analysis and lists the available functions, respectively.
+
+* Selection of trajectory features
+    + ``filterTrajFeaturesByDL``
+    + ``filterTrajFeaturesByCOV``
+    + ``filterTrajFeaturesByFF``
+*  Lower-dimensional manifold learning
+    + ``embedSamples``
+    + ``findSpectrum``
+    + ``latentSpace``
+    + ``plotManifold``
+*  Clustering
+    + ``findStates``
+    + ``states``
+    + ``plotStateSize``
+    + ``plotStateExpression``
+*  Determination of the trajectory topology
+    + ``connectStates``
+    + ``showTrajInfo``
+    + ``trajComponents``
+    + ``selectTrajectory``
+    + ``plotStateTrajectory``
+* Chronologically ordering of samples
+    + ``fitTrajectory``
+    + ``plotTrajectoryFit``
+* Trajectory visualization
+    + ``write.ygraphml``
+    + ``read.ygraphml``
+    + ``trajLayout``
+    + ``plotMap``
+* Identification of paths (trails) on the trajectory
+    + ``landmarks``
+    + ``userLandmarks``
+    + ``addTrail``, ``removeTrail``
+    + ``trailNames``
+    + ``trails``
+    + ``plotTrail``
+* Inference of expression dynamics of trails
+    + ``fitDynamic``
+    + ``plotDynamic``
+* Intra- and inter-trail expression dynamic comparison
+    + ``contrastTrailExpr``
+
+By calling the function `showTrajInfo`, an informative overview of the data relevant for, or stored by _CellTrails_ is printed. We suggest to use this function multiple times during a _CellTrails_ analysis, as it provides useful insights into the analysis' progress.
+
+```{r, eval=TRUE}
+showTrajInfo(exBundle)
+```
+
+The entries _logcounts_ and _Feature data_ correspond to the expression matrix and feature information provided and annotated by the user, respectively. _Pheno data_ contains metainformation for each sample stored by the user and by *CellTrails*. The entries _Trajectory data_, _Trajectories_ and _Trail data_ denote *CellTrails* specific information and will be described in detail in the respective section of this handbook.

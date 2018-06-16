@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</title>
+  <meta name="description" content="CellTrails Handbook">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="CellTrails Handbook" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  
+  <meta name="twitter:description" content="CellTrails Handbook" />
+  
+
+<meta name="author" content="Daniel C. Ellwanger // dcellwanger.dev[at]gmail.com">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="expression-dynamics.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CellTrails Handbook</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="prerequisites.html"><a href="prerequisites.html#terminology"><i class="fa fa-check"></i><b>1.1</b> Terminology</a></li>
+<li class="chapter" data-level="1.2" data-path="prerequisites.html"><a href="prerequisites.html#load-library"><i class="fa fa-check"></i><b>1.2</b> Load Library</a></li>
+<li class="chapter" data-level="1.3" data-path="prerequisites.html"><a href="prerequisites.html#third-party-software-yed"><i class="fa fa-check"></i><b>1.3</b> Third-party Software: yEd</a></li>
+<li class="chapter" data-level="1.4" data-path="prerequisites.html"><a href="prerequisites.html#input-singlecellexperiment"><i class="fa fa-check"></i><b>1.4</b> Input: SingleCellExperiment</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
+<li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
+<li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
+<li class="chapter" data-level="3.1" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-detection-level"><i class="fa fa-check"></i><b>3.1</b> Filter by Detection Level</a></li>
+<li class="chapter" data-level="3.2" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-coefficient-of-variation"><i class="fa fa-check"></i><b>3.2</b> Filter by Coefficient of Variation</a></li>
+<li class="chapter" data-level="3.3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-fano-factor"><i class="fa fa-check"></i><b>3.3</b> Filter by Fano Factor</a></li>
+<li class="chapter" data-level="3.4" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#blocking-uniformative-substructures"><i class="fa fa-check"></i><b>3.4</b> Blocking Uniformative Substructures</a></li>
+<li class="chapter" data-level="3.5" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#using-alternative-methods"><i class="fa fa-check"></i><b>3.5</b> Using Alternative Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
+<li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>5</b> Clustering</a><ul>
+<li class="chapter" data-level="5.1" data-path="clustering.html"><a href="clustering.html#hierarchical-spectral-clustering"><i class="fa fa-check"></i><b>5.1</b> Hierarchical Spectral Clustering</a></li>
+<li class="chapter" data-level="5.2" data-path="clustering.html"><a href="clustering.html#using-alternative-methods-2"><i class="fa fa-check"></i><b>5.2</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="5.3" data-path="clustering.html"><a href="clustering.html#visualization-1"><i class="fa fa-check"></i><b>5.3</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sample-ordering.html"><a href="sample-ordering.html"><i class="fa fa-check"></i><b>6</b> Sample Ordering</a><ul>
+<li class="chapter" data-level="6.1" data-path="sample-ordering.html"><a href="sample-ordering.html#state-trajectory-graph"><i class="fa fa-check"></i><b>6.1</b> State Trajectory Graph</a></li>
+<li class="chapter" data-level="6.2" data-path="sample-ordering.html"><a href="sample-ordering.html#aligning-samples-onto-the-trajectory"><i class="fa fa-check"></i><b>6.2</b> Aligning Samples Onto the Trajectory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="celltrails-maps.html"><a href="celltrails-maps.html"><i class="fa fa-check"></i><b>7</b> CellTrails Maps</a><ul>
+<li class="chapter" data-level="7.1" data-path="celltrails-maps.html"><a href="celltrails-maps.html#graph-layout"><i class="fa fa-check"></i><b>7.1</b> Graph Layout</a></li>
+<li class="chapter" data-level="7.2" data-path="celltrails-maps.html"><a href="celltrails-maps.html#plot-maps"><i class="fa fa-check"></i><b>7.2</b> Plot Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="expression-dynamics.html"><a href="expression-dynamics.html"><i class="fa fa-check"></i><b>8</b> Expression Dynamics</a><ul>
+<li class="chapter" data-level="8.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#trail-definition"><i class="fa fa-check"></i><b>8.1</b> Trail Definition</a></li>
+<li class="chapter" data-level="8.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#defining-subtrails"><i class="fa fa-check"></i><b>8.2</b> Defining Subtrails</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-yed"><i class="fa fa-check"></i><b>8.2.1</b> Using yEd</a></li>
+<li class="chapter" data-level="8.2.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-r"><i class="fa fa-check"></i><b>8.2.2</b> Using R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="expression-dynamics.html"><a href="expression-dynamics.html#inference-of-dynamics"><i class="fa fa-check"></i><b>8.3</b> Inference of Dynamics</a></li>
+<li class="chapter" data-level="8.4" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-within-trails"><i class="fa fa-check"></i><b>8.4</b> Dynamic Comparison: Within Trails</a></li>
+<li class="chapter" data-level="8.5" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-between-trails"><i class="fa fa-check"></i><b>8.5</b> Dynamic Comparison: Between Trails</a></li>
+<li class="chapter" data-level="8.6" data-path="expression-dynamics.html"><a href="expression-dynamics.html#parallelization"><i class="fa fa-check"></i><b>8.6</b> Parallelization</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>9</b> Appendix</a><ul>
+<li class="chapter" data-level="9.1" data-path="appendix.html"><a href="appendix.html#protocols"><i class="fa fa-check"></i><b>9.1</b> Protocols</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="appendix.html"><a href="appendix.html#chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.1.1</b> Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.1.2" data-path="appendix.html"><a href="appendix.html#mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.1.2</b> Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix.html"><a href="appendix.html#runtime"><i class="fa fa-check"></i><b>9.2</b> Runtime</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="appendix.html"><a href="appendix.html#protocol-chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.2.1</b> Protocol: Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.2.2" data-path="appendix.html"><a href="appendix.html#protocol-mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.2.2</b> Protocol: Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix.html"><a href="appendix.html#session-info"><i class="fa fa-check"></i><b>9.3</b> Session Info</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix" class="section level1">
+<h1><span class="header-section-number">Chapter 9</span> Appendix</h1>
+<!-- ---------------------------------- -->
+<div id="protocols" class="section level2">
+<h2><span class="header-section-number">9.1</span> Protocols</h2>
+<p>The following protocols describe how this package can be used to perform the data analysis shown in the original <em>CellTrails</em> article.</p>
+<div id="chicken-e15-utricle-data" class="section level3">
+<h3><span class="header-section-number">9.1.1</span> Chicken E15 Utricle Data</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load expression data</span>
+bundle &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">system.file</span>(<span class="st">&quot;exdata&quot;</span>, <span class="st">&quot;bundle.rds&quot;</span>, <span class="dt">package=</span><span class="st">&quot;CellTrails&quot;</span>))
+
+<span class="co"># Manifold Learning</span>
+se &lt;-<span class="st"> </span><span class="kw">embedSamples</span>(bundle)
+d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(se<span class="op">$</span>eigenvalues, <span class="dt">frac=</span><span class="dv">100</span>) <span class="co">#Similar to Figure 1E</span>
+<span class="kw">latentSpace</span>(bundle) &lt;-<span class="st"> </span>se<span class="op">$</span>components[, d]
+
+<span class="co"># Clustering</span>
+<span class="kw">states</span>(bundle) &lt;-<span class="st"> </span><span class="kw">findStates</span>(bundle, <span class="dt">min_size=</span><span class="fl">0.01</span>, 
+                             <span class="dt">min_feat=</span><span class="dv">5</span>, <span class="dt">max_pval=</span><span class="fl">1e-04</span>, <span class="dt">min_fc=</span><span class="dv">2</span>)
+
+<span class="co"># Sample Ordering</span>
+bundle &lt;-<span class="st"> </span><span class="kw">connectStates</span>(bundle, <span class="dt">l=</span><span class="dv">10</span>)
+<span class="kw">showTrajInfo</span>(bundle)
+
+bundle &lt;-<span class="st"> </span><span class="kw">selectTrajectory</span>(bundle, <span class="dt">component=</span><span class="dv">1</span>)
+bundle &lt;-<span class="st"> </span><span class="kw">fitTrajectory</span>(bundle)
+
+<span class="co"># CellTrails maps</span>
+<span class="co"># Please note: For illustration purposes, the layout was </span>
+<span class="co"># computed in yEd using functions write.ygraphml and </span>
+<span class="co"># read.ygraphml, and is part of the CellTrails package</span>
+tl &lt;-<span class="st"> </span><span class="kw">read.ygraphml</span>(<span class="kw">system.file</span>(<span class="st">&quot;exdata&quot;</span>, <span class="st">&quot;bundle.graphml&quot;</span>, 
+                                <span class="dt">package=</span><span class="st">&quot;CellTrails&quot;</span>))
+<span class="kw">trajLayout</span>(bundle, <span class="dt">adjust=</span><span class="ot">TRUE</span>) &lt;-<span class="st"> </span>tl
+
+<span class="co"># Define subtrail by adding a user-defined landmark</span>
+<span class="kw">userLandmarks</span>(bundle) &lt;-<span class="st"> &quot;Cell-8-57&quot;</span>
+
+<span class="co"># Analysis of Expression Dynamics</span>
+bundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(bundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;H9&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrS&quot;</span>)
+bundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(bundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;H1&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrES&quot;</span>)
+bundle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(bundle, <span class="dt">from=</span><span class="st">&quot;B3&quot;</span>, <span class="dt">to=</span><span class="st">&quot;U1&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)
+
+<span class="co"># Inter-trail comparison (similar to Figure 5B)</span>
+rmsd_all &lt;-<span class="st"> </span><span class="kw">contrastTrailExpr</span>(bundle, <span class="dt">trail_names=</span><span class="kw">c</span>(<span class="st">&quot;TrS&quot;</span>, <span class="st">&quot;TrES&quot;</span>))
+rmsd_all &lt;-<span class="st"> </span>rmsd_all[rmsd_all <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>]
+<span class="kw">sort</span>(rmsd_all[<span class="kw">scale</span>(<span class="kw">log</span>(rmsd_all)) <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.65</span>])
+
+<span class="co"># -------------------------------</span>
+<span class="co"># Visualizations</span>
+<span class="co"># -------------------------------</span>
+<span class="co"># Plot size of clusters (similar to Figure 2E)</span>
+<span class="kw">plotStateSize</span>(bundle)
+
+<span class="co"># Plot expression distribution</span>
+<span class="kw">plotStateExpression</span>(bundle, <span class="dt">feature_name=</span><span class="st">&quot;OTOA&quot;</span>)
+<span class="kw">plotStateExpression</span>(bundle, <span class="dt">feature_name=</span><span class="st">&quot;ATOH1&quot;</span>)
+<span class="kw">plotStateExpression</span>(bundle, <span class="dt">feature_name=</span><span class="st">&quot;CALB2&quot;</span>)
+<span class="kw">plotStateExpression</span>(bundle, <span class="dt">feature_name=</span><span class="st">&quot;ATP2B2&quot;</span>)
+
+<span class="co"># Plot manifold (similar to Figure S4F)</span>
+<span class="kw">set.seed</span>(<span class="dv">1101</span>)
+gp &lt;-<span class="st"> </span><span class="kw">plotManifold</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;state&quot;</span>)
+<span class="kw">manifold2D</span>(bundle) &lt;-<span class="st"> </span>gp
+<span class="kw">plotManifold</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;fm143&quot;</span>)
+<span class="kw">plotManifold</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;OTOA&quot;</span>)
+<span class="kw">plotManifold</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;CALB2&quot;</span>)
+
+<span class="co"># Plot state trajectory graph (similar to Figure 1G)</span>
+<span class="kw">plotStateTrajectory</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, 
+                    <span class="dt">name=</span><span class="st">&quot;fm143&quot;</span>, <span class="dt">point_size=</span><span class="fl">1.5</span>, 
+                    <span class="dt">label_offset=</span><span class="dv">4</span>, <span class="dt">component=</span><span class="dv">1</span>)
+<span class="kw">plotStateTrajectory</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, 
+                    <span class="dt">name=</span><span class="st">&quot;origin&quot;</span>, <span class="dt">point_size=</span><span class="fl">1.5</span>, 
+                    <span class="dt">label_offset=</span><span class="dv">4</span>, <span class="dt">component=</span><span class="dv">1</span>)
+<span class="kw">plotStateTrajectory</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+                    <span class="dt">name=</span><span class="st">&quot;OTOA&quot;</span>, <span class="dt">point_size=</span><span class="dv">5</span>, 
+                    <span class="dt">label_offset=</span><span class="dv">4</span>, <span class="dt">component=</span><span class="dv">1</span>)
+<span class="kw">plotStateTrajectory</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+                    <span class="dt">name=</span><span class="st">&quot;ATOH1&quot;</span>, <span class="dt">point_size=</span><span class="dv">5</span>, 
+                    <span class="dt">label_offset=</span><span class="dv">4</span>, <span class="dt">component=</span><span class="dv">1</span>)
+<span class="kw">plotStateTrajectory</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+                    <span class="dt">name=</span><span class="st">&quot;CALB2&quot;</span>, <span class="dt">point_size=</span><span class="dv">5</span>, 
+                    <span class="dt">label_offset=</span><span class="dv">4</span>, <span class="dt">component=</span><span class="dv">1</span>)
+
+<span class="co"># Plot trajectory fit (similar to Figure 2E)</span>
+<span class="kw">plotTrajectoryFit</span>(bundle)
+
+<span class="co"># Plot CellTrails maps (similar to Figure 3 and Table S2)</span>
+<span class="kw">plotMap</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;fm143&quot;</span>)
+<span class="kw">plotMap</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+        <span class="dt">name=</span><span class="st">&quot;ATOH1&quot;</span>, <span class="dt">type=</span><span class="st">&quot;raw&quot;</span>)
+<span class="kw">plotMap</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+        <span class="dt">name=</span><span class="st">&quot;ATOH1&quot;</span>, <span class="dt">type=</span><span class="st">&quot;surface.fit&quot;</span>)
+<span class="kw">plotMap</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+        <span class="dt">name=</span><span class="st">&quot;ATOH1&quot;</span>, <span class="dt">type=</span><span class="st">&quot;surface.se&quot;</span>)
+<span class="kw">plotMap</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+        <span class="dt">name=</span><span class="st">&quot;ATOH1&quot;</span>, <span class="dt">type=</span><span class="st">&quot;surface.fit&quot;</span>, <span class="dt">samples_only=</span><span class="ot">TRUE</span>)
+
+<span class="co"># Plot landmarks</span>
+<span class="kw">plotMap</span>(bundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>)
+
+<span class="co"># Plot trails (similar to Figure 4K)</span>
+<span class="kw">plotTrail</span>(bundle, <span class="dt">name=</span><span class="st">&quot;TrS&quot;</span>)
+<span class="kw">plotTrail</span>(bundle, <span class="dt">name=</span><span class="st">&quot;TrES&quot;</span>)
+<span class="kw">plotTrail</span>(bundle, <span class="dt">name=</span><span class="st">&quot;TrES*&quot;</span>)
+
+<span class="co"># Plot single dynamics (similar to Figure 4B,G and Table S2)</span>
+<span class="kw">plotDynamic</span>(bundle, <span class="dt">feature_name=</span><span class="st">&quot;CALB2&quot;</span>, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>)
+<span class="kw">plotDynamic</span>(bundle, <span class="dt">feature_name=</span><span class="st">&quot;ATP2B2&quot;</span>, <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>)
+
+<span class="co"># Compare dynamics (similar to Figure 6A)</span>
+<span class="kw">plotDynamic</span>(bundle, 
+            <span class="dt">feature_name=</span><span class="kw">c</span>(<span class="st">&quot;TECTA&quot;</span>, <span class="st">&quot;OTOA&quot;</span>, <span class="st">&quot;ATOH1&quot;</span>, <span class="st">&quot;POU4F3&quot;</span>, 
+                           <span class="st">&quot;MYO7A&quot;</span>, <span class="st">&quot;CALB2&quot;</span>, <span class="st">&quot;SYN3&quot;</span>, <span class="st">&quot;SKOR2&quot;</span>,
+                           <span class="st">&quot;ATP2B2&quot;</span>, <span class="st">&quot;LOXHD1&quot;</span>, <span class="st">&quot;MYO3A&quot;</span>, <span class="st">&quot;TMC2&quot;</span>, 
+                           <span class="st">&quot;TNNC2&quot;</span>), <span class="dt">trail_name=</span><span class="st">&quot;TrES&quot;</span>)
+
+<span class="kw">plotDynamic</span>(bundle, 
+            <span class="dt">feature_name=</span><span class="kw">c</span>(<span class="st">&quot;TECTA&quot;</span>, <span class="st">&quot;OTOA&quot;</span>, <span class="st">&quot;ATOH1&quot;</span>, <span class="st">&quot;POU4F3&quot;</span>, 
+                           <span class="st">&quot;MYO7A&quot;</span>, <span class="st">&quot;CALB2&quot;</span>, <span class="st">&quot;SYN3&quot;</span>, <span class="st">&quot;SKOR2&quot;</span>,
+                           <span class="st">&quot;ATP2B2&quot;</span>, <span class="st">&quot;LOXHD1&quot;</span>, <span class="st">&quot;MYO3A&quot;</span>, <span class="st">&quot;TMC2&quot;</span>, 
+                           <span class="st">&quot;TNNC2&quot;</span>), <span class="dt">trail_name=</span><span class="st">&quot;TrS&quot;</span>)</code></pre></div>
+</div>
+<div id="mouse-p1-utricle-data" class="section level3">
+<h3><span class="header-section-number">9.1.2</span> Mouse P1 Utricle Data</h3>
+<p>In the following, we provide a protocol to analyze the publicly-available dataset containing single-cell RNASeq measurements of 14,313 genes in 120 cells from P1 mouse utricles (<a href="https://www.ncbi.nlm.nih.gov/geo/"><em>GEO</em></a> accession code: GSE71982). Experimental metadata was generated during cell sorting (GFP and tdTomato fluorescence indicating major cell types). The processed data (<code>mmu_p1_utricle.rda</code>) can be downloaded as <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object from <a href="https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.rds">here</a>. The trajectory layout (<code>mmu_p1_utricle.graphml</code>) can be downloaded from <a href="https://github.com/elldc/CellTrails/raw/master/docs/mmu_p1_utricle.graphml">here</a>.</p>
+<p>If you use this dataset for your research, please cite the original work by <span class="citation">Burns et al. (<a href="#ref-burns2015">2015</a>)</span>.</p>
+<!-- Burns JC, Kelly MC, Hoa M, Morell RJ, Kelley MW. "Single-cell RNA-Seq resolves cellular complexity in sensory organs from the neonatal inner ear". *Nat Commun.* 2015 Oct 15;6:8557. doi: 10.1038/ncomms9557. -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load expression data</span>
+p1utricle &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;mmu_p1_utricle.rds&quot;</span>)
+
+<span class="co"># Feature Selection</span>
+<span class="kw">trajFeatureNames</span>(p1utricle) &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByDL</span>(p1utricle, <span class="dt">threshold=</span><span class="dv">2</span>)
+<span class="kw">trajFeatureNames</span>(p1utricle) &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByCOV</span>(p1utricle, <span class="dt">threshold=</span>.<span class="dv">5</span>)
+<span class="kw">trajFeatureNames</span>(p1utricle) &lt;-<span class="st"> </span><span class="kw">filterTrajFeaturesByFF</span>(p1utricle)
+
+<span class="kw">showTrajInfo</span>(p1utricle)
+
+<span class="co"># Manifold Learning</span>
+se &lt;-<span class="st"> </span><span class="kw">embedSamples</span>(p1utricle)
+d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(se<span class="op">$</span>eigenvalues)
+<span class="kw">latentSpace</span>(p1utricle) &lt;-<span class="st"> </span>se<span class="op">$</span>components[, d]
+
+<span class="co"># Clustering (parameters account for low sample size)</span>
+<span class="kw">states</span>(p1utricle) &lt;-<span class="st"> </span><span class="kw">findStates</span>(p1utricle, <span class="dt">max_pval=</span><span class="fl">1e-3</span>, <span class="dt">min_feat=</span><span class="dv">2</span>)
+
+<span class="co"># Sample Ordering</span>
+p1utricle &lt;-<span class="st"> </span><span class="kw">connectStates</span>(p1utricle)
+p1utricle &lt;-<span class="st"> </span><span class="kw">fitTrajectory</span>(p1utricle)
+<span class="kw">showTrajInfo</span>(p1utricle)
+
+<span class="co"># CellTrails maps</span>
+tl &lt;-<span class="st"> </span><span class="kw">read.ygraphml</span>(<span class="st">&quot;mmu_p1_utricle.graphml&quot;</span>)
+<span class="kw">trajLayout</span>(p1utricle) &lt;-<span class="st"> </span>tl
+
+<span class="co"># Analysis of Expression Dynamics</span>
+p1utricle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(p1utricle, <span class="dt">from=</span><span class="st">&quot;H1&quot;</span>, <span class="dt">to=</span><span class="st">&quot;H3&quot;</span>, <span class="dt">name=</span><span class="st">&quot;Tr1&quot;</span>)
+p1utricle &lt;-<span class="st"> </span><span class="kw">addTrail</span>(p1utricle, <span class="dt">from=</span><span class="st">&quot;H1&quot;</span>, <span class="dt">to=</span><span class="st">&quot;H2&quot;</span>, <span class="dt">name=</span><span class="st">&quot;Tr2&quot;</span>)
+
+<span class="co"># Inter-trail comparison</span>
+rmsd_all &lt;-<span class="st"> </span><span class="kw">contrastTrailExpr</span>(p1utricle, <span class="dt">trail_names=</span><span class="kw">c</span>(<span class="st">&quot;Tr1&quot;</span>, <span class="st">&quot;Tr2&quot;</span>))
+rmsd_all &lt;-<span class="st"> </span>rmsd_all[rmsd_all <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>]
+<span class="kw">sort</span>(rmsd_all[<span class="kw">scale</span>(<span class="kw">log</span>(rmsd_all)) <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.65</span>])
+
+<span class="co"># Alternative: using parallel computing using doSNOW</span>
+<span class="kw">library</span>(doSNOW)
+cpu.cl &lt;-<span class="st"> </span><span class="kw">makeCluster</span>(parallel<span class="op">::</span><span class="kw">detectCores</span>() <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)
+<span class="kw">registerDoSNOW</span>(cpu.cl)
+
+fnames &lt;-<span class="st"> </span><span class="kw">featureNames</span>(p1utricle)
+all_rmsd &lt;-<span class="st"> </span><span class="kw">foreach</span>(<span class="dt">i=</span><span class="kw">seq_along</span>(fnames), <span class="dt">.combine=</span>rbind)  <span class="op">%dopar%</span><span class="st">  </span>{
+  g &lt;-<span class="st"> </span>fnames[i]
+  CellTrails<span class="op">::</span><span class="kw">contrastTrailExpr</span>(p1utricle, <span class="dt">feature_name=</span>g, 
+                                <span class="dt">trail_names=</span><span class="kw">c</span>(<span class="st">&quot;Tr1&quot;</span>, <span class="st">&quot;Tr2&quot;</span>), <span class="dt">score=</span><span class="st">&quot;RMSD&quot;</span>)
+}
+<span class="kw">stopCluster</span>(cpu.cl)
+all_rmsd &lt;-<span class="st"> </span>all_rmsd[, <span class="dv">1</span>]
+<span class="kw">names</span>(all_rmsd) &lt;-<span class="st"> </span>fnames
+all_rmsd &lt;-<span class="st"> </span>all_rmsd[all_rmsd <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>]
+zscores &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">log</span>(all_rmsd))
+<span class="kw">sort</span>(all_rmsd[zscores <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.65</span>])
+
+<span class="co"># -------------------------------</span>
+<span class="co"># Visualizations</span>
+<span class="co"># -------------------------------</span>
+<span class="co"># Plot size of clusters (similar to Figure 7A)</span>
+<span class="kw">plotStateSize</span>(p1utricle)
+
+<span class="co"># Plot expression distribution</span>
+<span class="kw">plotStateExpression</span>(p1utricle, <span class="dt">feature_name=</span><span class="st">&quot;Otoa&quot;</span>)
+<span class="kw">plotStateExpression</span>(p1utricle, <span class="dt">feature_name=</span><span class="st">&quot;Atoh1&quot;</span>)
+<span class="kw">plotStateExpression</span>(p1utricle, <span class="dt">feature_name=</span><span class="st">&quot;Sox2&quot;</span>)
+
+<span class="co"># Plot manifold</span>
+<span class="kw">set.seed</span>(<span class="dv">1101</span>)
+gp &lt;-<span class="st"> </span><span class="kw">plotManifold</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;state&quot;</span>)
+<span class="kw">manifold2D</span>(p1utricle) &lt;-<span class="st"> </span>gp
+<span class="kw">plotManifold</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;gate&quot;</span>)
+<span class="kw">plotManifold</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;Otoa&quot;</span>)
+<span class="kw">plotManifold</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;Fscn2&quot;</span>)
+
+<span class="co"># Plot state trajectory graph (similar to Figure 1G)</span>
+<span class="kw">plotStateTrajectory</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, 
+                    <span class="dt">name=</span><span class="st">&quot;gate&quot;</span>, <span class="dt">point_size=</span><span class="fl">1.5</span>, 
+                    <span class="dt">label_offset=</span><span class="dv">4</span>, <span class="dt">component=</span><span class="dv">1</span>)
+<span class="kw">plotStateTrajectory</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+                    <span class="dt">name=</span><span class="st">&quot;Otoa&quot;</span>, <span class="dt">point_size=</span><span class="dv">5</span>, 
+                    <span class="dt">label_offset=</span><span class="dv">4</span>, <span class="dt">component=</span><span class="dv">1</span>)
+
+<span class="co"># Plot trajectory fit (similar to Figure 7A)</span>
+<span class="kw">plotTrajectoryFit</span>(p1utricle)
+
+<span class="co"># Plot CellTrails maps (similar to Figure 7C-E)</span>
+<span class="kw">plotMap</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;gate&quot;</span>)
+<span class="kw">plotMap</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+        <span class="dt">name=</span><span class="st">&quot;Atoh1&quot;</span>, <span class="dt">type=</span><span class="st">&quot;raw&quot;</span>)
+<span class="kw">plotMap</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+        <span class="dt">name=</span><span class="st">&quot;Atoh1&quot;</span>, <span class="dt">type=</span><span class="st">&quot;surface.fit&quot;</span>)
+<span class="kw">plotMap</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+        <span class="dt">name=</span><span class="st">&quot;Atoh1&quot;</span>, <span class="dt">type=</span><span class="st">&quot;surface.se&quot;</span>)
+<span class="kw">plotMap</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, 
+        <span class="dt">name=</span><span class="st">&quot;Atoh1&quot;</span>, <span class="dt">type=</span><span class="st">&quot;surface.fit&quot;</span>, 
+        <span class="dt">samples_only=</span><span class="ot">TRUE</span>)
+
+<span class="co"># Plot landmarks</span>
+<span class="kw">plotMap</span>(p1utricle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;landmark&quot;</span>)
+
+<span class="co"># Plot trails (similar to Figure 7F)</span>
+<span class="kw">plotTrail</span>(p1utricle, <span class="dt">name=</span><span class="st">&quot;Tr1&quot;</span>)
+<span class="kw">plotTrail</span>(p1utricle, <span class="dt">name=</span><span class="st">&quot;Tr2&quot;</span>)
+
+<span class="co"># Plot single dynamics (similar to Figure 7I)</span>
+<span class="kw">plotDynamic</span>(p1utricle, <span class="dt">feature_name=</span><span class="st">&quot;Fgf21&quot;</span>, <span class="dt">trail_name=</span><span class="st">&quot;Tr2&quot;</span>)
+<span class="kw">plotDynamic</span>(p1utricle, <span class="dt">feature_name=</span><span class="st">&quot;Fgf21&quot;</span>, <span class="dt">trail_name=</span><span class="st">&quot;Tr1&quot;</span>)
+
+<span class="co"># Compare dynamics</span>
+<span class="kw">plotDynamic</span>(p1utricle, <span class="dt">feature_name=</span><span class="kw">c</span>(<span class="st">&quot;Fscn1&quot;</span>, <span class="st">&quot;Fscn2&quot;</span>), <span class="dt">trail_name=</span><span class="st">&quot;Tr2&quot;</span>)</code></pre></div>
+</div>
+</div>
+<div id="runtime" class="section level2">
+<h2><span class="header-section-number">9.2</span> Runtime</h2>
+<p>In this section, we illustrate that a <em>CellTrails</em> analysis can be performed in a reasonable period of time. The elapsed computational runtime of each function was measured on a MacBook Pro (Early 2015) with a 3.1 GHz Intel Core i7 processor, 16 GB 1867 MHz DDR3 RAM, and an Intel Iris Graphics 6100 1536 MB graphics card.</p>
+<div id="protocol-chicken-e15-utricle-data" class="section level3">
+<h3><span class="header-section-number">9.2.1</span> Protocol: Chicken E15 Utricle Data</h3>
+<p>This dataset consists of 183 features and 1,008 samples. The computation time of the whole protocol as listed above took less then two minutes. Let’s assume that computing the layout takes about two minutes (starting <em>yEd</em>, running the layouter, saving the file), then the total runtime is up to five minutes.</p>
+<!-- test with proc.time(); ... ; ptm <- proc.time() -->
+</div>
+<div id="protocol-mouse-p1-utricle-data" class="section level3">
+<h3><span class="header-section-number">9.2.2</span> Protocol: Mouse P1 Utricle Data</h3>
+<p>This dataset consists of 14,313 features and 120 samples. The computation time of the whole protocol as listed above (with parallelization of the inter-trail dynamics comparison) took less then seven minutes. Let’s assume that computing the layout takes about two minutes (starting <em>yEd</em>, running the layouter, saving the file), then the total runtime is up to 10 minutes.</p>
+</div>
+</div>
+<div id="session-info" class="section level2">
+<h2><span class="header-section-number">9.3</span> Session Info</h2>
+<p>We used <em>yEd</em> version 3.14.4.<br />
+The <em>R</em> session and the system used to compile this document is listed below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.4.3 (2017-11-30)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Sierra 10.12.4
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+## [8] methods   base     
+## 
+## other attached packages:
+##  [1] CellTrails_0.99.12         SingleCellExperiment_1.0.0
+##  [3] SummarizedExperiment_1.8.0 DelayedArray_0.4.1        
+##  [5] matrixStats_0.52.2         Biobase_2.38.0            
+##  [7] GenomicRanges_1.30.0       GenomeInfoDb_1.14.0       
+##  [9] IRanges_2.12.0             S4Vectors_0.16.0          
+## [11] BiocGenerics_0.24.0        BiocStyle_2.6.1           
+## 
+## loaded via a namespace (and not attached):
+##   [1] backports_1.1.2         Hmisc_4.0-3            
+##   [3] RcppEigen_0.3.3.3.1     plyr_1.8.4             
+##   [5] igraph_1.1.2            lazyeval_0.2.1         
+##   [7] sp_1.2-5                shinydashboard_0.6.1   
+##   [9] splines_3.4.3           BiocParallel_1.12.0    
+##  [11] ggplot2_2.2.1           scater_1.6.1           
+##  [13] digest_0.6.12           htmltools_0.3.6        
+##  [15] viridis_0.4.0           magrittr_1.5           
+##  [17] checkmate_1.8.5         memoise_1.1.0          
+##  [19] cluster_2.0.6           limma_3.34.3           
+##  [21] xts_0.10-0              prettyunits_1.0.2      
+##  [23] colorspace_1.3-2        blob_1.1.0             
+##  [25] ggrepel_0.7.0           xfun_0.1               
+##  [27] dplyr_0.7.4             RCurl_1.95-4.8         
+##  [29] tximport_1.6.0          EnvStats_2.3.0         
+##  [31] lme4_1.1-14             bindr_0.1              
+##  [33] survival_2.41-3         zoo_1.8-0              
+##  [35] glue_1.2.0              gtable_0.2.0           
+##  [37] zlibbioc_1.24.0         XVector_0.18.0         
+##  [39] MatrixModels_0.4-1      cba_0.2-19             
+##  [41] car_2.1-6               kernlab_0.9-25         
+##  [43] prabclus_2.2-6          DEoptimR_1.0-8         
+##  [45] SparseM_1.77            VIM_4.7.0              
+##  [47] scales_0.5.0            mvtnorm_1.0-6          
+##  [49] DBI_0.7                 edgeR_3.20.1           
+##  [51] Rcpp_0.12.14            dtw_1.18-1             
+##  [53] laeken_0.4.6            viridisLite_0.2.0      
+##  [55] xtable_1.8-2            progress_1.1.2         
+##  [57] htmlTable_1.11.0        foreign_0.8-69         
+##  [59] bit_1.1-12              proxy_0.4-20           
+##  [61] mclust_5.4              Formula_1.2-2          
+##  [63] DT_0.2                  vcd_1.4-4              
+##  [65] htmlwidgets_0.9         FNN_1.1                
+##  [67] RColorBrewer_1.1-2      fpc_2.1-10             
+##  [69] acepack_1.4.1           modeltools_0.2-21      
+##  [71] pkgconfig_2.0.1         XML_3.98-1.9           
+##  [73] flexmix_2.3-14          nnet_7.3-12            
+##  [75] locfit_1.5-9.1          dynamicTreeCut_1.63-1  
+##  [77] labeling_0.3            rlang_0.1.4            
+##  [79] reshape2_1.4.3          AnnotationDbi_1.40.0   
+##  [81] munsell_0.4.3           tools_3.4.3            
+##  [83] RSQLite_2.0             evaluate_0.10.1        
+##  [85] stringr_1.2.0           maptree_1.4-7          
+##  [87] yaml_2.1.16             knitr_1.20             
+##  [89] bit64_0.9-7             robustbase_0.92-8      
+##  [91] purrr_0.2.4             dendextend_1.6.0       
+##  [93] bindrcpp_0.2            nlme_3.1-131           
+##  [95] quantreg_5.34           whisker_0.3-2          
+##  [97] mime_0.5                scran_1.6.6            
+##  [99] biomaRt_2.34.0          pbkrtest_0.4-7         
+## [101] compiler_3.4.3          rstudioapi_0.7         
+## [103] png_0.1-7               curl_3.1               
+## [105] beeswarm_0.2.3          e1071_1.6-8            
+## [107] smoother_1.1            tibble_1.3.4           
+## [109] statmod_1.4.30          stringi_1.1.6          
+## [111] lattice_0.20-35         trimcluster_0.1-2      
+## [113] Matrix_1.2-12           nloptr_1.0.4           
+## [115] lmtest_0.9-35           data.table_1.10.4-3    
+## [117] bitops_1.0-6            httpuv_1.3.5           
+## [119] R6_2.2.2                latticeExtra_0.6-28    
+## [121] bookdown_0.7            gridExtra_2.3          
+## [123] vipor_0.4.5             boot_1.3-20            
+## [125] MASS_7.3-47             assertthat_0.2.0       
+## [127] destiny_2.6.1           rhdf5_2.22.0           
+## [129] rprojroot_1.2           rjson_0.2.15           
+## [131] GenomeInfoDbData_0.99.1 diptest_0.75-7         
+## [133] mgcv_1.8-22             grid_3.4.3             
+## [135] rpart_4.1-11            minqa_1.2.4            
+## [137] tidyr_0.7.2             class_7.3-14           
+## [139] rmarkdown_1.8           Rtsne_0.13             
+## [141] TTR_0.23-2              shiny_1.0.5            
+## [143] base64enc_0.1-3         ggbeeswarm_0.6.0</code></pre>
+
+<!-- ---------------------------------- -->
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-burns2015">
+<p>Burns, JC, MC Kelly, M Hoa, RJ Morell, and MW Kelley. 2015. “Single-Cell Rna-Seq Resolves Cellular Complexity in Sensory Organs from the Neonatal Inner Ear.” <em>Nature Communications</em> 15 (6): 8557.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="expression-dynamics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["CellTrails-handbook.pdf", "CellTrails-handbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

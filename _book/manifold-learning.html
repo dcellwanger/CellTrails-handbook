@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</title>
+  <meta name="description" content="CellTrails Handbook">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="CellTrails Handbook" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data" />
+  
+  <meta name="twitter:description" content="CellTrails Handbook" />
+  
+
+<meta name="author" content="Daniel C. Ellwanger // dcellwanger.dev[at]gmail.com">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="selection-of-trajectory-features.html">
+<link rel="next" href="clustering.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CellTrails Handbook</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="prerequisites.html"><a href="prerequisites.html#terminology"><i class="fa fa-check"></i><b>1.1</b> Terminology</a></li>
+<li class="chapter" data-level="1.2" data-path="prerequisites.html"><a href="prerequisites.html#load-library"><i class="fa fa-check"></i><b>1.2</b> Load Library</a></li>
+<li class="chapter" data-level="1.3" data-path="prerequisites.html"><a href="prerequisites.html#third-party-software-yed"><i class="fa fa-check"></i><b>1.3</b> Third-party Software: yEd</a></li>
+<li class="chapter" data-level="1.4" data-path="prerequisites.html"><a href="prerequisites.html#input-singlecellexperiment"><i class="fa fa-check"></i><b>1.4</b> Input: SingleCellExperiment</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="prerequisites.html"><a href="prerequisites.html#shape-of-expression-data"><i class="fa fa-check"></i><b>1.4.1</b> Shape of Expression Data</a></li>
+<li class="chapter" data-level="1.4.2" data-path="prerequisites.html"><a href="prerequisites.html#spike-in-controls"><i class="fa fa-check"></i><b>1.4.2</b> Spike-in Controls</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="prerequisites.html"><a href="prerequisites.html#exdat"><i class="fa fa-check"></i><b>1.5</b> Example Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a></li>
+<li class="chapter" data-level="3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html"><i class="fa fa-check"></i><b>3</b> Selection of Trajectory Features</a><ul>
+<li class="chapter" data-level="3.1" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-detection-level"><i class="fa fa-check"></i><b>3.1</b> Filter by Detection Level</a></li>
+<li class="chapter" data-level="3.2" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-coefficient-of-variation"><i class="fa fa-check"></i><b>3.2</b> Filter by Coefficient of Variation</a></li>
+<li class="chapter" data-level="3.3" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#filter-by-fano-factor"><i class="fa fa-check"></i><b>3.3</b> Filter by Fano Factor</a></li>
+<li class="chapter" data-level="3.4" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#blocking-uniformative-substructures"><i class="fa fa-check"></i><b>3.4</b> Blocking Uniformative Substructures</a></li>
+<li class="chapter" data-level="3.5" data-path="selection-of-trajectory-features.html"><a href="selection-of-trajectory-features.html#using-alternative-methods"><i class="fa fa-check"></i><b>3.5</b> Using Alternative Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="manifold-learning.html"><a href="manifold-learning.html"><i class="fa fa-check"></i><b>4</b> Manifold Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="manifold-learning.html"><a href="manifold-learning.html#spectral-embedding"><i class="fa fa-check"></i><b>4.1</b> Spectral Embedding</a></li>
+<li class="chapter" data-level="4.2" data-path="manifold-learning.html"><a href="manifold-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>4.2</b> Dimensionality Reduction</a></li>
+<li class="chapter" data-level="4.3" data-path="manifold-learning.html"><a href="manifold-learning.html#blocking-uninformative-substructures"><i class="fa fa-check"></i><b>4.3</b> Blocking Uninformative Substructures</a></li>
+<li class="chapter" data-level="4.4" data-path="manifold-learning.html"><a href="manifold-learning.html#using-alternative-methods-1"><i class="fa fa-check"></i><b>4.4</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="4.5" data-path="manifold-learning.html"><a href="manifold-learning.html#visualization"><i class="fa fa-check"></i><b>4.5</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>5</b> Clustering</a><ul>
+<li class="chapter" data-level="5.1" data-path="clustering.html"><a href="clustering.html#hierarchical-spectral-clustering"><i class="fa fa-check"></i><b>5.1</b> Hierarchical Spectral Clustering</a></li>
+<li class="chapter" data-level="5.2" data-path="clustering.html"><a href="clustering.html#using-alternative-methods-2"><i class="fa fa-check"></i><b>5.2</b> Using Alternative Methods</a></li>
+<li class="chapter" data-level="5.3" data-path="clustering.html"><a href="clustering.html#visualization-1"><i class="fa fa-check"></i><b>5.3</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sample-ordering.html"><a href="sample-ordering.html"><i class="fa fa-check"></i><b>6</b> Sample Ordering</a><ul>
+<li class="chapter" data-level="6.1" data-path="sample-ordering.html"><a href="sample-ordering.html#state-trajectory-graph"><i class="fa fa-check"></i><b>6.1</b> State Trajectory Graph</a></li>
+<li class="chapter" data-level="6.2" data-path="sample-ordering.html"><a href="sample-ordering.html#aligning-samples-onto-the-trajectory"><i class="fa fa-check"></i><b>6.2</b> Aligning Samples Onto the Trajectory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="celltrails-maps.html"><a href="celltrails-maps.html"><i class="fa fa-check"></i><b>7</b> CellTrails Maps</a><ul>
+<li class="chapter" data-level="7.1" data-path="celltrails-maps.html"><a href="celltrails-maps.html#graph-layout"><i class="fa fa-check"></i><b>7.1</b> Graph Layout</a></li>
+<li class="chapter" data-level="7.2" data-path="celltrails-maps.html"><a href="celltrails-maps.html#plot-maps"><i class="fa fa-check"></i><b>7.2</b> Plot Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="expression-dynamics.html"><a href="expression-dynamics.html"><i class="fa fa-check"></i><b>8</b> Expression Dynamics</a><ul>
+<li class="chapter" data-level="8.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#trail-definition"><i class="fa fa-check"></i><b>8.1</b> Trail Definition</a></li>
+<li class="chapter" data-level="8.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#defining-subtrails"><i class="fa fa-check"></i><b>8.2</b> Defining Subtrails</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-yed"><i class="fa fa-check"></i><b>8.2.1</b> Using yEd</a></li>
+<li class="chapter" data-level="8.2.2" data-path="expression-dynamics.html"><a href="expression-dynamics.html#using-r"><i class="fa fa-check"></i><b>8.2.2</b> Using R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="expression-dynamics.html"><a href="expression-dynamics.html#inference-of-dynamics"><i class="fa fa-check"></i><b>8.3</b> Inference of Dynamics</a></li>
+<li class="chapter" data-level="8.4" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-within-trails"><i class="fa fa-check"></i><b>8.4</b> Dynamic Comparison: Within Trails</a></li>
+<li class="chapter" data-level="8.5" data-path="expression-dynamics.html"><a href="expression-dynamics.html#dynamic-comparison-between-trails"><i class="fa fa-check"></i><b>8.5</b> Dynamic Comparison: Between Trails</a></li>
+<li class="chapter" data-level="8.6" data-path="expression-dynamics.html"><a href="expression-dynamics.html#parallelization"><i class="fa fa-check"></i><b>8.6</b> Parallelization</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>9</b> Appendix</a><ul>
+<li class="chapter" data-level="9.1" data-path="appendix.html"><a href="appendix.html#protocols"><i class="fa fa-check"></i><b>9.1</b> Protocols</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="appendix.html"><a href="appendix.html#chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.1.1</b> Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.1.2" data-path="appendix.html"><a href="appendix.html#mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.1.2</b> Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix.html"><a href="appendix.html#runtime"><i class="fa fa-check"></i><b>9.2</b> Runtime</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="appendix.html"><a href="appendix.html#protocol-chicken-e15-utricle-data"><i class="fa fa-check"></i><b>9.2.1</b> Protocol: Chicken E15 Utricle Data</a></li>
+<li class="chapter" data-level="9.2.2" data-path="appendix.html"><a href="appendix.html#protocol-mouse-p1-utricle-data"><i class="fa fa-check"></i><b>9.2.2</b> Protocol: Mouse P1 Utricle Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix.html"><a href="appendix.html#session-info"><i class="fa fa-check"></i><b>9.3</b> Session Info</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CellTrails: Reconstruction, Visualization, and Analysis of Branching Trajectories from Single-cell Expression Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="manifold-learning" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Manifold Learning</h1>
+<!-- ---------------------------------- -->
+<p>The samples’ expression profiles are shaped by many factors, such as developmental age, tissue region of origin, cell cycle stage, as well as extrinsic sources such as status of signaling receptors, and environmental stressors, but also technical noise. In other words, a single dimension, despite just containing feature expression information, represents an underlying combination of multiple dependent and independent, relevant and non-relevant factors, whereat each factor’s individual contribution is non-uniform. To obtain a better resolution and to extract underlying information, <em>CellTrails</em> aims to find a meaningful low-dimensional structure - a manifold - that represents samples mainly by their latent temporal relation.</p>
+<div id="spectral-embedding" class="section level2">
+<h2><span class="header-section-number">4.1</span> Spectral Embedding</h2>
+<p><em>CellTrails</em> aims to decipher the temporal relation between samples by computing a novel data representation which amplifies trajectory information in its first <em>n</em> dimensions. For this purpose, <em>CellTrails</em> employs spectral graph theory. Due to their locality-preserving character, spectral embedding techniques are advantageous because these consider the data’s manifold structure, are insensitive to outliers and noise, are not susceptible to short-circuiting, and emphasize naturally occurring clusters in the data <span class="citation">(Belkin and Niyogi <a href="#ref-belkin2003">2003</a>; Sussman et al. <a href="#ref-sussman2012">2012</a>)</span>. In a nutshell, <em>CellTrails</em> assumes that two samples that have a high statistical dependency are represented in close proximity along a trajectory. <em>CellTrails</em> captures the intrinsic data geometry as a weighted graph (nodes = samples, edges = statistical dependencies between pairs of samples) by means of fuzzy mutual information and uses spectral graph decomposition to unfold the manifold revealing the hidden trajectory information.</p>
+<p>The spectral embedding is performed using the function <code>embedSamples</code> and results in a list with the eigenspace representation of the original expression data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Spectral Embedding</span>
+se &lt;-<span class="st"> </span><span class="kw">embedSamples</span>(exBundle)</code></pre></div>
+<pre><code>## Computing adjacency matrix ...</code></pre>
+<pre><code>## Computing spectral embedding ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(se)</code></pre></div>
+<pre><code>## [1] &quot;components&quot;  &quot;eigenvalues&quot;</code></pre>
+<p><em>Please note</em> that this function can also be applied to any numerical matrix of interest.</p>
+</div>
+<div id="dimensionality-reduction" class="section level2">
+<h2><span class="header-section-number">4.2</span> Dimensionality Reduction</h2>
+<p><em>CellTrails</em> assumes that the expression vectors are lying on or near a manifold with a low dimensionality that is embedded in the higher-dimensional space. The number of dimensions can be reduced, which lowers noise (i.e., truncates non-relevant dimensions), while the geometry of the trajectory is emphasized.</p>
+<p>The function <code>findSpectrum</code> helps to identify the intrisic dimensionality of the data. It determines the most informative dimensions based on the eigenvalues (spectrum) of the eigenspace. Components of the latent space are ranked by their information content. In the following example, <em>CellTrails</em> identifies relevant components by using a linear fit on the eigengaps of the first 100 eigenvalues.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Identify relevant components</span>
+d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(se<span class="op">$</span>eigenvalues, <span class="dt">frac=</span><span class="dv">100</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d</code></pre></div>
+<pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
+<p>We suggest to assess the resulting Scree plot (eigengaps versus spectrum size) for whether the estimation of the unknown intrinsic dimensionality was reasonable. Otherwise, we recommend to adjust the parameter <code>frac</code> accordingly.</p>
+<p><em>Please note</em> that considering too few components of the latent space may result in loss of information, while selecting lower ranked components could increase noise.</p>
+<p>Next, we set the identified latent space to our <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">latentSpace</span>(exBundle) &lt;-<span class="st"> </span>se<span class="op">$</span>components[, d]</code></pre></div>
+<pre><code>## Calculating approximation of CellTrails manifold for 2D visualization...</code></pre>
+<pre><code>## Used tSNE perplexity: 30</code></pre>
+</div>
+<div id="blocking-uninformative-substructures" class="section level2">
+<h2><span class="header-section-number">4.3</span> Blocking Uninformative Substructures</h2>
+<p>Single-cell measurements are susceptible to the influence of confounders, such as batch, gender or cell cycle effects. Blocking these nuisance factors during manifold learning may be necessary to significantly improve the result of downstream data analyses, such as reconstruction of the temporal trajectory. Therefore, the function <code>embedSamples</code> can account for confounding effects via the parameter <code>design</code>, as will be demonstrated on the example of single-cell RNA-Seq data of murine T helper 2 cell (T<sub>h</sub>2) differentiation <span class="citation">(Mahata et al. <a href="#ref-mahata2014">2014</a>)</span>. In a nutshell, Buettner <em>et al.</em> <span class="citation">(F. Buettner et al. <a href="#ref-buettner2015">2015</a>)</span> identified cell cycle effects as major confounder in this dataset and applied a single-cell latent variable model (scLVM) approach to account for this factor. They unbiasedly identified then two cell populations, namely a group of partially and a group of fully differentiated cells. The normalized, log transformed and filtered scRNA-Seq data can be obtained from the supplementary materials of their article (Table S5 and S7); further, a curated list of T<sub>h</sub>2 marker genes, the scLVM-corrected expression matrix, and a binary cluster assignment for each cell can be downloaded.</p>
+<p>For your convenience, the numeric expression matrix (here called <code>th2</code>) and the list of marker genes were already organized in a <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> container. Here, the expression matrix consists of 7,063 selected genes (116 of which are marker genes) which have been detected in more than 3 of all 81 cells.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">th2 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">system.file</span>(<span class="st">&quot;exdata&quot;</span>, <span class="st">&quot;th2.rds&quot;</span>, <span class="dt">package=</span><span class="st">&quot;CellTrails&quot;</span>))
+th2</code></pre></div>
+<pre><code>## class: SingleCellExperiment 
+## dim: 7063 81 
+## metadata(0):
+## assays(1): logcounts
+## rownames(7063): Gnai3 Cdc45 ... ENSMUSG00000097906 X4933404O12Rik
+## rowData names(2): isMarker ENSEMBL
+## colnames(81): Cell 1 Cell 2 ... Cell 80 Cell 81
+## colData names(0):
+## reducedDimNames(0):
+## spikeNames(0):</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Number of markers</span>
+nMarkers &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">rowData</span>(th2)<span class="op">$</span>isMarker)
+nMarkers</code></pre></div>
+<pre><code>## [1] 116</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Number of total genes</span>
+nGenes &lt;-<span class="st"> </span><span class="kw">nrow</span>(th2)
+nGenes</code></pre></div>
+<pre><code>## [1] 7063</code></pre>
+<p>First, we have a quick look into the unprocessed dataset. If the latent temporal factor is a major source of variance, two clusters, which separate fully from partially differentiated cells, should be detectable; if those clusters are not identifiable, the data is affected by uniformative substructures. We assume that T<sub>h</sub>2 marker genes should be enriched in the group of genes differentially expressed between clusters, i.e. the enrichment odds ratio should be &gt; 1 and the enrichment <em>P</em>-value should be significant if cells were clustered by maturity.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clustering in the original space</span>
+D &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">t</span>(<span class="kw">logcounts</span>(th2)))
+dendro &lt;-<span class="st"> </span><span class="kw">hclust</span>(D, <span class="dt">method=</span><span class="st">&quot;ward.D2&quot;</span>)
+cluster &lt;-<span class="st"> </span><span class="kw">cutree</span>(dendro, <span class="dt">k=</span><span class="dv">2</span>)
+
+<span class="co"># Differential expression</span>
+pvals &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">logcounts</span>(th2), <span class="dv">1</span>, <span class="cf">function</span>(x) {
+  <span class="kw">wilcox.test</span>(x[cluster <span class="op">==</span><span class="st"> </span><span class="dv">1</span>], 
+              x[cluster <span class="op">==</span><span class="st"> </span><span class="dv">2</span>], 
+              <span class="dt">exact=</span><span class="ot">FALSE</span>)<span class="op">$</span>p.value})
+fdr &lt;-<span class="st"> </span><span class="kw">p.adjust</span>(pvals, <span class="dt">method=</span><span class="st">&quot;fdr&quot;</span>)
+
+<span class="co"># Number of differentially expressed markers for FDR &lt; 0.05</span>
+de &lt;-<span class="st"> </span><span class="kw">names</span>(fdr[fdr <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>]) <span class="co">#differentially expressed genes</span>
+deGenes &lt;-<span class="st"> </span><span class="kw">length</span>(de) <span class="co">#number of genes</span>
+deMarkers &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">rowData</span>(th2[de, ])<span class="op">$</span>isMarker) <span class="co">#number of markers</span>
+
+<span class="co"># Enrichment statistic</span>
+<span class="kw">enrichment.test</span>(deMarkers, nMarkers, deGenes, nGenes)</code></pre></div>
+<pre><code>## $p.value
+## [1] 0.989218
+## 
+## $odds.ratio
+## odds ratio 
+##  0.6526187 
+## 
+## $conf.int
+## [1] 0.4687965       Inf
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95
+## 
+## $method
+## [1] &quot;Fisher&#39;s exact test for enrichment&quot;</code></pre>
+<!-- prod(diag(m)) / prod(diag(t(m)[, 2:1])) -->
+<!-- m <- matrix(c(n_marker_de, 
+              n_marker-n_marker_de, 
+              n_genes_de-n_marker_de, 
+              n_genes-n_genes_de+n_marker_de), ncol=2)-->
+<p>Since the enrichment is not significant (with an odds ratio &lt; 1), we argue that cells were not properly separated by maturity in the original space.</p>
+<p>To block the cell cycle effects, <em>CellTrails</em> expects a design matrix modeling the cell cycle stage as the explanatory factor for each cell. As the cell-cycle stage of each cell is not known in this data set, we need to predict cell cycle phases. In this example, we use the classifier <code>cyclon</code> from the <em><a href="http://bioconductor.org/packages/scran">scran</a></em> package <span class="citation">(Lun, McCarthy, and Marioni <a href="#ref-scran">2016</a>)</span>. To be able to run the algrithm properly, gene symbols were translated to Ensembl identifiers using Bioconductors’ annotation database interface package <em><a href="http://bioconductor.org/packages/AnnotationDbi">AnnotationDbi</a></em> <span class="citation">(Pagès et al. <a href="#ref-R-AnnotationDbi">2017</a>)</span> and the mouse annotation data package <em><a href="http://bioconductor.org/packages/org.Mm.eg.db">org.Mm.eg.db</a></em> <span class="citation">(Carlson <a href="#ref-R-Orgmmegdb">2017</a>)</span>.</p>
+<p><em>Please note</em> that these packages are not part of <em>CellTrails</em> and may be needed to be installed first.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Not run: 
+##library(scran)
+## End(Not run)
+
+<span class="co"># Run cyclone</span>
+mcm &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">system.file</span>(<span class="st">&quot;exdata&quot;</span>, <span class="st">&quot;mouse_cycle_markers.rds&quot;</span>, 
+                           <span class="dt">package=</span><span class="st">&quot;scran&quot;</span>))
+<span class="kw">set.seed</span>(<span class="dv">1101</span>)
+cellCycle &lt;-<span class="st"> </span>scran<span class="op">::</span><span class="kw">cyclone</span>(<span class="dt">x=</span><span class="kw">logcounts</span>(th2), 
+                            <span class="dt">pairs=</span>mcm, 
+                            <span class="dt">gene.names=</span><span class="kw">rowData</span>(th2)<span class="op">$</span>ENSEMBL)
+
+<span class="co"># Number of predicted phases</span>
+<span class="kw">table</span>(cellCycle<span class="op">$</span>phases)</code></pre></div>
+<pre><code>## 
+##  G1 G2M   S 
+##  59  14   8</code></pre>
+<p>Let’s create the respective design matrix using the <code>cyclon</code> classification scores.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Design matrix</span>
+cc_design &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span><span class="st"> </span>cellCycle<span class="op">$</span>scores<span class="op">$</span>G1 <span class="op">+</span><span class="st"> </span>cellCycle<span class="op">$</span>scores<span class="op">$</span>G2M)
+<span class="kw">head</span>(cc_design)</code></pre></div>
+<pre><code>##   (Intercept) cellCycle$scores$G1 cellCycle$scores$G2M
+## 1           1               0.108                0.701
+## 2           1               1.000                0.002
+## 3           1               0.971                0.009
+## 4           1               1.000                0.000
+## 5           1               1.000                0.000
+## 6           1               0.671                0.338</code></pre>
+<p>Next, we reduce the dimensionality using <em>CellTrails</em>. Passing the design matrix to <code>embedSamples</code> ensures that <em>CellTrails</em> properly regresses out the effects of the explanatory variables before learning the manifold. Then, we cluster the cells in the derived lower-dimensional space.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform Dimensionality Reduction with Design Matrix</span>
+se &lt;-<span class="st"> </span><span class="kw">embedSamples</span>(th2, <span class="dt">design=</span>cc_design)</code></pre></div>
+<pre><code>## Warning in .embedSamples_def(x = M, design = design): Please note that
+## trajectory features weren&#39;t selected. Thus, spectral embedding will be
+## performed on all features, which may result in lower accuracy and longer
+## computation time.</code></pre>
+<pre><code>## Blocking nuisance factors ...</code></pre>
+<pre><code>## Computing adjacency matrix ...</code></pre>
+<pre><code>## Computing spectral embedding ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(se<span class="op">$</span>eigenvalues, <span class="dt">frac=</span><span class="dv">60</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">latentSpace</span>(th2) &lt;-<span class="st"> </span>se<span class="op">$</span>components[, d]</code></pre></div>
+<pre><code>## Calculating approximation of CellTrails manifold for 2D visualization...</code></pre>
+<pre><code>## Used tSNE perplexity: 16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clustering in Latent Space</span>
+D &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">latentSpace</span>(th2))
+dendro &lt;-<span class="st"> </span><span class="kw">hclust</span>(D, <span class="dt">method=</span><span class="st">&quot;ward.D2&quot;</span>)
+cluster &lt;-<span class="st"> </span><span class="kw">cutree</span>(dendro, <span class="dt">k=</span><span class="dv">2</span>)</code></pre></div>
+<p>We test the quality of clustering by quantifying the enrichment of marker genes in the set of differentially expressed genes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Differential expression</span>
+pvals &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">logcounts</span>(th2), <span class="dv">1</span>, <span class="cf">function</span>(x) {
+  <span class="kw">wilcox.test</span>(x[cluster <span class="op">==</span><span class="st"> </span><span class="dv">1</span>], 
+              x[cluster <span class="op">==</span><span class="st"> </span><span class="dv">2</span>], 
+              <span class="dt">exact=</span><span class="ot">FALSE</span>)<span class="op">$</span>p.value})
+fdr &lt;-<span class="st"> </span><span class="kw">p.adjust</span>(pvals, <span class="dt">method=</span><span class="st">&quot;fdr&quot;</span>)
+
+<span class="co"># Number of differentially expressed markers for FDR &lt; 0.05</span>
+de &lt;-<span class="st"> </span><span class="kw">names</span>(fdr[fdr <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>]) <span class="co">#differentially expressed genes</span>
+deGenes &lt;-<span class="st"> </span><span class="kw">length</span>(de) <span class="co">#number of genes</span>
+deMarkers &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">rowData</span>(th2[de, ])<span class="op">$</span>isMarker) <span class="co">#number of markers</span>
+
+<span class="co"># Enrichment statistic</span>
+<span class="kw">enrichment.test</span>(deMarkers, nMarkers, deGenes, nGenes)</code></pre></div>
+<pre><code>## $p.value
+## [1] 6.144029e-07
+## 
+## $odds.ratio
+## odds ratio 
+##   5.971408 
+## 
+## $conf.int
+## [1] 3.431202      Inf
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95
+## 
+## $method
+## [1] &quot;Fisher&#39;s exact test for enrichment&quot;</code></pre>
+<p>The marker gene enrichment is significant (<em>P</em>-value &lt; 10<sup>-6</sup>) and the odds ratio is remarkably increased to ~6, indicating that the cells are now properly separated by maturity. In comparison, an enrichment odds ratio of 2.4 was achieved using the cell-cycle ‘corrected’ data and the clustering provided in the original scLVM study <span class="citation">(F. Buettner et al. <a href="#ref-buettner2015">2015</a>)</span>.</p>
+<p><em>Please note</em> that the differential gene expression analysis using the <em>CellTrails</em> derived clusters was performed on the actual expression matrix and not the cell-cycle ‘corrected’ expression values. In contrast to scLVM, <em>CellTrails</em> blocks the nuisance variables for manifold learning only and keeps the original expression values for downstream analysis. This is due to the fact that the manipulated expression matrix does not represent the actual transcript levels measured in each cell, nor does it account for the uncertainty of estimation of the blocking factor terms. By this means, <em>CellTrails</em> protects against confounding effects without discarding information.</p>
+<p>Besides cell cycle, technical confounders may also be relevant to be accounted for. Those can occur, for example, if samples were processed on different plates or if samples were pooled from multiple sequencing runs. In this case, a design matrix with the respective explanatory variables can be constructed and passed to <code>embedSamples</code>.</p>
+</div>
+<div id="using-alternative-methods-1" class="section level2">
+<h2><span class="header-section-number">4.4</span> Using Alternative Methods</h2>
+<p>If the user prefers to use an alternative approach for dimensionality reduction, any latent space can be set to a <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object. The latent space has to be a numerical matrix; rows represent samples and columns the components of the latent space. <em>CellTrails</em> uses by default spectral embedding, but the framework also operates well with any other spectral dimensionality reduction method, such as PCA (e.g., available in <em>CellTrails</em> via function <code>pca</code>) and diffusion maps (e.g., available via the <em><a href="http://bioconductor.org/packages/destiny">destiny</a></em> package <span class="citation">(Angerer et al. <a href="#ref-destiny">2015</a>)</span>; please note this package is not part of <em>CellTrails</em> and may be needed to be installed first):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make copy of example data</span>
+exAlt &lt;-<span class="st"> </span>exBundle
+
+<span class="co"># PCA</span>
+pca_result &lt;-<span class="st"> </span><span class="kw">pca</span>(exAlt)</code></pre></div>
+<pre><code>## Warning in .pca_def(M = M, do_scaling = do_scaling, design = design): 1
+## feature(s) do(es) not encode valuable information (i.e., has/have constant
+## expression over all samples) and was/were therefore neglected.</code></pre>
+<pre><code>## Performing PCA ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(pca_result<span class="op">$</span>eigenvalues, <span class="dt">frac=</span><span class="dv">100</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">latentSpace</span>(exAlt) &lt;-<span class="st"> </span>pca_result<span class="op">$</span>components[, d]</code></pre></div>
+<pre><code>## Calculating approximation of CellTrails manifold for 2D visualization...</code></pre>
+<pre><code>## Used tSNE perplexity: 30</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Diffusion maps</span>
+## Not run: 
+##library(destiny)
+## End(Not run)
+
+lcounts &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(exAlt))
+dmaps_result &lt;-<span class="st"> </span>destiny<span class="op">::</span><span class="kw">DiffusionMap</span>(lcounts, <span class="dt">n_eigs =</span> <span class="dv">101</span>)
+d &lt;-<span class="st"> </span><span class="kw">findSpectrum</span>(destiny<span class="op">:::</span><span class="kw">eigenvalues</span>(dmaps_result), <span class="dt">frac=</span><span class="dv">100</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">latentSpace</span>(exAlt) &lt;-<span class="st"> </span>destiny<span class="op">:::</span><span class="kw">eigenvectors</span>(dmaps_result)[, d]</code></pre></div>
+<pre><code>## Calculating approximation of CellTrails manifold for 2D visualization...
+## Used tSNE perplexity: 30</code></pre>
+<p><em>Please note</em> that the function <code>latentSpace&lt;-</code> accepts any numerical matrix. Therefore, any latent space with an already reduced number of dimensions can be assigned to a <em>CellTrailsSet</em> object with this function; eigenvalues are only used to determine the intrinsic dimensionality of the data set.</p>
+</div>
+<div id="visualization" class="section level2">
+<h2><span class="header-section-number">4.5</span> Visualization</h2>
+<p><em>CellTrails</em> allows us to visualize an approximation of the learned lower-dimensional manifold in two dimensions. <em>CellTrails’</em> plot function <code>plotManifold</code> uses t-distributed stochastic neighbor embedding (tSNE) <span class="citation">(Maaten and Hinton <a href="#ref-vdmaaten2008">2008</a>)</span> to illustrate the arrangement of the samples in the latent space in a two-dimensional plot. Points denote individual samples, the colorization indicates either a metadata label or expression of a single feature. Empty points denote a missing label or missing expression value (non-detects). Available phenotype lables can be listed with the function <code>phenoNames</code>, available features with <code>featureNames</code>, respectively.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Show available phenotype labels</span>
+<span class="kw">phenoNames</span>(exBundle)</code></pre></div>
+<pre><code>## [1] &quot;fm143&quot;  &quot;origin&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Show sample metainformation &#39;fm143 dye uptake&#39;</span>
+<span class="kw">plotManifold</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;phenoName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;fm143&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>The function <code>plotManifold</code> returns a <code>ggplot</code> object <span class="citation">(Wickham <a href="#ref-ggplot2">2009</a>)</span> from the <em><a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a></em> package, which can be adapted by the user’s needs and preferences (for details, please refer to the <em><a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a></em> manual; to save the plot see function <code>ggsave</code>). The 2D representation of the latent manifold is by default already stored the the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object (also accessible via <code>reducedDims</code>). However, the <code>plotManifold</code> function provides the parameter <code>recalculate</code>. For example, if we want to change the <code>perplexity</code> parameter of the tSNE calculation, then we set <code>recalculate=TRUE</code>. The new tSNE result needs to be set to the <em><a href="http://bioconductor.org/packages/SingleCellExperiment">SingleCellExperiment</a></em> object using the <code>manifold2D</code> function, respectively.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Show feature expression (e.g., gene TECTA)</span>
+gp &lt;-<span class="st"> </span><span class="kw">plotManifold</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;TECTA&quot;</span>, <span class="dt">recalculate=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## Calculating 2D approximation of CellTrails manifold...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gp</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Store tSNE result</span>
+<span class="kw">manifold2D</span>(exBundle) &lt;-<span class="st"> </span>gp
+
+<span class="co"># Show feature expression (e.g., genes MYO7A)</span>
+<span class="kw">plotManifold</span>(exBundle, <span class="dt">color_by=</span><span class="st">&quot;featureName&quot;</span>, <span class="dt">name=</span><span class="st">&quot;MYO7A&quot;</span>)</code></pre></div>
+<p><img src="CellTrails-handbook_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+
+<!-- ---------------------------------- -->
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-belkin2003">
+<p>Belkin, M, and P Niyogi. 2003. “Laplacian Eigenmaps for Dimensionality Reduction and Data Representation.” <em>Neural Computation</em> 15: 1373–96.</p>
+</div>
+<div id="ref-sussman2012">
+<p>Sussman, DL, M Tang, DE Fishkind, and CE Priebe. 2012. “A Consistent Adjacency Spectral Embedding for Stochastic Blockmodel Graphs.” <em>J Am Stat Assoc</em> 107: 1119–28.</p>
+</div>
+<div id="ref-mahata2014">
+<p>Mahata, B, X Zhang, AA Kolodziejczyk, V Proserpio, L Haim-Vilmovsky, AE Taylor, D Hebenstreit, et al. 2014. “Single-Cell Rna Sequencing Reveals T Helper Cells Synthesizing Steroids de Novo to Contribute to Immune Homeostasis.” <em>Cell Reports</em> 7 (4): 1130–42.</p>
+</div>
+<div id="ref-buettner2015">
+<p>Buettner, F, KN Natarajan, FP Casale, V Proserpio, A Scialdone, FJ Theis, SA Teichmann, JC Marioni, and O Stegle. 2015. “Computational Analysis of Cell-to-Cell Heterogeneity in Single-Cell Rna-Sequencing Data Reveals Hidden Subpopulations of Cells.” <em>Nature Biotechnology</em> 33 (2): 155–60.</p>
+</div>
+<div id="ref-scran">
+<p>Lun, ATL, DJ McCarthy, and JC Marioni. 2016. “A Step-by-Step Workflow for Low-Level Analysis of Single-Cell Rna-Seq Data with Bioconductor.” <em>F1000Res.</em> 5: 2122.</p>
+</div>
+<div id="ref-R-AnnotationDbi">
+<p>Pagès, H, M Carlson, S Falcon, and N Li. 2017. <em>AnnotationDbi: Annotation Database Interface</em>.</p>
+</div>
+<div id="ref-R-Orgmmegdb">
+<p>Carlson, M. 2017. <em>Org.Mm.eg.db: Genome Wide Annotation for Mouse.</em></p>
+</div>
+<div id="ref-destiny">
+<p>Angerer, P, L Haghverdi, M Buettner, FJ Theis, C Marr, and F Buettner. 2015. “Destiny: Diffusion Maps for Large-Scale Single-Cell Data in R.” <em>Bioinformatics</em> 32: 1241–3.</p>
+</div>
+<div id="ref-vdmaaten2008">
+<p>Maaten, LJP van der, and GE Hinton. 2008. “Visualizing High-Dimensional Data Using T-Sne.” <em>Journal of Machine Learning Research</em> 9: 2579–2605.</p>
+</div>
+<div id="ref-ggplot2">
+<p>Wickham, H. 2009. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="http://ggplot2.org" class="uri">http://ggplot2.org</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="selection-of-trajectory-features.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["CellTrails-handbook.pdf", "CellTrails-handbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!-- ---------------------------------- -->
+# Clustering
+<!-- ---------------------------------- -->
+## Hierarchical Spectral Clustering
+
+To identify cellular subpopulations, *CellTrails* performs hierarchical clustering via minimization of a square error criterion [@ward1963] in the lower-dimensional space. To determine the number of clusters, *CellTrails* conducts an unsupervised *post-hoc* analysis. Here, it is assumed that differential expression of assayed features determines distinct cellular stages. Hierarchical clustering in the latent space generates a cluster dendrogram. *CellTrails* makes use of this information and identifies the maximal fragmentation of the data space, i.e. the lowest cutting height in the clustering dendrogram that ensures that the resulting clusters contain at least a certain fraction of samples. Then, processing from this height towards the root, *CellTrails* iteratively joins siblings if they do not have at least a certain number of differentially expressed features. Statistical significance is tested by means of a two-sample non-parametric linear rank test accounting for censored values [@peto1972]. The null hypothesis is rejected using the Benjamini-Hochberg [@benjamini1995] procedure for a given significance level. The number of clusters can impact the outcome of the trajectory reconstruction and therefore, this step might require some parameter tuning depending on the input data (for more information on the parameters call `?findStates`).
+
+```{r, eval=TRUE}
+cl <- findStates(exBundle, min_size=0.01, min_feat=5, max_pval=1e-4, min_fc=2)
+head(cl)
+```
+
+The clusters identified by *CellTrails* are referred to as states along the trajectory. The function `states` can be used to set the clusters to the `r Biocpkg("SingleCellExperiment")` object.
+
+```{r, eval=TRUE}
+# Set clusters
+states(exBundle) <- cl
+```
+
+State assignments are stored as sample metainformation and can be either recieved via `colData` or `states`. Since `CellTrails` operates on a `r Biocpkg("SingleCellExperiment")` object, its results can be easily used by other packages. For example, visualizing a principal component analysis with `r Biocpkg("scater")` [@scater]:
+```{r, eval=TRUE}
+## Not run: 
+##library(scater)
+## End(Not run)
+
+# Plot scater PCA with CellTrails cluster information
+scater::plotPCA(exBundle, colour_by="CellTrails.state")
+```
+
+Please note that the (Bioconductor) package `r Biocpkg("scater")` is not part of *CellTrails* and may be needed to be installed first.
+
+## Using Alternative Methods
+Technically, the function `states<-` allows to set any clustering result to a `r Biocpkg("SingleCellExperiment")` object. Any numeric, character or factor vector containing the cluster assignments for each sample is accepted.
+
+## Visualization
+As before, we can visualize the approximated lower-dimensional manifold and colorize each sample by its assigned state.
+```{r, eval=TRUE}
+# States are now listed as phenotype
+phenoNames(exBundle)
+
+# Show manifold
+plotManifold(exBundle, color_by="phenoName", name="state")
+```
+
+The function `plotStateSize` generates a barplot showing the absolute sizes of each state.
+```{r, eval=TRUE}
+plotStateSize(exBundle)
+```
+
+Further, violin plots can be produced showing the expression distribution of a feature per state. Each point displays the feature's expression value in a single sample. A violine represents a vertically mirrored density plot on each side.
+```{r, eval=TRUE}
+plotStateExpression(exBundle, feature_name="CALB2")
+```

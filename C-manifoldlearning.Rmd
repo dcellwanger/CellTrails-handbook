@@ -1,0 +1,202 @@
+<!-- ---------------------------------- -->
+# Manifold Learning
+<!-- ---------------------------------- -->
+The samples' expression profiles are shaped by many factors, such as developmental age, tissue region of origin, cell cycle stage, as well as extrinsic sources such as status of signaling receptors, and environmental stressors, but also technical noise. In other words, a single dimension, despite just containing feature expression information, represents an underlying combination of multiple dependent and independent, relevant and non-relevant factors, whereat each factor's individual contribution is non-uniform. To obtain a better resolution and to extract underlying information, *CellTrails* aims to find a meaningful low-dimensional structure - a manifold - that represents samples mainly by their latent temporal relation.
+
+## Spectral Embedding
+*CellTrails* aims to decipher the temporal relation between samples by computing a novel data representation which amplifies trajectory information in its first *n* dimensions. For this purpose, *CellTrails* employs spectral graph theory. Due to their locality-preserving character, spectral embedding techniques are advantageous because these consider the data's manifold structure, are insensitive to outliers and noise, are not susceptible to short-circuiting, and emphasize naturally occurring clusters in the data [@belkin2003; @sussman2012]. In a nutshell, *CellTrails* assumes that two samples that have a high statistical dependency are represented in close proximity along a trajectory. *CellTrails* captures the intrinsic data geometry as a weighted graph (nodes = samples, edges = statistical dependencies between pairs of samples) by means of fuzzy mutual information and uses spectral graph decomposition to unfold the manifold revealing the hidden trajectory information.
+
+The spectral embedding is performed using the function `embedSamples` and results in a list with the eigenspace representation of the original expression data.
+
+```{r, eval=TRUE}
+# Spectral Embedding
+se <- embedSamples(exBundle)
+names(se)
+```
+
+*Please note* that this function can also be applied to any numerical matrix of interest.
+
+## Dimensionality Reduction
+*CellTrails* assumes that the expression vectors are lying on or near a manifold with a low dimensionality that is embedded in the higher-dimensional space. The number of dimensions can be reduced, which lowers noise (i.e., truncates non-relevant dimensions), while the geometry of the trajectory is emphasized.
+
+The function `findSpectrum` helps to identify the intrisic dimensionality of the data. It determines the most informative dimensions based on the eigenvalues (spectrum) of the eigenspace. Components of the latent space are ranked by their information content. In the following example, *CellTrails* identifies relevant components by using a linear fit on the eigengaps of the first 100 eigenvalues.
+
+```{r, eval=TRUE}
+# Identify relevant components
+d <- findSpectrum(se$eigenvalues, frac=100)
+d
+```
+
+We suggest to assess the resulting Scree plot (eigengaps versus spectrum size) for whether the estimation of the unknown intrinsic dimensionality was reasonable. Otherwise, we recommend to adjust the parameter `frac` accordingly. 
+
+*Please note* that considering too few components of the latent space may result in loss of information, while selecting lower ranked components could increase noise.
+
+Next, we set the identified latent space to our `r Biocpkg("SingleCellExperiment")` object:
+```{r, eval=TRUE}
+latentSpace(exBundle) <- se$components[, d]
+```
+
+## Blocking Uninformative Substructures
+Single-cell measurements are susceptible to the influence of confounders, such as batch, gender or cell cycle effects. Blocking these nuisance factors during manifold learning may be necessary to significantly improve the result of downstream data analyses, such as reconstruction of the temporal trajectory. Therefore, the function `embedSamples` can account for confounding effects via the parameter `design`, as will be demonstrated on the example of single-cell RNA-Seq data of murine T helper 2 cell (T~h~2) differentiation [@mahata2014]. In a nutshell, Buettner *et al.* [@buettner2015] identified cell cycle effects as major confounder in this dataset and applied a single-cell latent variable model (scLVM) approach to account for this factor. They unbiasedly identified then two cell populations, namely a group of partially and a group of fully differentiated cells. The normalized, log transformed and filtered scRNA-Seq data can be obtained from the supplementary materials of their article (Table S5 and S7); further, a curated list of T~h~2 marker genes, the scLVM-corrected expression matrix, and a binary cluster assignment for each cell can be downloaded.
+
+For your convenience, the numeric expression matrix (here called `th2`) and the list of marker genes were already organized in a `r Biocpkg("SingleCellExperiment")` container. Here, the expression matrix consists of 7,063 selected genes (116 of which are marker genes) which have been detected in more than 3 of all 81 cells.
+```{r, eval=TRUE}
+th2 <- readRDS(system.file("exdata", "th2.rds", package="CellTrails"))
+th2
+
+# Number of markers
+nMarkers <- sum(rowData(th2)$isMarker)
+nMarkers
+
+# Number of total genes
+nGenes <- nrow(th2)
+nGenes
+```
+
+First, we have a quick look into the unprocessed dataset. If the latent temporal factor is a major source of variance, two clusters, which separate fully from partially differentiated cells, should be detectable; if those clusters are not identifiable, the data is affected by uniformative substructures. We assume that T~h~2 marker genes should be enriched in the group of genes differentially expressed between clusters, i.e. the enrichment odds ratio should be > 1 and the enrichment *P*-value should be significant if cells were clustered by maturity.
+
+```{r, eval=TRUE}
+# Clustering in the original space
+D <- dist(t(logcounts(th2)))
+dendro <- hclust(D, method="ward.D2")
+cluster <- cutree(dendro, k=2)
+
+# Differential expression
+pvals <- apply(logcounts(th2), 1, function(x) {
+  wilcox.test(x[cluster == 1], 
+              x[cluster == 2], 
+              exact=FALSE)$p.value})
+fdr <- p.adjust(pvals, method="fdr")
+
+# Number of differentially expressed markers for FDR < 0.05
+de <- names(fdr[fdr < 0.05]) #differentially expressed genes
+deGenes <- length(de) #number of genes
+deMarkers <- sum(rowData(th2[de, ])$isMarker) #number of markers
+
+# Enrichment statistic
+enrichment.test(deMarkers, nMarkers, deGenes, nGenes)
+```
+<!-- prod(diag(m)) / prod(diag(t(m)[, 2:1])) -->
+<!-- m <- matrix(c(n_marker_de, 
+              n_marker-n_marker_de, 
+              n_genes_de-n_marker_de, 
+              n_genes-n_genes_de+n_marker_de), ncol=2)-->
+Since the enrichment is not significant (with an odds ratio < 1), we argue that cells were not properly separated by maturity in the original space.
+
+To block the cell cycle effects, *CellTrails* expects a design matrix modeling the cell cycle stage as the explanatory factor for each cell. As the cell-cycle stage of each cell is not known in this data set, we need to predict cell cycle phases. In this example, we use the classifier `cyclon` from the `r Biocpkg("scran")` package [@scran]. To be able to run the algrithm properly, gene symbols were translated to Ensembl identifiers using Bioconductors' annotation database interface package `r Biocpkg("AnnotationDbi")` [@R-AnnotationDbi] and the mouse annotation data package `r Biocpkg("org.Mm.eg.db")` [@R-Orgmmegdb].
+
+*Please note* that these packages are not part of *CellTrails* and may be needed to be installed first.
+
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
+## Not run: 
+##library(scran)
+## End(Not run)
+
+# Run cyclone
+mcm <- readRDS(system.file("exdata", "mouse_cycle_markers.rds", 
+                           package="scran"))
+set.seed(1101)
+cellCycle <- scran::cyclone(x=logcounts(th2), 
+                            pairs=mcm, 
+                            gene.names=rowData(th2)$ENSEMBL)
+
+# Number of predicted phases
+table(cellCycle$phases)
+```
+
+Let's create the respective design matrix using the `cyclon` classification scores.
+
+```{r, eval=TRUE}
+# Design matrix
+cc_design <- model.matrix(~ cellCycle$scores$G1 + cellCycle$scores$G2M)
+head(cc_design)
+```
+
+Next, we reduce the dimensionality using *CellTrails*. Passing the design matrix to `embedSamples` ensures that *CellTrails* properly regresses out the effects of the explanatory variables before learning the manifold. Then, we cluster the cells in the derived lower-dimensional space.
+
+```{r, eval=TRUE}
+# Perform Dimensionality Reduction with Design Matrix
+se <- embedSamples(th2, design=cc_design)
+d <- findSpectrum(se$eigenvalues, frac=60)
+latentSpace(th2) <- se$components[, d]
+
+# Clustering in Latent Space
+D <- dist(latentSpace(th2))
+dendro <- hclust(D, method="ward.D2")
+cluster <- cutree(dendro, k=2)
+```
+
+We test the quality of clustering by quantifying the enrichment of marker genes in the set of differentially expressed genes.
+
+```{r, eval=TRUE}
+# Differential expression
+pvals <- apply(logcounts(th2), 1, function(x) {
+  wilcox.test(x[cluster == 1], 
+              x[cluster == 2], 
+              exact=FALSE)$p.value})
+fdr <- p.adjust(pvals, method="fdr")
+
+# Number of differentially expressed markers for FDR < 0.05
+de <- names(fdr[fdr < 0.05]) #differentially expressed genes
+deGenes <- length(de) #number of genes
+deMarkers <- sum(rowData(th2[de, ])$isMarker) #number of markers
+
+# Enrichment statistic
+enrichment.test(deMarkers, nMarkers, deGenes, nGenes)
+```
+
+The marker gene enrichment is significant (*P*-value < 10^-6^) and the odds ratio is remarkably increased to ~6, indicating that the cells are now properly separated by maturity. In comparison, an enrichment odds ratio of 2.4 was achieved using the cell-cycle 'corrected' data and the clustering provided in the original scLVM study [@buettner2015].
+
+*Please note* that the differential gene expression analysis using the *CellTrails* derived clusters was performed on the actual expression matrix and not the cell-cycle 'corrected' expression values. In contrast to scLVM, *CellTrails* blocks the nuisance variables for manifold learning only and keeps the original expression values for downstream analysis. This is due to the fact that the manipulated expression matrix does not represent the actual transcript levels measured in each cell, nor does it account for the uncertainty of estimation of the blocking factor terms. By this means, *CellTrails* protects against confounding effects without discarding information.
+
+Besides cell cycle, technical confounders may also be relevant to be accounted for. Those can occur, for example, if samples were processed on different plates or if samples were pooled from multiple sequencing runs. In this case, a design matrix with the respective explanatory variables can be constructed and passed to `embedSamples`.
+
+## Using Alternative Methods
+If the user prefers to use an alternative approach for dimensionality reduction, any latent space can be set to a `r Biocpkg("SingleCellExperiment")` object. The latent space has to be a numerical matrix; rows represent samples and columns the components of the latent space. *CellTrails* uses by default spectral embedding, but the framework also operates well with any other spectral dimensionality reduction method, such as PCA (e.g., available in *CellTrails* via function `pca`) and diffusion maps (e.g., available via the `r Biocpkg("destiny")` package [@destiny]; please note this package is not part of *CellTrails* and may be needed to be installed first):
+
+```{r, eval=TRUE}
+# Make copy of example data
+exAlt <- exBundle
+
+# PCA
+pca_result <- pca(exAlt)
+d <- findSpectrum(pca_result$eigenvalues, frac=100)
+latentSpace(exAlt) <- pca_result$components[, d]
+
+# Diffusion maps
+## Not run: 
+##library(destiny)
+## End(Not run)
+
+lcounts <- t(logcounts(exAlt))
+dmaps_result <- destiny::DiffusionMap(lcounts, n_eigs = 101)
+d <- findSpectrum(destiny:::eigenvalues(dmaps_result), frac=100)
+latentSpace(exAlt) <- destiny:::eigenvectors(dmaps_result)[, d]
+```
+
+*Please note* that the function `latentSpace<-` accepts any numerical matrix. Therefore, any latent space with an already reduced number of dimensions can be assigned to a *CellTrailsSet* object with this function; eigenvalues are only used to determine the intrinsic dimensionality of the data set. 
+
+## Visualization
+*CellTrails* allows us to visualize an approximation of the learned lower-dimensional manifold in two dimensions. *CellTrails'* plot function `plotManifold` uses t-distributed stochastic neighbor embedding (tSNE) [@vdmaaten2008] to illustrate the arrangement of the samples in the latent space in a two-dimensional plot. Points denote individual samples, the colorization indicates either a metadata label or expression of a single feature. Empty points denote a missing label or missing expression value (non-detects). Available phenotype lables can be listed with the function `phenoNames`, available features with `featureNames`, respectively.
+
+```{r, eval=TRUE}
+# Show available phenotype labels
+phenoNames(exBundle)
+
+# Show sample metainformation 'fm143 dye uptake'
+plotManifold(exBundle, color_by="phenoName", name="fm143")
+```
+
+The function `plotManifold` returns a `ggplot` object [@ggplot2] from the `r CRANpkg("ggplot2")` package, which can be adapted by the user's needs and preferences (for details, please refer to the `r CRANpkg("ggplot2")` manual; to save the plot see function `ggsave`). The 2D representation of the latent manifold is by default already stored the the `r Biocpkg("SingleCellExperiment")` object (also accessible via `reducedDims`). However, the `plotManifold` function provides the parameter `recalculate`. For example, if we want to change the `perplexity` parameter of the tSNE calculation, then we set `recalculate=TRUE`. The new tSNE result needs to be set to the `r Biocpkg("SingleCellExperiment")` object using the `manifold2D` function, respectively.
+
+```{r, eval=TRUE}
+# Show feature expression (e.g., gene TECTA)
+gp <- plotManifold(exBundle, color_by="featureName", name="TECTA", recalculate=TRUE)
+gp
+
+# Store tSNE result
+manifold2D(exBundle) <- gp
+
+# Show feature expression (e.g., genes MYO7A)
+plotManifold(exBundle, color_by="featureName", name="MYO7A")
+```
