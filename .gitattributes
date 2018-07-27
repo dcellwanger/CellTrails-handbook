@@ -1,3 +1,4 @@
 * linguist-vendored
-*.html linguist-vendored=false
+*.Rmd linguist-vendored=false
 docs/*.html linguist-documentation=false
+*.Rmd linguist-detectable=true
