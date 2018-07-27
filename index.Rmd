@@ -30,4 +30,4 @@ This manual describes the practical use of the _CellTrails_ implementation, an u
 
 We are pleased that you consider using _CellTrails_ in your research. A detailed theoretical description of the algorithm and its application to biological uses has been published in:
 
-Ellwanger, DC, M Scheibinger, RA Dumont, PG Barr-Gillespie, and S Heller. 2018. "Transcriptional Dynamics of Hair-Bundle Morphogenesis Revealed with Celltrails." *Cell Reports* 23(10): 2901–14.
+Ellwanger, DC, M Scheibinger, RA Dumont, PG Barr-Gillespie, and S Heller. 2018. "Transcriptional Dynamics of Hair-Bundle Morphogenesis Revealed with Celltrails." *Cell Reports* 23(10):2901–14.
