@@ -125,7 +125,7 @@ Trajectories from Single-cell Expression Data}
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{Package: 0.99.14 // Manual: 2018-07-26}
+  \date{Package: 0.99.14 // Manual: 2018-08-22}
 
 \usepackage{booktabs}
 
@@ -172,7 +172,7 @@ application to biological uses has been published in:
 
 Ellwanger, DC, M Scheibinger, RA Dumont, PG Barr-Gillespie, and S
 Heller. 2018. ``Transcriptional Dynamics of Hair-Bundle Morphogenesis
-Revealed with Celltrails.'' \emph{Cell Reports} 23(10): 2901--14.
+Revealed with Celltrails.'' \emph{Cell Reports} 23(10):2901--14.
 
 \chapter{Prerequisites}\label{prerequisites}
 
@@ -1870,7 +1870,13 @@ Linux).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{write.ygraphml}\NormalTok{(exBundle, }\DataTypeTok{file=}\StringTok{"yourFileName.graphml"}\NormalTok{)}
+\CommentTok{# Export trajectory graph structure to graphml}
+\CommentTok{# Color and label nodes by state}
+\KeywordTok{write.ygraphml}\NormalTok{(}\DataTypeTok{sce=}\NormalTok{exBundle,}
+               \DataTypeTok{file=}\StringTok{'yourFileName.graphml'}\NormalTok{,}
+               \DataTypeTok{color_by=}\StringTok{'phenoName'}\NormalTok{,}
+               \DataTypeTok{name=}\StringTok{'state'}\NormalTok{,}
+               \DataTypeTok{node_label=}\StringTok{'state'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1885,10 +1891,10 @@ file and will be directly interpreted by \emph{yEd}. In this example, no
 layout was defined yet and therefore, all samples (nodes) are
 overlapping.
 
-\emph{Please note} that the export function \texttt{write.ygraphml}
-colorizes automatically nodes by their assigned state. However, it is
-possible to colorize and label nodes by any phenotype or feature
-expression data stored in the
+\emph{Please note} that, in this example, the export function
+\texttt{write.ygraphml} was set to colorize nodes by their assigned
+state. However, it is possible to colorize and label nodes by any
+phenotype or feature expression data stored in the
 \emph{\href{http://bioconductor.org/packages/SingleCellExperiment}{SingleCellExperiment}}
 object. For example, we could colorize the nodes by the recorded FM1-43
 dye intensity to get an idea where the trajectory might start and end (a
@@ -3086,39 +3092,40 @@ listed below.
 ##  [73] flexmix_2.3-14          nnet_7.3-12            
 ##  [75] locfit_1.5-9.1          dynamicTreeCut_1.63-1  
 ##  [77] labeling_0.3            rlang_0.2.1            
-##  [79] reshape2_1.4.3          AnnotationDbi_1.40.0   
-##  [81] munsell_0.4.3           tools_3.4.3            
-##  [83] RSQLite_2.0             evaluate_0.10.1        
-##  [85] stringr_1.2.0           maptree_1.4-7          
-##  [87] yaml_2.1.16             knitr_1.20             
-##  [89] bit64_0.9-7             robustbase_0.92-8      
-##  [91] purrr_0.2.4             dendextend_1.6.0       
-##  [93] bindrcpp_0.2            nlme_3.1-131           
-##  [95] quantreg_5.34           whisker_0.3-2          
-##  [97] mime_0.5                scran_1.6.6            
-##  [99] biomaRt_2.34.0          pbkrtest_0.4-7         
-## [101] compiler_3.4.3          rstudioapi_0.7         
-## [103] curl_3.1                beeswarm_0.2.3         
-## [105] e1071_1.6-8             smoother_1.1           
-## [107] tibble_1.3.4            statmod_1.4.30         
-## [109] stringi_1.1.6           lattice_0.20-35        
-## [111] trimcluster_0.1-2       Matrix_1.2-12          
-## [113] nloptr_1.0.4            lmtest_0.9-35          
-## [115] data.table_1.10.4-3     bitops_1.0-6           
-## [117] httpuv_1.3.5            R6_2.2.2               
-## [119] latticeExtra_0.6-28     bookdown_0.7           
-## [121] gridExtra_2.3           vipor_0.4.5            
-## [123] boot_1.3-20             MASS_7.3-47            
-## [125] assertthat_0.2.0        destiny_2.6.1          
-## [127] rhdf5_2.22.0            rprojroot_1.2          
-## [129] rjson_0.2.15            withr_2.1.0            
-## [131] GenomeInfoDbData_0.99.1 diptest_0.75-7         
-## [133] mgcv_1.8-22             grid_3.4.3             
-## [135] rpart_4.1-11            minqa_1.2.4            
-## [137] tidyr_0.7.2             class_7.3-14           
-## [139] rmarkdown_1.8           Rtsne_0.13             
-## [141] TTR_0.23-2              shiny_1.0.5            
-## [143] base64enc_0.1-3         ggbeeswarm_0.6.0
+##  [79] reshape2_1.4.3          later_0.7.3            
+##  [81] AnnotationDbi_1.40.0    munsell_0.4.3          
+##  [83] tools_3.4.3             RSQLite_2.0            
+##  [85] evaluate_0.10.1         stringr_1.2.0          
+##  [87] maptree_1.4-7           yaml_2.1.16            
+##  [89] knitr_1.20              bit64_0.9-7            
+##  [91] robustbase_0.92-8       purrr_0.2.4            
+##  [93] dendextend_1.6.0        bindrcpp_0.2           
+##  [95] nlme_3.1-131            quantreg_5.34          
+##  [97] whisker_0.3-2           mime_0.5               
+##  [99] scran_1.6.6             biomaRt_2.34.0         
+## [101] pbkrtest_0.4-7          compiler_3.4.3         
+## [103] rstudioapi_0.7          curl_3.1               
+## [105] beeswarm_0.2.3          e1071_1.6-8            
+## [107] smoother_1.1            tibble_1.3.4           
+## [109] statmod_1.4.30          stringi_1.1.6          
+## [111] lattice_0.20-35         trimcluster_0.1-2      
+## [113] Matrix_1.2-12           nloptr_1.0.4           
+## [115] lmtest_0.9-35           data.table_1.10.4-3    
+## [117] bitops_1.0-6            httpuv_1.4.5           
+## [119] R6_2.2.2                latticeExtra_0.6-28    
+## [121] bookdown_0.7            promises_1.0.1         
+## [123] gridExtra_2.3           vipor_0.4.5            
+## [125] boot_1.3-20             MASS_7.3-47            
+## [127] assertthat_0.2.0        destiny_2.6.1          
+## [129] rhdf5_2.22.0            rprojroot_1.2          
+## [131] rjson_0.2.15            withr_2.1.0            
+## [133] GenomeInfoDbData_0.99.1 diptest_0.75-7         
+## [135] mgcv_1.8-22             grid_3.4.3             
+## [137] rpart_4.1-11            minqa_1.2.4            
+## [139] tidyr_0.7.2             class_7.3-14           
+## [141] rmarkdown_1.8           Rtsne_0.13             
+## [143] TTR_0.23-2              shiny_1.1.0            
+## [145] base64enc_0.1-3         ggbeeswarm_0.6.0
 \end{verbatim}
 
 \bibliography{book.bib,articles.bib}

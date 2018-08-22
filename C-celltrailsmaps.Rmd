@@ -9,7 +9,13 @@ We found that the freely available graph visualization software _yEd_ (http://ww
 Therefore, *CellTrails* enables to export and import the trajectory graph structure using the common _graphml_ file format. This file format can be interpreted by most third-party graph analysis applications, allowing the user to subject the trajectory graph to a wide range of (tree) layout algorithms. In particular, the exported file has additional ygraph attributes best suited to be used with _yEd_, which is freely available for all major platforms (Windows, Mac OS, and Linux).
 
 ```{r, eval=FALSE}
-write.ygraphml(exBundle, file="yourFileName.graphml")
+# Export trajectory graph structure to graphml
+# Color and label nodes by state
+write.ygraphml(sce=exBundle,
+               file='yourFileName.graphml',
+               color_by='phenoName',
+               name='state',
+               node_label='state')
 ```
 
 Let's open the exported graphml file in _yEd_:
@@ -21,7 +27,7 @@ knitr::include_graphics(path=pth)
 
 If a layout has already been defined for a `r Biocpkg("SingleCellExperiment")` object, the samples' coordinates will be listed in the exported graphml file and will be directly interpreted by _yEd_. In this example, no layout was defined yet and therefore, all samples (nodes) are overlapping.
 
-*Please note* that the export function `write.ygraphml` colorizes automatically nodes by their assigned state. However, it is possible to colorize and label nodes by any phenotype or feature expression data stored in the `r Biocpkg("SingleCellExperiment")` object. For example, we could colorize the nodes by the recorded FM1-43 dye intensity to get an idea where the trajectory might start and end (a high FM1-43 dye indicates mature cells) and label the nodes by their determined state by setting the parameters `color_by="phenoName"`, `name="fm143"` and `label="state"`. Nodes with a missing phenotype information are not colorized and remain transparent.
+*Please note* that, in this example, the export function `write.ygraphml` was set to colorize nodes by their assigned state. However, it is possible to colorize and label nodes by any phenotype or feature expression data stored in the `r Biocpkg("SingleCellExperiment")` object. For example, we could colorize the nodes by the recorded FM1-43 dye intensity to get an idea where the trajectory might start and end (a high FM1-43 dye indicates mature cells) and label the nodes by their determined state by setting the parameters `color_by="phenoName"`, `name="fm143"` and `label="state"`. Nodes with a missing phenotype information are not colorized and remain transparent.
 
 Next, we layout the graph. Since the trajectory resembles a tree structre, we use a tree algorithm. We found that routing the trajectory graph in a quasi-radial style, called balloon style, works very well for our case. The layouter can be selected via  _Layout_ $\rightarrow$ _Tree_ $\rightarrow$ _Balloon_. The following parameter setting was used in the original _CellTrails_ publication:
 
